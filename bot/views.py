@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .credintials import TOKEN, API_URL, URL
 
 @csrf_exempt
-def telegram_bot(request):
+def bot(request):
   if request.method == 'POST':
     message = json.loads(request.body.decode('utf-8'))
 
