@@ -4,7 +4,8 @@ class User(models.Model):
     user_id  = models.PositiveBigIntegerField(primary_key=True)
     grade = models.ForeignKey(
         'content.Grade',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null = True,
     )
 
 

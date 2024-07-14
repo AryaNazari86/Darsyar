@@ -3,7 +3,8 @@ import requests
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .credintials import TOKEN, API_URL, URL
-
+from user.models import User
+from bot import strings
 @csrf_exempt
 def bot(request):
   if request.method == 'POST':
@@ -13,14 +14,37 @@ def bot(request):
       start(message)
       return HttpResponse('ok')
     
-    if message['message']['text'][0:3] == '/ip':
-      ip_address(message)
-      return HttpResponse('ok')
-    
-    info(message)
-    #help(message)
     
   return HttpResponse('ok')
+
+def start(message):
+  if (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
+    user = User.objects.create(user_id=message['message']['from']['id'])
+  send(
+    'sendMessage',
+    json.dumps({
+  "chat_id": 2130762647,
+  "text": "salalamamamamam",
+  "reply_markup": {
+    "inline_keyboard": [
+      [
+        {
+          "text": "Red",
+          "callback_data": "Red"
+        },
+        {
+          "text": "Blue",
+          "callback_data": "Blue"
+        },
+        {
+          "text": "Green",
+          "callback_data": "Green"
+        }
+      ]
+    ]
+  }
+})
+  )
 
 def bale_setwebhook(request):
   response = requests.post(API_URL+ "setWebhook?url=" + URL).json()
