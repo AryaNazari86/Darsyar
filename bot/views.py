@@ -11,13 +11,20 @@ MENU = {
         "keyboard": [
         [
           {
-            "text": "⁉️ سوال جدید"
+            "text": strings.MenuStrings.new_question
+          },
+        ],
+        [
+          {
+            "text": strings.MenuStrings.change_grade
+          },
+        ],
+        [
+          {
+            "text": strings.MenuStrings.channel
           },
           {
-            "text": "Blue"
-          },
-          {
-            "text": "Green"
+            "text": strings.MenuStrings.support
           }
         ]]
       }
@@ -32,12 +39,42 @@ def bot(request):
         update_grade(message)
         return HttpResponse('ok')
     
+    if message['message']['text'] == strings.MenuStrings.new_question:
+      new_question(message)
     if message['message']['text'] == '/start':
       start(message)
       return HttpResponse('ok')
-    
+    elif message['message']['text'] == strings.MenuStrings.change_grade:
+      new_grade(message)
+    elif message['message']['text'] == strings.MenuStrings.channel:
+      channel(message)
+    elif message['message']['text'] == strings.MenuStrings.support:
+      support(message)
     
   return HttpResponse('ok')
+
+def channel(message): 
+  send(
+    'sendMessage',
+    json.dumps({
+      "chat_id": message['message']['chat']['id'],
+      "text": strings.channel,
+      "reply_markup": MENU
+    })
+  )
+
+def support(message):
+  send(
+    'sendMessage',
+    json.dumps({
+      "chat_id": message['message']['chat']['id'],
+      "text": strings.support,
+      "reply_markup": MENU
+    })
+  )
+
+def new_question(message):
+  pass
 
 def update_grade(message): 
   user = User.objects.get(user_id=message['callback_query']['from']['id'])
@@ -61,7 +98,7 @@ def new_grade(message):
       "text": strings.new_grade,
       "reply_markup": {
         "inline_keyboard": [
-          [{"text": grade.name, "callback_data": str(grade.id)} for grade in Grade.objects.all()]
+          [{"text": grade.name, "callback_data": str(grade.id)}] for grade in Grade.objects.all()
         ]
       }
     })
@@ -78,7 +115,7 @@ def start(message):
       "text": strings.start,
       "reply_markup": {
         "inline_keyboard": [
-          [{"text": grade.name, "callback_data": str(grade.id)} for grade in Grade.objects.all()]
+          [{"text": grade.name, "callback_data": str(grade.id)}] for grade in Grade.objects.all()
         ]
       }
     })
