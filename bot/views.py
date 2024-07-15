@@ -2,10 +2,26 @@ import json
 import requests
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from .credintials import TOKEN, API_URL, URL
+from bot.credintials import TOKEN, API_URL, URL
 from user.models import User
 from content.models import Grade
 from bot import strings
+
+MENU = {
+        "keyboard": [
+        [
+          {
+            "text": "⁉️ سوال جدید"
+          },
+          {
+            "text": "Blue"
+          },
+          {
+            "text": "Green"
+          }
+        ]]
+      }
+
 @csrf_exempt
 def bot(request):
   if request.method == 'POST':
@@ -32,7 +48,8 @@ def update_grade(message):
     'sendMessage',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
-      "text": f"شما در {user.grade.name} هستید."
+      "text": f"شما در {user.grade.name} هستید.",
+      "reply_markup": MENU
     })
   )
 
@@ -67,6 +84,29 @@ def start(message):
     })
   )
 
+def menu(chat_id):
+  send(
+    'sendMessage',
+    json.dumps({
+      "chat_id": chat_id,
+      "text": strings.menu,
+      "reply_markup": {
+      "keyboard": [
+        [
+          {
+            "text": "Red"
+          },
+          {
+            "text": "Blue"
+          },
+          {
+            "text": "Green"
+          }
+        ]
+      ]
+    }
+    })
+  )
 def bale_setwebhook(request):
   response = requests.post(API_URL+ "setWebhook?url=" + URL).json()
   return HttpResponse(f"{response}")
