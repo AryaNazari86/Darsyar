@@ -4,12 +4,18 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .credintials import TOKEN, API_URL, URL
 from user.models import User
+from content.models import Grade
 from bot import strings
 @csrf_exempt
 def bot(request):
   if request.method == 'POST':
     message = json.loads(request.body.decode('utf-8'))
-
+    #print(json.dumps(message, indent=2))
+    
+    if message.get('callback_query'):
+        update_grade(message)
+        return HttpResponse('ok')
+    
     if message['message']['text'] == '/start':
       start(message)
       return HttpResponse('ok')
@@ -17,33 +23,48 @@ def bot(request):
     
   return HttpResponse('ok')
 
-def start(message):
-  if (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
-    user = User.objects.create(user_id=message['message']['from']['id'])
+def update_grade(message): 
+  user = User.objects.get(user_id=message['callback_query']['from']['id'])
+  user.grade = Grade.objects.get(id=int(message['callback_query']['data']))
+  user.save()
+
   send(
     'sendMessage',
     json.dumps({
-  "chat_id": 2130762647,
-  "text": "salalamamamamam",
-  "reply_markup": {
-    "inline_keyboard": [
-      [
-        {
-          "text": "Red",
-          "callback_data": "Red"
-        },
-        {
-          "text": "Blue",
-          "callback_data": "Blue"
-        },
-        {
-          "text": "Green",
-          "callback_data": "Green"
-        }
-      ]
-    ]
-  }
-})
+      "chat_id": message['callback_query']['message']['chat']['id'],
+      "text": f"شما در {user.grade.name} هستید."
+    })
+  )
+
+def new_grade(message):
+  send(
+    'sendMessage',
+    json.dumps({
+      "chat_id": message['message']['chat']['id'],
+      "text": strings.new_grade,
+      "reply_markup": {
+        "inline_keyboard": [
+          [{"text": grade.name, "callback_data": str(grade.id)} for grade in Grade.objects.all()]
+        ]
+      }
+    })
+  )
+
+def start(message):
+  if (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
+    user = User.objects.create(user_id=message['message']['from']['id'])
+
+  send(
+    'sendMessage',
+    json.dumps({
+      "chat_id": message['message']['chat']['id'],
+      "text": strings.start,
+      "reply_markup": {
+        "inline_keyboard": [
+          [{"text": grade.name, "callback_data": str(grade.id)} for grade in Grade.objects.all()]
+        ]
+      }
+    })
   )
 
 def bale_setwebhook(request):
