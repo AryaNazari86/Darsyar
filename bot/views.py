@@ -7,6 +7,20 @@ from user.models import User
 from content.models import Grade
 from bot import strings
 
+MENU = {
+        "keyboard": [
+        [
+          {
+            "text": "⁉️ سوال جدید"
+          },
+          {
+            "text": "Blue"
+          },
+          {
+            "text": "Green"
+          }
+        ]]
+      }
 
 @csrf_exempt
 def bot(request):
@@ -35,20 +49,7 @@ def update_grade(message):
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
       "text": f"شما در {user.grade.name} هستید.",
-      "reply_markup": {
-        "keyboard": [
-        [
-          {
-            "text": "⁉️ سوال جدید"
-          },
-          {
-            "text": "Blue"
-          },
-          {
-            "text": "Green"
-          }
-        ]]
-      }
+      "reply_markup": MENU
     })
   )
 
