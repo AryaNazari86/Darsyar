@@ -10,7 +10,7 @@ new_grade = "پایه تحصیلی خود را انتخاب کنید :"
 
 channel = "ble.ir/join/33meCDte4u"
 support = "@mhk488"
-
+new_question = "درس مورد نظر را انتخاب کنید"
 class MenuStrings():
     new_question="⁉️ سوال جدید"
     change_grade="⚙️ تغییر پایه تحصیلی"
