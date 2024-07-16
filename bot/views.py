@@ -150,7 +150,7 @@ def new_question(message):
     'sendMessage',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
-      "text": unit.questions.all()[q].text,
+      "text": strings.quesetion.format(unit, unit.questions.all()[q].text),
       "reply_markup": {
         "inline_keyboard": [
           [{
