@@ -243,7 +243,7 @@ def start(message):
   )
 
 def bale_setwebhook(request):
-  response = requests.post(request.build_absolute_uri('/')+ "setWebhook?url=" + URL).json()
+  response = requests.post(API_URL+ "setWebhook?url=" + request.build_absolute_uri('/')).json()
   return HttpResponse(f"{response}")
 
 def send(method, data):
