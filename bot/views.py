@@ -7,6 +7,7 @@ from user.models import User
 from content.models import Grade, Class, Unit, Question
 from bot import strings
 from random import randint
+from bot.AI import ai
 
 MENU = {
         "keyboard": [
@@ -32,7 +33,6 @@ MENU = {
 
 @csrf_exempt
 def bot(request):
-  print(request.build_absolute_uri)
   if request.method == 'POST':
     message = json.loads(request.body.decode('utf-8'))
     print(json.dumps(message, indent=2))
@@ -45,49 +45,58 @@ def bot(request):
           user = User.objects.get(user_id=int(message['message']['from']['id']))
           state = user.state > 0
     
-    try:
-      if state:
-        check_answer(message)
-            
-      
-      elif message.get('callback_query') and message['callback_query']['data'][0] == "1":
-          update_grade(message)
-      elif message.get('callback_query') and message['callback_query']['data'][0] == "2":
-          choose_unit(message)
-      elif message.get('callback_query') and message['callback_query']['data'][0] == "3":
-          new_question(message)
-      elif message.get('callback_query') and message['callback_query']['data'][0] == "4":
-          show_answer(message)
-      elif message.get('callback_query') and message['callback_query']['data'][0] == "5":
-          switch_state(message)
-      
-      elif message['message']['text'] == '/start':
-          start(message)
-      elif message['message']['text'] == strings.MenuStrings.new_question:
-          choose_class(message)
-      elif message['message']['text'] == strings.MenuStrings.change_grade:
-          new_grade(message)
-      elif message['message']['text'] == strings.MenuStrings.channel:
-          channel(message)
-      elif message['message']['text'] == strings.MenuStrings.support:
-          support(message)
-      else:
-          Sticker(message)
-    except:
-       Sticker(message)
+    
+    if state:
+      check_answer(message)
+          
+    
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "1":
+        update_grade(message)
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "2":
+        choose_unit(message)
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "3":
+        new_question(message)
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "4":
+        show_answer(message)
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "5":
+        switch_state(message)
+    
+    elif message['message']['text'] == '/start':
+        start(message)
+    elif message['message']['text'] == strings.MenuStrings.new_question:
+        choose_class(message)
+    elif message['message']['text'] == strings.MenuStrings.change_grade:
+        new_grade(message)
+    elif message['message']['text'] == strings.MenuStrings.channel:
+        channel(message)
+    elif message['message']['text'] == strings.MenuStrings.support:
+        support(message)
+    else:
+        Sticker(message)
+    
     
   return HttpResponse('ok')
 
 def check_answer(message):
   user = User.objects.get(user_id=int(message['message']['from']['id']))
   question = Question.objects.get(id=user.state)
-
-  user = User.objects.get(user_id = message['message']['from']['id'])
-  send(
+  
+  message_id = send(
     'sendMessage',
     json.dumps({
       "chat_id": message['message']['chat']['id'],
-      "text": f"your answer: {message['message']['text']}\ncorrect answer: {question.answer}",
+      "text": strings.wait,
+    })
+  )
+
+  req = ai(question.text, question.answer, message['message']['text'])
+
+  send(
+    'editMessageText',
+    json.dumps({
+      "chat_id": message['message']['chat']['id'],
+      "message_id": message_id,
+      "text": strings.ai_answer.format(req['grade'], req['feedback'], question.answer),
       "reply_markup": MENU
     })
   )
@@ -247,7 +256,7 @@ def bale_setwebhook(request):
   return HttpResponse(f"{response}")
 
 def send(method, data):
-  return requests.post(API_URL + method, data)
+  return requests.post(API_URL + method, data).json()['result']['message_id']
 
 def Sticker(message):
   print(message['message']['from']['id'])
