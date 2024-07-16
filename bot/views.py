@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from bot.credintials import TOKEN, API_URL, URL
 from user.models import User
-from content.models import Grade, Class, Question
+from content.models import Grade, Class, Unit, Question
 from bot import strings
 from random import randint
 
@@ -39,18 +39,22 @@ def bot(request):
     if message.get('callback_query') and message['callback_query']['data'][0] == "1":
         update_grade(message)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "2":
+        choose_unit(message)
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "3":
         new_question(message)
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "4":
+        show_answer(message)
     
     elif message['message']['text'] == '/start':
-      start(message)
+        start(message)
     elif message['message']['text'] == strings.MenuStrings.new_question:
-      choose_class(message)
+        choose_class(message)
     elif message['message']['text'] == strings.MenuStrings.change_grade:
-      new_grade(message)
+        new_grade(message)
     elif message['message']['text'] == strings.MenuStrings.channel:
-      channel(message)
+        channel(message)
     elif message['message']['text'] == strings.MenuStrings.support:
-      support(message)
+        support(message)
     
   return HttpResponse('ok')
 
@@ -74,16 +78,36 @@ def support(message):
     })
   )
 
-def new_question(message):
-  print(message['callback_query']['data'])
-  cls = Class.objects.all().get(id = int(message['callback_query']['data'][1:]))
-  q = randint(0, cls.questions.count()-1)
+def show_answer(message):
+  q = Question.objects.get(id=int(message['callback_query']['data'][1:]))
 
   send(
     'sendMessage',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
-      "text": cls.questions.all()[q].text,
+      "text": q.answer, 
+      "reply_markup": MENU
+    })
+  )
+
+def new_question(message):
+  print(message['callback_query']['data'])
+  unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
+  q = randint(0, unit.questions.count()-1)
+
+  send(
+    'sendMessage',
+    json.dumps({
+      "chat_id": message['callback_query']['message']['chat']['id'],
+      "text": unit.questions.all()[q].text,
+      "reply_markup": {
+        "inline_keyboard": [
+          [{
+            "text": strings.show_answer,
+            "callback_data": "4" + str(unit.questions.all()[q].id),
+          }]
+        ]
+      }
     })
   )
 
@@ -93,10 +117,25 @@ def choose_class(message):
     'sendMessage',
     json.dumps({
       "chat_id": message['message']['chat']['id'],
-      "text": strings.new_question,
+      "text": strings.choose_class,
       "reply_markup": {
         "inline_keyboard": [
           [{"text": cls.name, "callback_data": "2" + str(cls.id)}] for cls in user.grade.classes.all()
+        ]
+      }
+    })
+  )
+
+def choose_unit(message):
+  cls = Class.objects.all().get(id = int(message['callback_query']['data'][1:]))
+  send(
+    'sendMessage',
+    json.dumps({
+      "chat_id": message['callback_query']['message']['chat']['id'],
+      "text": strings.choose_unit,
+      "reply_markup": {
+        "inline_keyboard": [
+          [{"text": unit.name, "callback_data": "3" + str(unit.id)}] for unit in cls.units.all()
         ]
       }
     })

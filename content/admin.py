@@ -1,5 +1,8 @@
 from django.contrib import admin
-from content.models import Grade, Class, Question
+from content.models import Grade, Class, Unit, Question
+
+def name(obj): 
+    return str(obj)
 
 @admin.register(Grade)
 class GradeAdmin(admin.ModelAdmin):
@@ -10,6 +13,10 @@ class GradeAdmin(admin.ModelAdmin):
 class ClassAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'grade_number']
 
+@admin.register(Unit)
+class UnitAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'class_rel']
+
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'text', 'answer', 'class_rel']
+    list_display = ['id', name, 'unit']
