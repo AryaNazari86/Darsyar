@@ -79,10 +79,21 @@ WSGI_APPLICATION = 'Darsyar.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'darsyardb',
+        'USER': 'darsyaruser',
+        'PASSWORD': 'gK3=#]m,`W0Xr`.>£DH~6U9~z',
+        'HOST': '87.107.54.151',  # Replace with your PostgreSQL server's address if necessary
+        'PORT': '5432',          # Leave empty to use the default PostgreSQL port (usually 5432)
+    }
+}
+
+"""DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
+}"""
 
 
 # Password validation

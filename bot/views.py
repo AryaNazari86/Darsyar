@@ -40,9 +40,7 @@ def bot(request):
     
     state = 0
     if message.get('message'):
-      if (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
-        start(message)
-      else:
+      if (User.objects.filter(user_id=message['message']['from']['id']).exists()):
           user = User.objects.get(user_id=int(message['message']['from']['id']))
           state = user.state > 0
     
@@ -61,6 +59,8 @@ def bot(request):
         show_answer(message)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "5":
         switch_state(message)
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "6":
+        help(message['callback_query']['message']['chat']['id'])
     
     elif message['message']['text'] == '/start':
         start(message)
@@ -78,6 +78,16 @@ def bot(request):
     
   return HttpResponse('ok')
 
+def help(chat_id):
+   message_id = send(
+    'sendMessage',
+    json.dumps({
+      "chat_id": chat_id,
+      "text": strings.help,
+      "reply_markup": MENU,
+    })
+  )
+  
 def check_answer(message):
   user = User.objects.get(user_id=int(message['message']['from']['id']))
   question = Question.objects.get(id=user.state)
@@ -160,6 +170,7 @@ def new_question(message):
     'sendMessage',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
+      #"message_id": message['callback_query']['message']['message_id'],
       "text": strings.question.format(unit, unit.questions.all()[q].text),
       "reply_markup": {
         "inline_keyboard": [
@@ -170,6 +181,14 @@ def new_question(message):
           [{
             "text": strings.check_answer,
             "callback_data": "5" + str(unit.questions.all()[q].id),
+          }],
+          [{
+             "text": strings.next_question,
+            "callback_data": "3" + str(unit.id),
+          }],
+          [{
+             "text": strings.show_help,
+             "callback_data": "6",
           }]
         ]
       }
@@ -194,9 +213,10 @@ def choose_class(message):
 def choose_unit(message):
   cls = Class.objects.all().get(id = int(message['callback_query']['data'][1:]))
   send(
-    'sendMessage',
+    'editMessageText',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
+      "message_id": message['callback_query']['message']['message_id'],
       "text": strings.choose_unit.format(cls),
       "reply_markup": {
         "inline_keyboard": [
@@ -239,6 +259,7 @@ def start(message):
     user = User.objects.create(user_id=message['message']['from']['id'], first_name= message['message']['from']['first_name'], last_name=message['message']['from']['last_name'])
   else: 
     user = User.objects.get(user_id=message['message']['from']['id'])
+  
   send(
     'sendMessage',
     json.dumps({
