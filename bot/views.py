@@ -40,7 +40,9 @@ def bot(request):
     
     state = 0
     if message.get('message'):
-      if (User.objects.filter(user_id=message['message']['from']['id']).exists()):
+      if message['message']['text'] != 'text' and (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
+        start(message)
+      else:
           user = User.objects.get(user_id=int(message['message']['from']['id']))
           state = user.state > 0
     
