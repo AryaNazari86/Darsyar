@@ -7,6 +7,7 @@ from user.models import User
 from content.models import Grade, Class, Unit, Question
 from bot import strings
 from random import randint
+import persian
 from bot.AI import ai
 
 MENU = {
@@ -96,7 +97,7 @@ def check_answer(message):
     json.dumps({
       "chat_id": message['message']['chat']['id'],
       "message_id": message_id,
-      "text": strings.ai_answer.format(req['grade'], req['feedback'], question.answer),
+      "text": strings.ai_answer.format(persian.convert_en_numbers(req['grade']), req['feedback'], question.answer),
       "reply_markup": MENU
     })
   )
