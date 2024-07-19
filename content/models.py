@@ -38,6 +38,21 @@ class Question(models.Model):
         on_delete=models.CASCADE,
         null = True
     )
+    source = models.ForeignKey(
+        'content.Source',
+        on_delete=models.CASCADE,
+        related_name='questions',
+        null = True,
+    )
 
     def __str__(self): 
         return f"Question #{self.id}-#{self.unit.id}-#{self.unit.class_rel.id}"
+
+
+class Source(models.Model):
+    name = models.CharField(max_length = 100)
+    url = models.URLField(null=True)
+
+    def __str__(self):
+        return self.name
+

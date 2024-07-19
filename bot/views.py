@@ -7,6 +7,7 @@ from user.models import User
 from content.models import Grade, Class, Unit, Question
 from bot import strings
 from random import randint
+import random
 import persian
 from bot.AI import ai
 
@@ -15,6 +16,11 @@ MENU = {
         [
           {
             "text": strings.MenuStrings.new_question
+          },
+        ],
+        [
+          {
+            "text": strings.MenuStrings.new_test
           },
         ],
         [
@@ -53,10 +59,14 @@ def bot(request):
     
     elif message.get('callback_query') and message['callback_query']['data'][0] == "1":
         update_grade(message)
-    elif message.get('callback_query') and message['callback_query']['data'][0] == "2":
-        choose_unit(message)
-    elif message.get('callback_query') and message['callback_query']['data'][0] == "3":
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "a":
+        choose_unit(message, 0)
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "b":
+        choose_unit(message, 1)
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "c":
         new_question(message)
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "d":
+        new_test(message)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "4":
         show_answer(message)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "5":
@@ -67,7 +77,9 @@ def bot(request):
     elif message['message']['text'] == '/start':
         start(message)
     elif message['message']['text'] == strings.MenuStrings.new_question:
-        choose_class(message)
+        choose_class(message, 0)
+    elif message['message']['text'] == strings.MenuStrings.new_test:
+       choose_class(message, 1)
     elif message['message']['text'] == strings.MenuStrings.change_grade:
         new_grade(message)
     elif message['message']['text'] == strings.MenuStrings.channel:
@@ -163,6 +175,27 @@ def show_answer(message):
     })
   )
 
+def new_test(message):
+  print(message['callback_query']['data'])
+  unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
+  q = randint(0, unit.questions.count()-1)
+  test = random.sample(list(unit.questions.all()), 5)
+
+
+  text = ""
+  for i in test:
+    text += i.text
+    text += "\n"
+
+  send(
+    'sendMessage',
+    json.dumps({
+      "chat_id": message['callback_query']['message']['chat']['id'],
+      "text": text,
+      "reply_markup": MENU
+    })
+  )
+
 def new_question(message):
   print(message['callback_query']['data'])
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
@@ -197,8 +230,9 @@ def new_question(message):
     })
   )
 
-def choose_class(message):
+def choose_class(message, type):
   user = User.objects.get(user_id = message['message']['from']['id'])
+
   send(
     'sendMessage',
     json.dumps({
@@ -206,13 +240,13 @@ def choose_class(message):
       "text": strings.choose_class,
       "reply_markup": {
         "inline_keyboard": [
-          [{"text": cls.name, "callback_data": "2" + str(cls.id)}] for cls in user.grade.classes.all()
+          [{"text": cls.name, "callback_data": chr(ord('a') + type) + str(cls.id)}] for cls in user.grade.classes.all()
         ]
       }
     })
   )
 
-def choose_unit(message):
+def choose_unit(message, type):
   cls = Class.objects.all().get(id = int(message['callback_query']['data'][1:]))
   send(
     'editMessageText',
@@ -222,7 +256,7 @@ def choose_unit(message):
       "text": strings.choose_unit.format(cls),
       "reply_markup": {
         "inline_keyboard": [
-          [{"text": unit.name, "callback_data": "3" + str(unit.id)}] for unit in cls.units.all()
+          [{"text": unit.name, "callback_data": chr(ord('c') + type) + str(unit.id)}] for unit in cls.units.all()
         ]
       }
     })
