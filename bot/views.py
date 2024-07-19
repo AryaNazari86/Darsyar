@@ -3,7 +3,7 @@ import requests
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from bot.credintials import TOKEN, API_URL, URL
-from user.models import User
+from user.models import User, UserQuestionRel
 from content.models import Grade, Class, Unit, Question
 from bot import strings
 from random import randint
@@ -26,6 +26,9 @@ MENU = {
         [
           {
             "text": strings.MenuStrings.change_grade
+          },
+          {
+            "text": strings.MenuStrings.show_score
           },
         ],
         [
@@ -80,6 +83,8 @@ def bot(request):
         choose_class(message, 0)
     elif message['message']['text'] == strings.MenuStrings.new_test:
        choose_class(message, 1)
+    elif message['message']['text'] == strings.MenuStrings.show_score:
+        show_score(message)
     elif message['message']['text'] == strings.MenuStrings.change_grade:
         new_grade(message)
     elif message['message']['text'] == strings.MenuStrings.channel:
@@ -102,6 +107,18 @@ def help(chat_id):
     })
   )
   
+def show_score(message):
+  user = User.objects.get(user_id=int(message['message']['from']['id']))
+  
+  send(
+     'sendMessage',
+     json.dumps({
+        "chat_id": message['message']['chat']['id'],
+        "text": strings.score.format(persian.convert_en_numbers(user.score())),
+        "reply_markup": MENU
+     })
+  )
+
 def check_answer(message):
   user = User.objects.get(user_id=int(message['message']['from']['id']))
   question = Question.objects.get(id=user.state)
@@ -116,6 +133,12 @@ def check_answer(message):
 
   req = ai(question.text, question.answer, message['message']['text'])
 
+  if not UserQuestionRel.objects.filter(user = user, question = question).exists():
+      rel = UserQuestionRel.objects.create(user=user, question=question, point = req['grade'])
+      print(rel)
+      print("=======")
+      rel.save()
+  
   send(
     'editMessageText',
     json.dumps({
@@ -219,7 +242,7 @@ def new_question(message):
           }],
           [{
              "text": strings.next_question,
-            "callback_data": "3" + str(unit.id),
+            "callback_data": "c" + str(unit.id),
           }],
           [{
              "text": strings.show_help,
@@ -323,7 +346,7 @@ def Sticker(message):
       'sendAnimation',
       {
           "chat_id": message['message']['from']['id'],
-          "animation": "1409599563:-356479065845784830:1:1a9ec6f7595b78a8"
+          "animation": "1409599563:-356479065845784830:1:1a9ec6f7595b78a8",
       }
     )
   except:
@@ -331,6 +354,6 @@ def Sticker(message):
       'sendAnimation',
       {
           "chat_id": message['callback_query']['message']['from']['id'],
-          "animation": "1409599563:-356479065845784830:1:1a9ec6f7595b78a8"
+          "animation": "1409599563:-356479065845784830:1:1a9ec6f7595b78a8",
       }
     )

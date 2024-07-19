@@ -13,7 +13,7 @@ class User(models.Model):
 
     def score(self):
         sc = 0
-        for i in self.solved_questions:
+        for i in self.solved_questions.all():
             sc += i.point
         
         return sc
