@@ -9,7 +9,6 @@ from random import randint
 import random
 from bot.views import *
 
-@csrf_exempt
 def get_pdf(request):
   chat_id = request.GET.get("chatid")
   unit_id = request.GET.get("unitid")
