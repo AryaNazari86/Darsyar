@@ -1,6 +1,7 @@
 import json
 from django.http import FileResponse
 from django.views.decorators.csrf import csrf_exempt
+from bot.views import send
 from content.models import Unit
 from django.template import loader
 from persiantools.jdatetime import JalaliDateTime
