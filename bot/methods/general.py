@@ -1,7 +1,7 @@
 import json
 from bot import strings
-from ..views import send, MENU
 from user.models import User
+from bot.views import *
 
 def help(chat_id):
    message_id = send(
