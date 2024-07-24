@@ -8,4 +8,4 @@ RUN pip install --trusted-host mirrors.aliyun.com -i http://mirrors.aliyun.com/p
 
 COPY . .
 
-CMD [ "python", "./manage.py", "runserver 0.0.0.0:6969"]
+CMD [ "python", "./manage.py", "runserver", "0.0.0.0:6969"]
