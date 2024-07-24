@@ -15,6 +15,9 @@ import random
 import persian
 from bot.AI import ai
 
+from methods.general import *
+
+
 MENU = {
         "keyboard": [
         [
@@ -125,16 +128,6 @@ def get_pdf(request):
   })
   response = FileResponse(open(filename, 'rb'))
   return response
-
-def help(chat_id):
-   message_id = send(
-    'sendMessage',
-    json.dumps({
-      "chat_id": chat_id,
-      "text": strings.help,
-      "reply_markup": MENU,
-    })
-  )
   
 def show_score(message):
   user = User.objects.get(user_id=int(message['message']['from']['id']))
@@ -192,26 +185,6 @@ def switch_state(message):
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
       "text": strings.send_answer,
-    })
-  )
-
-def channel(message): 
-  send(
-    'sendMessage',
-    json.dumps({
-      "chat_id": message['message']['chat']['id'],
-      "text": strings.channel,
-      "reply_markup": MENU
-    })
-  )
-
-def support(message):
-  send(
-    'sendMessage',
-    json.dumps({
-      "chat_id": message['message']['chat']['id'],
-      "text": strings.support,
-      "reply_markup": MENU
     })
   )
 
@@ -367,22 +340,3 @@ def bale_setwebhook(request):
 
 def send(method, data):
   return requests.post(API_URL + method, data).json()['result']['message_id']
-
-def Sticker(message):
-  print(message['message']['from']['id'])
-  try:
-     send(
-      'sendAnimation',
-      {
-          "chat_id": message['message']['from']['id'],
-          "animation": "1409599563:-356479065845784830:1:1a9ec6f7595b78a8",
-      }
-    )
-  except:
-     send(
-      'sendAnimation',
-      {
-          "chat_id": message['callback_query']['message']['from']['id'],
-          "animation": "1409599563:-356479065845784830:1:1a9ec6f7595b78a8",
-      }
-    )
