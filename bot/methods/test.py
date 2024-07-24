@@ -3,7 +3,9 @@ from django.http import FileResponse
 from django.views.decorators.csrf import csrf_exempt
 from content.models import Unit
 from django.template import loader
+from persiantools.jdatetime import JalaliDateTime
 import pdfkit
+import pytz
 import tempfile
 from random import randint
 import random
@@ -26,7 +28,7 @@ def get_pdf(request):
 
   filename = tempfile.NamedTemporaryFile(delete=True, suffix=".pdf").name
   
-  html_str = loader.render_to_string('exam.html', {"questions": random_questions_objects})
+  html_str = loader.render_to_string('exam.html', {"questions": random_questions_objects, "unit": unit.name, "date": JalaliDateTime.now(pytz.utc).strftime("%Y/%m/%d")})
   pdfkit.from_string(html_str, filename, options={
      "encoding": "UTF-8"
   })

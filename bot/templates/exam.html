@@ -7,7 +7,7 @@
     <style>
         @font-face {
             font-family: Vazirmatn;
-            src: url('{% static 'fonts/Vazirmatn-Light.ttf' %}') format('trutype');
+            src: url('{% static ' fonts/Vazirmatn-Light.ttf' %}') format('trutype');
             font-weight: 300;
             font-style: normal;
             font-display: swap;
@@ -15,7 +15,7 @@
 
         @font-face {
             font-family: Vazirmatn;
-            src: url('{% static 'fonts/Vazirmatn-Regular.ttf' %}') format('trutype');
+            src: url('{% static ' fonts/Vazirmatn-Regular.ttf' %}') format('trutype');
             font-weight: 400;
             font-style: normal;
             font-display: swap;
@@ -23,32 +23,119 @@
 
         @font-face {
             font-family: Vazirmatn;
-            src: url('{% static 'fonts/Vazirmatn-Bold.ttf' %}') format('trutype');
+            src: url('{% static ' fonts/Vazirmatn-Bold.ttf' %}') format('trutype');
             font-weight: 700;
             font-style: normal;
             font-display: swap;
         }
     </style>
     <style>
-        body{
+        body {
             direction: rtl;
         }
-        #content {
-            margin: 20px 50px;
+
+        .content {
+            margin: 20px 50px 20px 10px;
         }
-        p {
+
+        .question,
+        .answer {
             font-family: Vazirmatn;
-            font-weight: 700;   
-            font-size: 25;
+            font-weight: 700;
+            font-size: 30px;
+            margin-bottom: 150px;
+        }
+
+        .question .number {
+            color: #220b35;
+            font-size: 30px;
+            width: 45px;
+            height: 45px;
+            display: inline-block;
+            border-radius: 15px;
+            text-align: center;
+            background-color: #88828d;
+
+        }
+
+        .question .source {
+            font-size: 24px;
+            font-weight: 300;
+            margin-right: 10px;
+            color: #220b36;
+        }
+
+        .answer .number {
+            color: #ff6d00;
+            font-size: 30px;
+            width: 45px;
+            height: 45px;
+            display: inline-block;
+            border-radius: 15px;
+            text-align: center;
+            background-color: #ffb133;
+
+        }
+
+        .answer .source {
+            font-size: 24px;
+            font-weight: 300;
+            margin-right: 10px;
+            color: #ff6d00;
+        }
+
+        #unit {
+            position: absolute;
+            top: 170px;
+            font-family: Vazirmatn;
+            font-weight: 700;
+            right: 80px;
+            font-size: 26px;
+            color: #220b36;
+        }
+
+        #date {
+            position: absolute;
+            top: 170px;
+            font-family: Vazirmatn;
+            font-weight: 700;
+            right: 430px;
+            font-size: 26px;
+            color: #220b36;
+        }
+
+        .pagebreak {
+            clear: both;
+            page-break-after: always;
         }
     </style>
 </head>
 
 <body>
-    <img src="https://uploadkon.ir/uploads/b2f524_24header.png" />
-    <div id="content">
-        {%for q in questions%} <p>{{convert_en_numbers forloop.counter }}{{q.text}}<span>({{q.sourceText}})</span></p> {% endfor %}
-        
+    <p id="unit">{{unit}}</p>
+    <p id="date">{{date|convert_en_numbers}}</p>
+    <!-- Questions -->
+    <img src="https://uploadkon.ir/uploads/b20f24_24header-1.png" width="1200" />
+    <div id="questions" class="content">
+        {%for q in questions%} <div class="question">
+            <div class="number">{{forloop.counter|convert_en_numbers }}</div>
+            {{q.text}}
+
+        </div>
+        {% endfor %}
+    </div>
+    <div class="pagebreak"> </div>
+
+    <!-- Answers -->
+    <img src="https://uploadkon.ir/uploads/37bc24_24header-2.png" width="1200" />
+    <div class="content">
+        {%for q in questions%} <div class="answer">
+            <div class="number">{{forloop.counter|convert_en_numbers }}</div>
+            {{q.answer}}
+            <span class="source">({{q.sourceText}})
+            </span>
+        </div>
+        {% endfor %}
     </div>
 
 </body>

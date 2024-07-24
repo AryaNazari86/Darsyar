@@ -70,6 +70,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+                
+        'libraries':{
+            'custom_tags': 'bot.templatetags.custom_tags',
+            
+            }
         },
     },
 ]
@@ -86,7 +91,7 @@ DATABASES = {
         'NAME': 'darsyardb',
         'USER': 'darsyaruser',
         'PASSWORD': 'gK3=#]m,`W0Xr`.>£DH~6U9~z',
-        'HOST': '87.107.54.151',  # Replace with your PostgreSQL server's address if necessary
+        'HOST': '87.248.130.25',  # Replace with your PostgreSQL server's address if necessary
         'PORT': '5432',          # Leave empty to use the default PostgreSQL port (usually 5432)
     }
 }
