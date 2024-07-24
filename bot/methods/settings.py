@@ -4,6 +4,7 @@ from content.models import Grade, Class
 from bot import strings
 import persian
 from bot.views import *
+from user.models import User
 
 def show_score(message):
   user = User.objects.get(user_id=int(message['message']['from']['id']))
