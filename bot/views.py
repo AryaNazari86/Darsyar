@@ -1,11 +1,15 @@
 import json
+import os
 import requests
-from django.http import HttpResponse
+from django.http import FileResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from bot.credintials import TOKEN, API_URL, URL
 from user.models import User, UserQuestionRel
 from content.models import Grade, Class, Unit, Question
+from django.template import loader
 from bot import strings
+import pdfkit
+import tempfile
 from random import randint
 import random
 import persian
@@ -96,6 +100,31 @@ def bot(request):
     
     
   return HttpResponse('ok')
+
+@csrf_exempt
+def get_pdf(request):
+  chat_id = request.GET.get("chatid")
+  unit_id = request.GET.get("unitid")
+  unit = Unit.objects.all().get(id = int(unit_id))
+  questions = list(unit.questions.all())
+  random_questions = random.sample(questions, 5)
+  random_questions_objects = [
+    {
+        'text': question.text,
+        'answer': question.answer,
+        'sourceText': question.source.name if question.source else None
+    }
+    for question in random_questions
+  ]
+
+  filename = tempfile.NamedTemporaryFile(delete=True, suffix=".pdf").name
+  
+  html_str = loader.render_to_string('exam.html', {"questions": random_questions_objects})
+  pdfkit.from_string(html_str, filename, options={
+     "encoding": "UTF-8"
+  })
+  response = FileResponse(open(filename, 'rb'))
+  return response
 
 def help(chat_id):
    message_id = send(
