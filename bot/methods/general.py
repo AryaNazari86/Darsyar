@@ -1,6 +1,5 @@
 import json
 from bot import strings
-from bot.views import MENU, send
 from user.models import User
 from bot.views import *
 
