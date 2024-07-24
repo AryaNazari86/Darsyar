@@ -3,7 +3,32 @@
 
 <head>
     <style>
-        #content{
+        @font-face {
+            font-family: Vazirmatn;
+            src: url('fonts/webfonts/Vazirmatn-Light.woff2') format('woff2');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: Vazirmatn;
+            src: url('fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: Vazirmatn;
+            src: url('fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
+    <style>
+        #content {
             margin: 20px 50px;
         }
     </style>
@@ -12,7 +37,8 @@
 <body>
     <img src="https://uploadkon.ir/uploads/b2f524_24header.png" />
     <div id="content">
-        {%for q in questions%} <p>{{q.text}}</p> <p>({{q.sourceText}})</p> {% endfor %}
+        {%for q in questions%} <p>{{q.text}}</p>
+        <p>({{q.sourceText}})</p> {% endfor %}
         {%for q in questions%} <p>{{a.answer}}</p> {% endfor %}
     </div>
 
