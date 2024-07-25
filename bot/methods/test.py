@@ -11,9 +11,9 @@ from random import randint
 import random
 from .api import *
 
-def get_pdf(request):
-  unit_id = request.GET.get("unitid")
-  unit = Unit.objects.all().get(id = int(unit_id))
+def get_pdf(request, unitid):
+  print(request)
+  unit = Unit.objects.all().get(id = int(unitid))
   questions = list(unit.questions.all())
   random_questions = random.sample(questions, 5)
   random_questions_objects = [
@@ -43,13 +43,13 @@ def new_test(message, url):
   test = random.sample(list(unit.questions.all()), 5)
 
 
-  print(f"{url}getpdf?unitid={unit.id}")
+  print(f"{url}getpdf/{unit.id}/exam.pdf")
 
   send(
     'sendDocument',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
-      "document": f"{url}getpdf?unitid={unit.id}",
+      "document": f"{url}getpdf/{unit.id}/exam.pdf",
       "reply_markup": MENU
     })
   )
