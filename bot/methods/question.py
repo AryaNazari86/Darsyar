@@ -5,7 +5,7 @@ from bot import strings
 from random import randint
 import persian
 from bot.AI import ai
-from bot.views import *
+from .api import *
 
 def check_answer(message):
   user = User.objects.get(user_id=int(message['message']['from']['id']))

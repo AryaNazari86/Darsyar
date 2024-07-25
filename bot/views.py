@@ -20,35 +20,6 @@ from .methods.test import *
 from .methods.question import *
 from.methods.settings import *
 
-MENU = {
-        "keyboard": [
-        [
-          {
-            "text": strings.MenuStrings.new_question
-          },
-        ],
-        [
-          {
-            "text": strings.MenuStrings.new_test
-          },
-        ],
-        [
-          {
-            "text": strings.MenuStrings.change_grade
-          },
-          {
-            "text": strings.MenuStrings.show_score
-          },
-        ],
-        [
-          {
-            "text": strings.MenuStrings.channel
-          },
-          {
-            "text": strings.MenuStrings.support
-          }
-        ]]
-      }
 
 @csrf_exempt
 def bot(request):
@@ -78,7 +49,7 @@ def bot(request):
     elif message.get('callback_query') and message['callback_query']['data'][0] == "c":
         new_question(message)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "d":
-        new_test(message)
+        new_test(message, request.build_absolute_uri('/'))
     elif message.get('callback_query') and message['callback_query']['data'][0] == "4":
         show_answer(message)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "5":
@@ -110,5 +81,3 @@ def bale_setwebhook(request):
   response = requests.post(API_URL+ "setWebhook?url=" + request.build_absolute_uri('/')).json()
   return HttpResponse(f"{response}")
 
-def send(method, data):
-  return requests.post(API_URL + method, data).json()['result']['message_id']

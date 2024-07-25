@@ -9,10 +9,9 @@ import pytz
 import tempfile
 from random import randint
 import random
-from bot.views import *
+from .api import *
 
 def get_pdf(request):
-  chat_id = request.GET.get("chatid")
   unit_id = request.GET.get("unitid")
   unit = Unit.objects.all().get(id = int(unit_id))
   questions = list(unit.questions.all())
@@ -37,23 +36,20 @@ def get_pdf(request):
   
 
 
-def new_test(message):
+def new_test(message, url):
   print(message['callback_query']['data'])
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
   q = randint(0, unit.questions.count()-1)
   test = random.sample(list(unit.questions.all()), 5)
 
 
-  text = ""
-  for i in test:
-    text += i.text
-    text += "\n"
+  print(f"{url}getpdf?unitid={unit.id}")
 
   send(
-    'sendMessage',
+    'sendDocument',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
-      "text": text,
+      "document": f"{url}getpdf?unitid={unit.id}",
       "reply_markup": MENU
     })
   )

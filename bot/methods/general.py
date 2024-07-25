@@ -1,7 +1,8 @@
 import json
 from bot import strings
 from user.models import User
-from bot.views import *
+from .api import *
+from content.models import Grade, Class, Unit, Question
 
 def help(chat_id):
    message_id = send(
