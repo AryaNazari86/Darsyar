@@ -5,7 +5,7 @@ from django.http import FileResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from bot.credintials import TOKEN, API_URL, URL
 from user.models import User, UserQuestionRel
-from content.models import Grade, Class, Unit, Question
+from content.models import Grade, Class, Unit, Question, Source
 from django.template import loader
 from bot import strings
 import pdfkit
@@ -18,18 +18,17 @@ from django.shortcuts import render
 from .methods.general import *
 from .methods.test import *
 from .methods.question import *
-from.methods.settings import *
+from .methods.settings import *
+from .scraper import scrape
 
-
-def test(request):
-   random_questions_objects = [
-    {
-        'text': "شمسنتیبمنسیتبم س",
-        'answer': "سلام حوبی حوبی خوبی",
-        'sourceText': "asda",
-    }
-  ]
-   return render(request, 'exam.html', {"questions": random_questions_objects})
+def scraper(request):
+    #grade = Grade.objects.filter(id = request.GET.get('grade'))
+    
+    cls = Class.objects.create(name = request.GET.get('class'), grade_number = request.GET.get('grade_number'))
+    #cls.grades.add(grade)
+    source = Source.objects.get(id = 1)
+    number = scrape(cls, source, request.GET.get('link'))
+    return HttpResponse(f"{number} questions scraped succesfully!")
    
 @csrf_exempt
 def bot(request):
