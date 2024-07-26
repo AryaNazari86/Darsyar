@@ -8,7 +8,6 @@ from user.models import User, UserQuestionRel
 from content.models import Grade, Class, Unit, Question, Source
 from django.template import loader
 from bot import strings
-import pdfkit
 import tempfile
 from random import randint
 import random

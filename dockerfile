@@ -1,8 +1,6 @@
-FROM docker.arvancloud.ir/python:3.10.12
+FROM docker.arvancloud.ir/python:3.10.12-alpine
 
-apk add weasyprint
-
-apk add py3-pip gcc musl-dev python3-dev pango zlib-dev jpeg-dev openjpeg-dev g++ libffi-dev harfbuzz-subset
+RUN apk add weasyprint
 
 WORKDIR /var/www/Darsyar/app
 
