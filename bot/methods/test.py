@@ -1,10 +1,11 @@
 import json
 from django.http import FileResponse
 from django.views.decorators.csrf import csrf_exempt
+from weasyprint import HTML
 from content.models import Unit
 from django.template import loader
 from persiantools.jdatetime import JalaliDateTime
-import pdfkit
+from asgiref.sync import async_to_sync
 import pytz
 import tempfile
 from random import randint
@@ -18,18 +19,17 @@ def get_pdf(request, unitid):
   random_questions_objects = [
     {
         'text': question.text,
-        'answer': question.answer,
+        'answer': question.answer, 
         'sourceText': question.source.name if question.source else None
     }
     for question in random_questions
   ]
 
   filename = tempfile.NamedTemporaryFile(delete=True, suffix=".pdf").name
-  
   html_str = loader.render_to_string('exam.html', {"questions": random_questions_objects, "unit": unit.name, "date": JalaliDateTime.now(pytz.utc).strftime("%Y/%m/%d")})
-  pdfkit.from_string(html_str, filename, options={
-     "encoding": "UTF-8"
-  })
+  
+  HTML(string=html_str).write_pdf(filename)
+
   response = FileResponse(open(filename, 'rb'))
   return response
   
