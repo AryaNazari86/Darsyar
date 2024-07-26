@@ -6,3 +6,4 @@ persian
 psycopg2-binary
 WeasyPrint
 persiantools
+bs4
