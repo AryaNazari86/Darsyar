@@ -12,7 +12,6 @@ import random
 from .api import *
 
 def get_pdf(request, unitid):
-  print(request)
   unit = Unit.objects.all().get(id = int(unitid))
   questions = list(unit.questions.all())
   random_questions = random.sample(questions, 5)
@@ -37,12 +36,15 @@ def get_pdf(request, unitid):
 
 
 def new_test(message, url):
-  print(message['callback_query']['data'])
+  #print(message['callback_query']['data'])
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
   q = randint(0, unit.questions.count()-1)
   test = random.sample(list(unit.questions.all()), 5)
 
 
+  
+  
+  url = url.replace('http', 'https')
   print(f"{url}getpdf/{unit.id}/exam.pdf")
 
   send(

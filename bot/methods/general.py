@@ -54,7 +54,6 @@ def start(message):
   )
 
 def Sticker(message):
-  print(message['message']['from']['id'])
   try:
      send(
       'sendAnimation',

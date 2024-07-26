@@ -14,18 +14,28 @@ from random import randint
 import random
 import persian
 from bot.AI import ai
-
+from django.shortcuts import render
 from .methods.general import *
 from .methods.test import *
 from .methods.question import *
 from.methods.settings import *
 
 
+def test(request):
+   random_questions_objects = [
+    {
+        'text': "شمسنتیبمنسیتبم س",
+        'answer': "سلام حوبی حوبی خوبی",
+        'sourceText': "asda",
+    }
+  ]
+   return render(request, 'exam.html', {"questions": random_questions_objects})
+   
 @csrf_exempt
 def bot(request):
   if request.method == 'POST':
     message = json.loads(request.body.decode('utf-8'))
-    print(json.dumps(message, indent=2))
+    #print(json.dumps(message, indent=2))
     
     state = 0
     if message.get('message'):

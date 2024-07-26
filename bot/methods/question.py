@@ -23,8 +23,6 @@ def check_answer(message):
 
   if not UserQuestionRel.objects.filter(user = user, question = question).exists():
       rel = UserQuestionRel.objects.create(user=user, question=question, point = req['grade'])
-      print(rel)
-      print("=======")
       rel.save()
   
   send(
@@ -41,7 +39,7 @@ def check_answer(message):
   user.save()
 
 def switch_state(message):
-  print(message['callback_query']['from']['id'])
+  #print(message['callback_query']['from']['id'])
   user = User.objects.get(user_id=int(message['callback_query']['from']['id']))
   user.state = int(message['callback_query']['data'][1:])
   user.save()
@@ -67,7 +65,7 @@ def show_answer(message):
   )
 
 def new_question(message):
-  print(message['callback_query']['data'])
+  #print(message['callback_query']['data'])
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
   q = randint(0, unit.questions.count()-1)
 
