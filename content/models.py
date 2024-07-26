@@ -15,6 +15,12 @@ class Class(models.Model):
     )
     grade_number = models.IntegerField()
 
+    def count_questions(self):
+        counter = 0
+        for unit in self.units.all():
+            counter += unit.questions.count()
+        return counter
+
     def __str__(self):
         return self.name
 

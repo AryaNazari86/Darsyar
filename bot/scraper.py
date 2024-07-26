@@ -8,7 +8,7 @@ def scrape(cls, source, link):
     counter = 0
     req = requests.get(link)
     req = BeautifulSoup(req.text, 'html.parser')
-    req = req.select_one('#text-3 > main > article:nth-child(1) > div > div.accessibility-plugin-ac.entry-content.post > ol')
+    req = req.find(attrs={'class': 'accessibility-plugin-ac entry-content post'})
     req = req.find_all('a')
 
     for UN in range(1, len(req) + 1):
@@ -25,11 +25,13 @@ def scrape(cls, source, link):
         
         
         for question in soup:
-            if question.text.find('پاسخ:') == -1:
+            if question.text.find('پاسخ:') == -1 and question.text.find('جواب:'):
                 continue
+
+            splitting_text = "پاسخ:" if question.text.find('پاسخ:') != -1 else "جواب:"
                 
             counter += 1
-            question = question.text.split('پاسخ:')
+            question = question.text.split(splitting_text)
             temp = question[0].split('-')
             if len(temp[0]) >= 5:
                 temp = question[0].split('_')

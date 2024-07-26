@@ -37,12 +37,16 @@ def choose_class(message, type):
 
 def choose_unit(message, type):
   cls = Class.objects.all().get(id = int(message['callback_query']['data'][1:]))
+  counter = 0
+  for unit in cls.units.all():
+    counter += unit.questions.count()
+
   send(
     'editMessageText',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
       "message_id": message['callback_query']['message']['message_id'],
-      "text": strings.choose_unit.format(cls),
+      "text": strings.choose_unit.format(cls, persian.convert_en_numbers(counter)),
       "reply_markup": {
         "inline_keyboard": [
           [{"text": unit.name, "callback_data": chr(ord('c') + type) + str(unit.id)}] for unit in cls.units.all()
@@ -73,7 +77,7 @@ def new_grade(message):
       "text": strings.new_grade,
       "reply_markup": {
         "inline_keyboard": [
-          [{"text": grade.name, "callback_data": "1"+str(grade.id)}] for grade in Grade.objects.all()
+          [{"text": grade.name, "callback_data": "1"+str(grade.id)}] for grade in Grade.objects.order_by("grade_number")
         ]
       }
     })
