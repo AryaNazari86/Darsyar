@@ -16,27 +16,32 @@ def scrape(cls, source, link):
         soup = BeautifulSoup(result.text, 'html.parser')
 
         soup = soup.select_one('#text-3 > main > article:nth-child(1) > div > div.accessibility-plugin-ac.entry-content.post')
-        name = soup.find(attrs={'class': 'center app-off more-off'})
+        try:
+            name = soup.find(attrs={'class': 'center app-off more-off'})
+        except:
+            continue
         soup = soup.find_all('p')
         name = name.find_all('p')[-1].find('strong').text
         
         unit = Unit.objects.create(name = name, class_rel = cls)
         unit.save()
         
-        
+        counter2 = 0
         for question in soup:
-            if question.text.find('پاسخ:') == -1 and question.text.find('جواب:'):
+            if question.text.find('پاسخ:') == -1 and question.text.find('جواب:') == -1:
                 continue
 
             splitting_text = "پاسخ:" if question.text.find('پاسخ:') != -1 else "جواب:"
                 
-            counter += 1
+            counter2 += 1
             question = question.text.split(splitting_text)
+        
             temp = question[0].split('-')
             if len(temp[0]) >= 5:
                 temp = question[0].split('_')
+            
             question[0] = ''
-            for i in range(1, len(temp)):
+            for i in range(1 if len(temp) > 1 else 0, len(temp)):
                 question[0] += temp[i]
 
             question = Question.objects.create(
@@ -48,6 +53,7 @@ def scrape(cls, source, link):
             question.save()
 
         
+        counter += counter2 
         print(f"unit {name} completed!")
 
 
