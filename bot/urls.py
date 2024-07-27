@@ -5,5 +5,6 @@ urlpatterns = [
     path('', views.bot, name='bot'),
     path('bale_setwebhook/', views.bale_setwebhook, name='bale_setwebhook'),
     path('getpdf/<int:unitid>/exam.pdf', views.get_pdf, name='get_pdf'),
+    path('gethtml/<int:unitid>', views.get_html, name='get_html'),
     path('scraper/', views.scraper, name="scraper"),
 ]
