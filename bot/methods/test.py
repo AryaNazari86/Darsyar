@@ -1,5 +1,5 @@
 import json
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from weasyprint import HTML
 from content.models import Unit
@@ -28,10 +28,10 @@ def get_html(request, unitid):
   return render(request, 'exam.html', {"questions": random_questions_objects, "unit": unit.name, "date": JalaliDateTime.now(pytz.utc).strftime("%Y/%m/%d")})
   
 def get_pdf(request, unitid):
-  filename = tempfile.NamedTemporaryFile(delete=True, suffix=".pdf").name
-  HTML(url=request.build_absolute_uri(f'/gethtml/{unitid}')).write_pdf(filename)
-
-  response = FileResponse(open(filename, 'rb'))
+  file = tempfile.NamedTemporaryFile(delete=True, suffix=".pdf")
+  HTML(url=request.build_absolute_uri(f'/gethtml/{unitid}')).write_pdf(file.name)
+  response = HttpResponse(file, content_type='application/pdf')
+  response['Content-Disposition'] = 'attachment; filename="' + file.name + '"'
   return response
 
 def new_test(message, url):
