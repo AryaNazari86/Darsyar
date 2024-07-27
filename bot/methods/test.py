@@ -27,30 +27,22 @@ def get_html(request, unitid):
   ]
   return render(request, 'exam.html', {"questions": random_questions_objects, "unit": unit.name, "date": JalaliDateTime.now(pytz.utc).strftime("%Y/%m/%d")})
   
-def get_pdf(request, unitid):
-  file = tempfile.NamedTemporaryFile(delete=True, suffix=".pdf")
-  HTML(url=request.build_absolute_uri(f'/gethtml/{unitid}')).write_pdf(file.name)
-  response = HttpResponse(file, content_type='application/pdf')
-  response['Content-Disposition'] = 'attachment; filename="' + file.name + '"'
-  return response
 
 def new_test(message, url):
   #print(message['callback_query']['data'])
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
-  q = randint(0, unit.questions.count()-1)
-  test = random.sample(list(unit.questions.all()), 5)
+  file = tempfile.NamedTemporaryFile(delete=True, suffix=".pdf")
+  HTML(url=f'{url}gethtml/{unit.id}').write_pdf(file.name)
+  upload_url = "https://tmpfiles.org/api/v1/upload"
+  files = {'file': file}
+  response = requests.post(upload_url, files=files)
 
-
-  
-  
-  url = url.replace('http', 'https')
-  print(f"{url}getpdf/{unit.id}/exam.pdf")
-
+  print(response.json()['data']['url'])
   send(
     'sendDocument',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
-      "document": f"{url}getpdf/{unit.id}/exam.pdf",
+      "document": response.json()['data']['url'],
       "reply_markup": MENU
     })
   )
