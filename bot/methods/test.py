@@ -39,6 +39,7 @@ def new_test(message, url):
   ]
   response = requests.post(upload_url, files=files)
   fileurl = response.json()['data']['url'].replace("https://tmpfiles.org/", "https://tmpfiles.org/dl")
+  print(fileurl)
   send(
     'sendDocument',
     json.dumps({
