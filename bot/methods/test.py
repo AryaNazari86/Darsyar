@@ -31,14 +31,14 @@ def get_html(request, unitid):
 def new_test(message, url):
   #print(message['callback_query']['data'])
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
-  file = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
+  file = tempfile.NamedTemporaryFile(delete=True, suffix=".pdf")
   HTML(url=f'{url}gethtml/{unit.id}').write_pdf(file.name)
   upload_url = "https://tmpfiles.org/api/v1/upload"
   files=[
     ('file',('exam.pdf',open(file.name,'rb')))
   ]
   response = requests.post(upload_url, files=files)
-  fileurl = response.json()['data']['url'].replace("https://tmpfiles.org/", "https://tmpfiles.org/dl")
+  fileurl = response.json()['data']['url'].replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/")
   print(fileurl)
   send(
     'sendDocument',
