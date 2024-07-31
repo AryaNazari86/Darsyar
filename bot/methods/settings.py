@@ -64,7 +64,7 @@ def update_grade(message):
     'sendMessage',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
-      "text": f"شما در {user.grade.name} هستید.",
+      "text": strings.confirm_grade.format(user.grade.name),
       "reply_markup": MENU
     })
   )
