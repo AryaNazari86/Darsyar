@@ -45,6 +45,7 @@ def new_test(message, url):
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
       "document": fileurl,
-      "reply_markup": MENU
+      "reply_markup": MENU,
+      "caption": strings.test_caption.format(unit.class_rel.grades[0].name, unit.class_rel.name, unit.name),
     })
   )
