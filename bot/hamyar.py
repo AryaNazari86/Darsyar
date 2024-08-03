@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from content.models import Question, Unit, Class, Source
 
-
+st = 669
 
 def scrape(cls, source, link):
     counter = 0
@@ -24,7 +24,8 @@ def scrape(cls, source, link):
         soup = soup.find_all('p')
         name = name.text.split(':')[-1].strip()#find_all('p')[-1].find('strong').text
         
-        unit = Unit.objects.create(name = name, class_rel = cls)
+        #unit = Unit.objects.get(id = UN + st - 1) 
+        unit = Unit.objects.create(name = name, class_rel = cls) 
         unit.save()
         
         counter2 = 0
@@ -37,9 +38,9 @@ def scrape(cls, source, link):
             counter2 += 1
             question = question.text.split(splitting_text)
         
-            temp = question[0].split('-')
+            temp = question[0].split('ـ')
             if len(temp[0]) >= 5:
-                temp = question[0].split('_')
+                temp = question[0].split('ـ')
             
             question[0] = ''
             for i in range(1 if len(temp) > 1 else 0, len(temp)):

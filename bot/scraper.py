@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from content.models import Question, Unit, Class, Source
 
-
+st = 10
 
 def scrape(cls, source, link):
     counter = 0
@@ -45,8 +45,8 @@ def scrape(cls, source, link):
                 question[0] += temp[i]
 
             question = Question.objects.create(
-                text=question[0], 
-                answer=question[-1], 
+                text=question[0].strip(), 
+                answer=question[-1].strip(), 
                 unit = unit, 
                 source = source
             )
