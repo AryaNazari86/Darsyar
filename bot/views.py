@@ -19,6 +19,7 @@ from .methods.test import *
 from .methods.question import *
 from .methods.settings import *
 from .scraper import scrape
+from . import hamyar
 
 def scraper(request):
     #grade = Grade.objects.filter(id = request.GET.get('grade'))
@@ -27,6 +28,15 @@ def scraper(request):
     #cls.grades.add(grade)
     source = Source.objects.get(id = 1)
     number = scrape(cls, source, request.GET.get('link'))
+    return HttpResponse(f"{number} questions scraped succesfully!")
+
+def scrape_hamyar(request):
+    #grade = Grade.objects.filter(id = request.GET.get('grade'))
+    
+    cls = Class.objects.create(name = request.GET.get('class'), grade_number = request.GET.get('grade_number'))
+    #cls.grades.add(grade)
+    source = Source.objects.get(id = 2)
+    number = hamyar.scrape(cls, source, request.GET.get('link'))
     return HttpResponse(f"{number} questions scraped succesfully!")
    
 @csrf_exempt
@@ -38,7 +48,10 @@ def bot(request):
     state = 0
     if message.get('message'):
       if message['message']['text'] != 'text' and (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
-        start(message)
+        if (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
+            user = User.objects.create(user_id=message['message']['from']['id'], first_name= message['message']['from']['first_name'], last_name=message['message']['from']['last_name'])
+        else: 
+            user = User.objects.get(user_id=message['message']['from']['id'])
       else:
           user = User.objects.get(user_id=int(message['message']['from']['id']))
           state = user.state > 0
@@ -47,7 +60,8 @@ def bot(request):
     if state:
       check_answer(message)
           
-    
+    elif message.get('callback_query') and message.get('callback_query')['data'][0] == "0":
+        ask_role(message)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "1":
         update_grade(message)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "a":

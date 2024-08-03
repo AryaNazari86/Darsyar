@@ -47,7 +47,8 @@ def start(message):
       "text": strings.start.format(user),
       "reply_markup": {
         "inline_keyboard": [
-          [{"text": grade.name, "callback_data": "1"+str(grade.id)}] for grade in Grade.objects.all()
+          [{"text": strings.student, "callback_data": "01"}],
+          [{"text": strings.teacher, "callback_data": "00"}]
         ]
       }
     })

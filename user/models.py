@@ -9,6 +9,7 @@ class User(models.Model):
         on_delete=models.CASCADE,
         null = True,
     )
+    is_student = models.BooleanField(default = 1)
     state = models.IntegerField(default=0)
 
     def score(self):

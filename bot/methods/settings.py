@@ -18,6 +18,23 @@ def show_score(message):
      })
   )
 
+def ask_role(message):
+  user = User.objects.get(user_id=message['callback_query']['from']['id'])
+  user.is_student = message['callback_query']['data'][1:] == '1'
+  user.save()
+
+  send(
+    'sendMessage',
+    json.dumps({
+      "chat_id": message['callback_query']['message']['chat']['id'],
+      "text": strings.new_grade,
+      "reply_markup": {
+        "inline_keyboard": [
+          [{"text": grade.name, "callback_data": "1"+str(grade.id)}] for grade in Grade.objects.order_by("grade_number")
+        ]
+      }
+    })
+  )
 
 def choose_class(message, type):
   user = User.objects.get(user_id = message['message']['from']['id'])

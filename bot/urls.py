@@ -7,4 +7,5 @@ urlpatterns = [
     # path('getpdf/<int:unitid>/exam.pdf', views.get_pdf, name='get_pdf'),
     path('gethtml/<int:unitid>', views.get_html, name='get_html'),
     path('scraper/', views.scraper, name="scraper"),
+    path('scrape_hamyar/', views.scrape_hamyar, name="scrape_hamyar"),
 ]
