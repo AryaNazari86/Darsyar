@@ -11,6 +11,8 @@ import pytz
 import tempfile
 from random import randint
 import random
+
+from user.models import User
 from .api import *
 
 def get_html(request, unitid):
@@ -40,12 +42,13 @@ def new_test(message, url):
   response = requests.post(upload_url, files=files)
   fileurl = response.json()['data']['url'].replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/")
   print(fileurl)
+  user = User.objects.get(user_id=message['callback_query']['from']['id'])
   send(
     'sendDocument',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
       "document": fileurl,
       "reply_markup": MENU,
-      "caption": strings.test_caption.format(unit.class_rel.grades.all()[0].name, unit.class_rel.name, unit.name),
+      "caption": strings.test_caption.format(user.grade.name, unit.class_rel.name, unit.name),
     })
   )
