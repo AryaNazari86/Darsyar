@@ -23,7 +23,8 @@ def scrape(cls, source, link):
         soup = soup.find_all('p')
         name = name.find_all('p')[-1].find('strong').text
         
-        unit = Unit.objects.create(name = name, class_rel = cls)
+        unit = Unit.objects.create(name = name, class_rel = cls) 
+        #unit = Unit.objects.get(id = UN+st - 1)
         unit.save()
         
         counter2 = 0
@@ -41,7 +42,7 @@ def scrape(cls, source, link):
                 temp = question[0].split('_')
             
             question[0] = ''
-            for i in range(1 if len(temp) > 1 else 0, len(temp)):
+            for i in range(1 if (len(temp) > 1) else 0, len(temp)):
                 question[0] += temp[i]
 
             question = Question.objects.create(
@@ -54,7 +55,7 @@ def scrape(cls, source, link):
 
         
         counter += counter2 
-        print(f"unit {name} completed!")
+        print(f"unit {unit.name} completed!")
 
 
     return counter

@@ -40,6 +40,8 @@ def scrape_hamyar(request):
         cls = Class.objects.get(name = request.GET.get('class'))
     else:
         cls = Class.objects.create(name = request.GET.get('class'), grade_number = request.GET.get('grade_number'))
+        cls.save()
+
     #cls.grades.add(grade)
     source = Source.objects.get(id = 2)
     number = hamyar.scrape(cls, source, request.GET.get('link'))

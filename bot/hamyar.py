@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from content.models import Question, Unit, Class, Source
 
-st = 669
+st = 776
 
 def scrape(cls, source, link):
     counter = 0
@@ -18,13 +18,15 @@ def scrape(cls, source, link):
 
         soup = soup1.select_one('#block-post > div.post > div.post-content')
         try:
-            name = soup1.select_one('#block-post > div.post > div.post-content > p:nth-child(4)')
+            name = soup1.select_one('#block-post > div.post > div.post-content > p:nth-child(4)').text.split(':')[-1].strip() 
         except:
-            name = str(UN)
+            name = f'درس {UN}'
         soup = soup.find_all('p')
-        name = name.text.split(':')[-1].strip()#find_all('p')[-1].find('strong').text
+        #name = name.text.split(':')[-1].strip() #find_all('p')[-1].find('strong').text
         
         #unit = Unit.objects.get(id = UN + st - 1) 
+        if (len(name) > 50):
+            name = f'درس {UN}'
         unit = Unit.objects.create(name = name, class_rel = cls) 
         unit.save()
         
@@ -40,7 +42,7 @@ def scrape(cls, source, link):
         
             temp = question[0].split('ـ')
             if len(temp[0]) >= 5:
-                temp = question[0].split('ـ')
+                temp = question[0].split('-')
             
             question[0] = ''
             for i in range(1 if len(temp) > 1 else 0, len(temp)):
@@ -58,7 +60,7 @@ def scrape(cls, source, link):
         
         counter += counter2 
         #print(counter)
-        print(f"unit {name} completed!")
+        print(f"unit {unit.name} completed!")
 
 
     return counter
