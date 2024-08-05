@@ -60,7 +60,7 @@ def show_answer(message):
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
       "message_id": message['callback_query']['message']['message_id'],
-      "text": q.answer, 
+      "text": strings.answer_text.format(q.text, q.answer), 
       "reply_markup": MENU
     })
   )

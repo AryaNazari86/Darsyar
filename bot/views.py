@@ -89,6 +89,8 @@ def bot(request):
     
     elif message['message']['text'] == '/start':
         start(message)
+    elif message['message']['text'] == '/help':
+        help(message['message']['chat']['id'])
     elif message['message']['text'] == strings.MenuStrings.new_question:
         choose_class(message, 0)
     elif message['message']['text'] == strings.MenuStrings.new_test:
