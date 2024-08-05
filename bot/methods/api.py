@@ -1,7 +1,7 @@
 import requests
 from bot.credintials import TOKEN, API_URL, URL
 from bot import strings
-
+import json
 
 MENU = {
         "keyboard": [
@@ -34,4 +34,9 @@ MENU = {
       }
 
 def send(method, data):
-  return requests.post(API_URL + method, data).json()['result']['message_id']
+  req = requests.post(API_URL + method, data).json()
+
+  try:
+    return req['result']['message_id']
+  except:
+    return req

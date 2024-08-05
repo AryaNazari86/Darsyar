@@ -76,11 +76,13 @@ def update_grade(message):
   user = User.objects.get(user_id=message['callback_query']['from']['id'])
   user.grade = Grade.objects.get(id=int(message['callback_query']['data'][1:]))
   user.save()
+  print(message['callback_query']['message']['message_id'])
 
   send(
-    'sendMessage',
+    'editMessage',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
+      "message_id": message['callback_query']['message']['message_id'],
       "text": strings.confirm_grade.format(user.grade.name),
       "reply_markup": MENU
     })

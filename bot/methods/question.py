@@ -56,9 +56,10 @@ def show_answer(message):
   q = Question.objects.get(id=int(message['callback_query']['data'][1:]))
 
   send(
-    'sendMessage',
+    'editMessageText',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
+      "message_id": message['callback_query']['message']['message_id'],
       "text": q.answer, 
       "reply_markup": MENU
     })
