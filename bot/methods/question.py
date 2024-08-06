@@ -6,6 +6,7 @@ from random import randint
 import persian
 from bot.AI import ai
 from .api import *
+from .logs import *
 
 def check_answer(message):
   user = User.objects.get(user_id=int(message['message']['from']['id']))
@@ -66,7 +67,7 @@ def show_answer(message):
   )
 
 def new_question(message):
-  #print(message['callback_query']['data'])
+  log_requests(message)
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
   q = randint(0, unit.questions.count()-1)
 

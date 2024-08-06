@@ -2,8 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from content.models import Question, Unit, Class, Source
 
-st = 776
-
 def scrape(cls, source, link):
     counter = 0
     req = requests.get(link)
