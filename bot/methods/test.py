@@ -31,6 +31,13 @@ def get_html(request, unitid):
   
 
 def new_test(message, url):
+  send(
+    'sendChatAction',
+    json.dumps({
+      "chat_id": message['callback_query']['message']['chat']['id'],
+      "action": strings.making_pdf,
+    })
+  )
   #print(message['callback_query']['data'])
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
   file = tempfile.NamedTemporaryFile(delete=True, suffix=".pdf")
@@ -41,7 +48,6 @@ def new_test(message, url):
   ]
   response = requests.post(upload_url, files=files)
   fileurl = response.json()['data']['url'].replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/")
-  print(fileurl)
   user = User.objects.get(user_id=message['callback_query']['from']['id'])
   send(
     'sendDocument',
