@@ -8,15 +8,23 @@ from user.models import User
 
 def show_score(message):
   user = User.objects.get(user_id=int(message['message']['from']['id']))
-  
+  score = user.score()
+
+  counter = 1
+  for i in User.objects.all():
+    if (i.score() > score):
+      counter += 1
+
   send(
      'sendMessage',
      json.dumps({
         "chat_id": message['message']['chat']['id'],
-        "text": strings.score.format(persian.convert_en_numbers(user.score())),
+        "text": strings.score.format(persian.convert_en_numbers(score), persian.convert_en_numbers(counter)),
         "reply_markup": MENU
      })
   )
+
+
 
 def ask_role(message):
   user = User.objects.get(user_id=message['callback_query']['from']['id'])
@@ -78,9 +86,10 @@ def update_grade(message):
   user.save()
 
   send(
-    'sendMessage',
+    'editMessageText',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
+      "message_id": message['callback_query']['message']['message_id'],
       "text": strings.confirm_grade.format(user.grade.name),
       "reply_markup": MENU
     })

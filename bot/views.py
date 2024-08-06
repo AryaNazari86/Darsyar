@@ -51,7 +51,7 @@ def scrape_hamyar(request):
 def bot(request):
   if request.method == 'POST':
     message = json.loads(request.body.decode('utf-8'))
-    #print(json.dumps(message, indent=2))
+    print(json.dumps(message, indent=4))
     
     state = 0
     if message.get('message'):
@@ -89,6 +89,8 @@ def bot(request):
     
     elif message['message']['text'] == '/start':
         start(message)
+    elif message['message']['text'] == '/help':
+        help(message['message']['chat']['id'])
     elif message['message']['text'] == strings.MenuStrings.new_question:
         choose_class(message, 0)
     elif message['message']['text'] == strings.MenuStrings.new_test:
@@ -111,3 +113,21 @@ def bale_setwebhook(request):
   response = requests.post(API_URL+ "setWebhook?url=" + request.build_absolute_uri('/')).json()
   return HttpResponse(f"{response}")
 
+def send_leaderboard(request):
+    lead = ""
+    number = 3
+    ranking = [(user.score(), str(user)) for user in User.objects.all()]
+    ranking = sorted(ranking, reverse=True)
+
+    for i in range(1, number+1):
+        lead += f"{persian.convert_en_numbers(i)}. {ranking[i-1][1]} ({persian.convert_en_numbers(ranking[i-1][0])} امتیاز)\n"
+    
+    send(
+        'sendMessage',
+        json.dumps({
+            "chat_id": "6210855232",
+            "text": strings.leaderboard.format(lead, persian.convert_en_numbers(number))
+        })
+    )
+
+    return HttpResponse('ok')
