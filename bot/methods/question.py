@@ -77,7 +77,7 @@ def show_answer(message):
 def new_question(message, first):
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
   q = randint(0, unit.questions.count()-1)
-  log_requests(message, unit.questions.all()[q])
+  log_requests(message, unit.questions.all()[q].id)
 
   send(
     'editMessageText' if first else 'sendMessage',
