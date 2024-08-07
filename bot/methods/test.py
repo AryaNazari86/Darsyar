@@ -11,7 +11,7 @@ import pytz
 import tempfile
 from random import randint
 import random
-
+from .logs import log_requests
 from user.models import User
 from .api import *
 
@@ -31,6 +31,7 @@ def get_html(request, unitid):
   
 
 def new_test(message, url):
+  log_requests(message)
   send(
     'sendChatAction',
     json.dumps({

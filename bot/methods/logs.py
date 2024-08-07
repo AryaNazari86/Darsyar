@@ -7,9 +7,9 @@ from .api import *
 from user.models import User
 
 
-def log_requests(message, question):
-    print("log")
-    format = "#question" if message['callback_query']['data'][0] == 'c' else "#test"
+def log_requests(message, question=""):
+    #print("log")
+    format = f"#question {question.id}" if (message['callback_query']['data'][0] == 'c' or message['callback_query']['data'][0] == 'C') else "#test"
     user = User.objects.get(user_id=int(message['callback_query']['from']['id']))
     unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
 
