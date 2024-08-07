@@ -9,6 +9,14 @@ from .api import *
 from .logs import *
 
 def check_answer(message):
+  """send(
+    'sendChatAction',
+    json.dumps({
+      "chat_id": message['message']['chat']['id'],
+      "action": strings.making_pdf,
+    })
+  )"""
+
   user = User.objects.get(user_id=int(message['message']['from']['id']))
   question = Question.objects.get(id=user.state)
   
@@ -67,9 +75,9 @@ def show_answer(message):
   )
 
 def new_question(message):
-  log_requests(message)
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
   q = randint(0, unit.questions.count()-1)
+  log_requests(message, unit.questions.all()[q])
 
   send(
     'sendMessage',
