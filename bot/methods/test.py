@@ -58,3 +58,11 @@ def new_test(message, url):
       "caption": strings.test_caption.format(user.grade.name, unit.class_rel.name, unit.name),
     })
   )
+  
+  send(
+    'deleteMessage',
+    json.dumps({
+      "chat_id": message['callback_query']['message']['chat']['id'],
+      "message_id": message['callback_query']['message']['message_id'],
+    })
+  )

@@ -74,16 +74,16 @@ def show_answer(message):
     })
   )
 
-def new_question(message):
+def new_question(message, first):
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
   q = randint(0, unit.questions.count()-1)
   log_requests(message, unit.questions.all()[q])
 
   send(
-    'sendMessage',
+    'editMessageText' if first else 'sendMessage',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
-      #"message_id": message['callback_query']['message']['message_id'],
+      "message_id": message['callback_query']['message']['message_id'],
       "text": strings.question.format(unit, unit.questions.all()[q].text),
       "reply_markup": {
         "inline_keyboard": [
@@ -96,12 +96,12 @@ def new_question(message):
             "callback_data": "5" + str(unit.questions.all()[q].id),
           }],
           [{
-             "text": strings.next_question,
-            "callback_data": "c" + str(unit.id),
+            "text": strings.next_question,
+            "callback_data": "C" + str(unit.id),
           }],
           [{
-             "text": strings.show_help,
-             "callback_data": "6",
+            "text": strings.show_help,
+            "callback_data": "6",
           }]
         ]
       }

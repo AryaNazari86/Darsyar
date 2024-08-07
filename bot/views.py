@@ -51,8 +51,8 @@ def scrape_hamyar(request):
 def bot(request):
   if request.method == 'POST':
     message = json.loads(request.body.decode('utf-8'))
-    print(json.dumps(message, indent=4))
-    
+    #print(json.dumps(message, indent=4))
+
     state = 0
     if message.get('message'):
       if message['message']['text'] != 'text' and (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
@@ -77,7 +77,9 @@ def bot(request):
     elif message.get('callback_query') and message['callback_query']['data'][0] == "b":
         choose_unit(message, 1)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "c":
-        new_question(message)
+        new_question(message, 1)
+    elif message.get('callback_query') and message['callback_query']['data'][0] == "C":
+        new_question(message, 0)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "d":
         new_test(message, request.build_absolute_uri('/'))
     elif message.get('callback_query') and message['callback_query']['data'][0] == "4":
