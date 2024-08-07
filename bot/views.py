@@ -93,9 +93,9 @@ def bot(request):
         start(message)
     elif message['message']['text'] == '/help':
         help(message['message']['chat']['id'])
-    elif message['message']['text'] == strings.MenuStrings.new_question:
+    elif message['message']['text'] == strings.MenuStrings.new_question or message['message']['text'] == '/question':
         choose_class(message, 0)
-    elif message['message']['text'] == strings.MenuStrings.new_test:
+    elif message['message']['text'] == strings.MenuStrings.new_test or message['message']['text'] == '/test':
        choose_class(message, 1)
     elif message['message']['text'] == strings.MenuStrings.show_score:
         show_score(message)

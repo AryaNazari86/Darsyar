@@ -95,6 +95,15 @@ def update_grade(message):
     })
   )
 
+  send(
+     'sendMessage',
+     json.dumps({
+      "chat_id": message['callback_query']['message']['chat']['id'],
+      "text": strings.guide,
+      "reply_markup": MENU,
+    })
+   )
+
 def new_grade(message):
   send(
     'sendMessage',

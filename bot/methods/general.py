@@ -6,6 +6,14 @@ from content.models import Grade, Class, Unit, Question
 
 def help(chat_id):
    send(
+     'sendMessage',
+     json.dumps({
+      "chat_id": chat_id,
+      "text": strings.guide,
+      "reply_markup": MENU,
+    })
+   )
+   send(
     'sendMessage',
     json.dumps({
       "chat_id": chat_id,
