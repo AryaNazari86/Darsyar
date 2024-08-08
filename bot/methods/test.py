@@ -32,11 +32,12 @@ def get_html(request, unitid):
 
 def new_test(message, url):
   log_requests(message)
-  send(
-    'sendChatAction',
+  message_id = send(
+    'sendMessage',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
-      "action": strings.making_pdf,
+      "message_id": message['callback_query']['message']['message_id'],
+      "text": strings.wait,
     })
   )
   #print(message['callback_query']['data'])

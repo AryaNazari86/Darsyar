@@ -8,5 +8,5 @@ urlpatterns = [
     path('gethtml/<int:unitid>', views.get_html, name='get_html'),
     path('scraper/', views.scraper, name="scraper"),
     path('scrape_hamyar/', views.scrape_hamyar, name="scrape_hamyar"),
-    path('send_leaderboard', views.send_leaderboard, name="send_leaderboard"),
+    path('send_leaderboard/<int:number>', views.send_leaderboard, name="send_leaderboard"),
 ]

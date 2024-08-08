@@ -115,9 +115,8 @@ def bale_setwebhook(request):
   response = requests.post(API_URL+ "setWebhook?url=" + request.build_absolute_uri('/')).json()
   return HttpResponse(f"{response}")
 
-def send_leaderboard(request):
+def send_leaderboard(request, number):
     lead = ""
-    number = 3
     ranking = [(user.score(), str(user)) for user in User.objects.all()]
     ranking = sorted(ranking, reverse=True)
 
@@ -132,4 +131,4 @@ def send_leaderboard(request):
         })
     )
 
-    return HttpResponse('ok')
+    return HttpResponse(lead)
