@@ -33,7 +33,7 @@ def get_html(request, unitid):
 def new_test(message, url):
   log_requests(message)
   message_id = send(
-    'sendMessage',
+    'editMessageText',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
       "message_id": message['callback_query']['message']['message_id'],
