@@ -62,15 +62,26 @@ def switch_state(message):
   )
 
 def show_answer(message):
-  q = Question.objects.get(id=int(message['callback_query']['data'][1:]))
+  question = Question.objects.get(id=int(message['callback_query']['data'][1:]))
 
   send(
     'editMessageText',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
       "message_id": message['callback_query']['message']['message_id'],
-      "text": strings.answer_text.format(q.text, q.answer), 
-      "reply_markup": MENU
+      "text": strings.answer_text.format(question.text, question.answer), 
+      "reply_markup": {
+        "inline_keyboard": [
+          [{
+            "text": strings.next_question,
+            "callback_data": "C" + str(question.unit.id),
+          }],
+          [{
+            "text": strings.show_help,
+            "callback_data": "6",
+          }]
+        ]
+      }
     })
   )
 
@@ -78,13 +89,14 @@ def new_question(message, first):
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
   q = randint(0, unit.questions.count()-1)
   log_requests(message, unit.questions.all()[q].id)
-
   send(
-    'editMessageText' if first else 'sendMessage',
+    'sendPhoto',
     json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
+      "from_chat_id": "@darsyarchannel",
       "message_id": message['callback_query']['message']['message_id'],
-      "text": strings.question.format(unit, unit.questions.all()[q].text),
+      "photo": "1274620264:1017637785560620802:0:4a16c9d0851906fefa6b055f138b54ae3c7b7805ace94705",
+      "caption": strings.question.format(unit, unit.questions.all()[q].text),
       "reply_markup": {
         "inline_keyboard": [
           [{
@@ -107,3 +119,12 @@ def new_question(message, first):
       }
     })
   )
+
+  if first:
+    send(
+      "deleteMessage",
+      json.dumps({
+        "chat_id": message['callback_query']['message']['chat']['id'],
+        "message_id": message['callback_query']['message']['message_id'],
+      })
+    )

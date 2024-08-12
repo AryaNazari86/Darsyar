@@ -6,10 +6,12 @@ from content.models import Grade, Class, Unit, Question
 
 def help(chat_id):
    send(
-     'sendMessage',
+     'sendPhoto',
      json.dumps({
       "chat_id": chat_id,
-      "text": strings.guide,
+      "from_chat_id": "@darsyarchannel",
+      "photo": "1274620264:-5975879736299086078:0:d2e8769499c774da902f88d87def11e2738d56623aa1fedb",
+      "caption": strings.guide,
       "reply_markup": MENU,
     })
    )
@@ -24,20 +26,24 @@ def help(chat_id):
 
 def channel(message): 
   send(
-    'sendMessage',
+    'sendPhoto',
     json.dumps({
       "chat_id": message['message']['chat']['id'],
-      "text": strings.channel,
+      "from_chat_id": "@darsyarchannel",
+      "photo": "1274620264:-8761291616849682688:0:e61885f6087179c8d7c2f54fcdd42a151a9ec6f7595b78a8",
+      "caption": strings.channel,
       "reply_markup": MENU
     })
   )
 
 def support(message):
   send(
-    'sendMessage',
+    'sendPhoto',
     json.dumps({
       "chat_id": message['message']['chat']['id'],
-      "text": strings.support,
+      "from_chat_id": "@darsyarchannel",
+      "photo": "1274620264:-8761291616849682688:0:e61885f6087179c8d7c2f54fcdd42a151a9ec6f7595b78a8",
+      "caption": strings.support,
       "reply_markup": MENU
     })
   )
@@ -49,10 +55,12 @@ def start(message):
     user = User.objects.get(user_id=message['message']['from']['id'])
   
   send(
-    'sendMessage',
+    'sendPhoto',
     json.dumps({
       "chat_id": message['message']['chat']['id'],
-      "text": strings.start.format(user),
+      "from_chat_id": "@darsyarchannel",
+      "photo": "1274620264:-8761291616849682688:0:e61885f6087179c8d7c2f54fcdd42a151a9ec6f7595b78a8",
+      "caption": strings.start.format(user),
       "reply_markup": {
         "inline_keyboard": [
           [{"text": strings.student, "callback_data": "01"}],

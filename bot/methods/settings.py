@@ -16,10 +16,12 @@ def show_score(message):
       counter += 1
 
   send(
-     'sendMessage',
+     'sendPhoto',
      json.dumps({
         "chat_id": message['message']['chat']['id'],
-        "text": strings.score.format(persian.convert_en_numbers(score), persian.convert_en_numbers(counter)),
+        "from_chat_id": "@darsyarchannel",
+        "photo": "1274620264:-7778577532524028157:0:01eb81afd8161218738d56623aa1fedb",
+        "caption": strings.score.format(persian.convert_en_numbers(score), persian.convert_en_numbers(counter)),
         "reply_markup": MENU
      })
   )
@@ -96,10 +98,12 @@ def update_grade(message):
   )
 
   send(
-     'sendMessage',
+     'sendPhoto',
      json.dumps({
       "chat_id": message['callback_query']['message']['chat']['id'],
-      "text": strings.guide,
+      "from_chat_id": "@darsyarchannel",
+      "photo": "1274620264:-5975879736299086078:0:d2e8769499c774da902f88d87def11e2738d56623aa1fedb",
+      "caption": strings.guide,
       "reply_markup": MENU,
     })
    )

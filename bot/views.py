@@ -51,7 +51,7 @@ def scrape_hamyar(request):
 def bot(request):
   if request.method == 'POST':
     message = json.loads(request.body.decode('utf-8'))
-    #print(json.dumps(message, indent=4))
+    print(json.dumps(message, indent=4))
 
     state = 0
     if message.get('message'):
