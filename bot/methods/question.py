@@ -44,6 +44,8 @@ def check_answer(message):
     })
   )
 
+  log_requests(message, question.unit.id, 2)
+
   user.state = 0
   user.save()
 

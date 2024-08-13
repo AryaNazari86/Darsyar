@@ -31,7 +31,7 @@ def get_html(request, unitid):
   
 
 def new_test(message, url):
-  log_requests(message)
+  log_requests(message, 0, 1)
   message_id = send(
     'editMessageText',
     json.dumps({
