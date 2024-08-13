@@ -47,18 +47,21 @@
             font-family: Vazirmatn;
             font-weight: 700;
             font-size: 18px;
+            display: flex;
             margin-bottom: 70px;
         }
 
         .question .number {
             color: #220b35;
             font-size: 18px;
+            min-width: 30px;
+            margin-left: 6px;
             width:30px;
             height: 30px;
             border-radius: 9px;
             text-align: center;
             background-color: #88828d;
-            display: inline;
+            display: flex;
             align-items: center;
             justify-content: center;
         }
@@ -74,11 +77,12 @@
             font-size: 18px;
             width:30px;
             height: 30px;
-            display: inline-block;
+            min-width: 30px;
+            margin-left: 6px;
             border-radius: 9px;
             text-align: center;
             background-color: #ffb133;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
         }
@@ -138,8 +142,10 @@
     <div class="content">
         {%for q in questions%} <div class="answer">
             <span class="number">{{forloop.counter|convert_en_numbers }}</span>
-            {{q.answer}}
-            <span class="source">({{q.sourceText}})
+            <span>
+                {{q.answer}}
+                <span class="source">({{q.sourceText}})
+                </span>
             </span>
         </div>
         {% endfor %}
