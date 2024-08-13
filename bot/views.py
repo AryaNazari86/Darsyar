@@ -54,7 +54,7 @@ def bot(request):
     print(json.dumps(message, indent=4))
 
     state = 0
-    if message.get('message'):
+    if message.get('message') and message.get('text'):
       if message['message']['text'] != 'text' and (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
         if (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
             user = User.objects.create(user_id=message['message']['from']['id'], first_name= message['message']['from']['first_name'], last_name=message['message']['from']['last_name'])
@@ -89,22 +89,23 @@ def bot(request):
     elif message.get('callback_query') and message['callback_query']['data'][0] == "6":
         help(message['callback_query']['message']['chat']['id'])
     
-    elif message['message']['text'] == '/start':
+    elif message.get('message') and message['message'].get('text') == '/start':
         start(message)
-    elif message['message']['text'] == '/help':
+    elif message.get('message') and message['message'].get('text') == '/help':
         help(message['message']['chat']['id'])
-    elif message['message']['text'] == strings.MenuStrings.new_question or message['message']['text'] == '/question':
+    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.new_question or message['message'].get('text') == '/question':
         choose_class(message, 0)
-    elif message['message']['text'] == strings.MenuStrings.new_test or message['message']['text'] == '/test':
+    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.new_test or message['message'].get('text') == '/test':
        choose_class(message, 1)
-    elif message['message']['text'] == strings.MenuStrings.show_score:
+    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.show_score:
         show_score(message)
-    elif message['message']['text'] == strings.MenuStrings.change_grade:
+    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.change_grade:
         new_grade(message)
-    elif message['message']['text'] == strings.MenuStrings.channel:
+    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.channel:
         channel(message)
-    elif message['message']['text'] == strings.MenuStrings.support:
+    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.support:
         support(message)
+    
     else:
         Sticker(message)
     
