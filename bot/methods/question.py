@@ -44,7 +44,7 @@ def check_answer(message):
     })
   )
 
-  log_requests(message, question.unit.id, 2)
+  
 
   user.state = 0
   user.save()
@@ -62,6 +62,15 @@ def switch_state(message):
       "text": strings.send_answer,
     })
   )
+
+  question = Question.objects.get(id = int(message['callback_query']['data'][1:]))
+  send(
+        'sendMessage',
+        json.dumps({
+            "chat_id": "5868778639",
+            "text": strings.log.format(format, user, user.user_id, user.grade, question.unit.class_rel, question.unit.name, question),
+        })
+    )
 
 def show_answer(message):
   question = Question.objects.get(id=int(message['callback_query']['data'][1:]))
@@ -90,7 +99,7 @@ def show_answer(message):
 def new_question(message, first):
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
   q = randint(0, unit.questions.count()-1)
-  log_requests(message, unit.questions.all()[q].id)
+  log_requests(message, unit.questions.all()[q].id, 0)
   send(
     'sendPhoto',
     json.dumps({

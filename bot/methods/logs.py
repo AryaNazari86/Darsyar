@@ -9,6 +9,7 @@ from user.models import User
 
 def log_requests(message, question=0, t=0):
     #print("log")
+    print(question, t)
     if t == 0:
         format = f"#question {question}"
     elif t == 1:
