@@ -51,7 +51,27 @@ def scrape_hamyar(request):
 def bot(request):
   if request.method == 'POST':
     message = json.loads(request.body.decode('utf-8'))
-    print(json.dumps(message, indent=4))
+    #print(message)
+    try:
+        user_id = message.get('message').get('from').get('id')
+    except:
+        user_id = message.get('callback_query').get('from').get('id')
+    
+    # Check If user has subscribed
+    request = requests.post(
+        API_URL + "getChatMember", 
+        json.dumps({
+            "chat_id": "5557386819",
+            "user_id": user_id
+        })
+    ).json()
+    
+    if request['ok'] == False:
+        join_channel(message)
+        return HttpResponse('ok')
+    
+
+    #print(json.dumps(message, indent=4))
 
     state = 0
     if message.get('message') and message['message'].get('text'):
@@ -68,6 +88,8 @@ def bot(request):
     if state:
       check_answer(message)
           
+    elif message.get('callback_query') and message.get('callback_query')['data'] == "-":
+        start(message)
     elif message.get('callback_query') and message.get('callback_query')['data'][0] == "0":
         ask_role(message)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "1":
@@ -88,7 +110,7 @@ def bot(request):
         switch_state(message)
     elif message.get('callback_query') and message['callback_query']['data'][0] == "6":
         help(message['callback_query']['message']['chat']['id'])
-    
+
     elif message.get('message') and message['message'].get('text') == '/start':
         start(message)
     elif message.get('message') and message['message'].get('text') == '/help':
