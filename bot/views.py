@@ -58,7 +58,7 @@ def bot(request):
         user_id = message.get('callback_query').get('from').get('id')
     
     # Check If user has subscribed
-    request = requests.post(
+    req = requests.post(
         API_URL + "getChatMember", 
         json.dumps({
             "chat_id": "5557386819",
@@ -66,7 +66,7 @@ def bot(request):
         })
     ).json()
     
-    if request['ok'] == False:
+    if req['ok'] == False:
         join_channel(message)
         return HttpResponse('ok')
     
