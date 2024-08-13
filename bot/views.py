@@ -54,7 +54,7 @@ def bot(request):
     print(json.dumps(message, indent=4))
 
     state = 0
-    if message.get('message') and message.get('text'):
+    if message.get('message') and message['message'].get('text'):
       if message['message']['text'] != 'text' and (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
         if (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
             user = User.objects.create(user_id=message['message']['from']['id'], first_name= message['message']['from']['first_name'], last_name=message['message']['from']['last_name'])
