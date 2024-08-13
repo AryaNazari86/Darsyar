@@ -64,6 +64,7 @@ def switch_state(message):
   )
 
   question = Question.objects.get(id = int(message['callback_query']['data'][1:]))
+  format = f"#AI {question.id}"
   send(
         'sendMessage',
         json.dumps({
