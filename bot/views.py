@@ -49,90 +49,94 @@ def scrape_hamyar(request):
    
 @csrf_exempt
 def bot(request):
-  if request.method == 'POST':
-    message = json.loads(request.body.decode('utf-8'))
-    #print(message)
-    try:
-        user_id = message.get('message').get('from').get('id')
-    except:
-        user_id = message.get('callback_query').get('from').get('id')
-    
-    # Check If user has subscribed
-    req = requests.post(
-        API_URL + "getChatMember", 
-        json.dumps({
-            "chat_id": "5557386819",
-            "user_id": user_id
-        })
-    ).json()
-    
-    if req['ok'] == False:
-        join_channel(message)
-        return HttpResponse('ok')
-    
+  try:
+    if request.method == 'POST':
+        message = json.loads(request.body.decode('utf-8'))
+        #print(message)
+        try:
+            user_id = message.get('message').get('from').get('id')
+        except:
+            user_id = message.get('callback_query').get('from').get('id')
+        
+        # Check If user has subscribed
+        req = requests.post(
+            API_URL + "getChatMember", 
+            json.dumps({
+                "chat_id": "5557386819",
+                "user_id": user_id
+            })
+        ).json()
+        
+        if req['ok'] == False:
+            join_channel(message)
+            return HttpResponse('ok')
+        
 
-    #print(json.dumps(message, indent=4))
+        #print(json.dumps(message, indent=4))
 
-    state = 0
-    if message.get('message') and message['message'].get('text'):
-      if message['message']['text'] != 'text' and (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
-        if (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
-            user = User.objects.create(user_id=message['message']['from']['id'], first_name= message['message']['from']['first_name'], last_name=message['message']['from']['last_name'])
-        else: 
-            user = User.objects.get(user_id=message['message']['from']['id'])
-      else:
-          user = User.objects.get(user_id=int(message['message']['from']['id']))
-          state = user.state > 0
-    
-    
-    if state:
-      check_answer(message)
-          
-    elif message.get('callback_query') and message.get('callback_query')['data'] == "-":
-        start(message)
-    elif message.get('callback_query') and message.get('callback_query')['data'][0] == "0":
-        ask_role(message)
-    elif message.get('callback_query') and message['callback_query']['data'][0] == "1":
-        update_grade(message)
-    elif message.get('callback_query') and message['callback_query']['data'][0] == "a":
-        choose_unit(message, 0)
-    elif message.get('callback_query') and message['callback_query']['data'][0] == "b":
-        choose_unit(message, 1)
-    elif message.get('callback_query') and message['callback_query']['data'][0] == "c":
-        new_question(message, 1)
-    elif message.get('callback_query') and message['callback_query']['data'][0] == "C":
-        new_question(message, 0)
-    elif message.get('callback_query') and message['callback_query']['data'][0] == "d":
-        new_test(message, request.build_absolute_uri('/'))
-    elif message.get('callback_query') and message['callback_query']['data'][0] == "4":
-        show_answer(message)
-    elif message.get('callback_query') and message['callback_query']['data'][0] == "5":
-        switch_state(message)
-    elif message.get('callback_query') and message['callback_query']['data'][0] == "6":
-        help(message['callback_query']['message']['chat']['id'])
+        state = 0
+        if message.get('message') and message['message'].get('text'):
+            if message['message']['text'] != 'text' and (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
+                if (not User.objects.filter(user_id=message['message']['from']['id']).exists()):
+                    user = User.objects.create(user_id=message['message']['from']['id'], first_name= message['message']['from']['first_name'], last_name=message['message']['from']['last_name'])
+                else: 
+                    user = User.objects.get(user_id=message['message']['from']['id'])
+            else:
+                user = User.objects.get(user_id=int(message['message']['from']['id']))
+                state = user.state > 0
+        
+        
+        if state:
+            check_answer(message)
+            
+        elif message.get('callback_query') and message.get('callback_query')['data'] == "-":
+            start(message)
+        elif message.get('callback_query') and message.get('callback_query')['data'][0] == "0":
+            ask_role(message)
+        elif message.get('callback_query') and message['callback_query']['data'][0] == "1":
+            update_grade(message)
+        elif message.get('callback_query') and message['callback_query']['data'][0] == "a":
+            choose_unit(message, 0)
+        elif message.get('callback_query') and message['callback_query']['data'][0] == "b":
+            choose_unit(message, 1)
+        elif message.get('callback_query') and message['callback_query']['data'][0] == "c":
+            new_question(message, 1)
+        elif message.get('callback_query') and message['callback_query']['data'][0] == "C":
+            new_question(message, 0)
+        elif message.get('callback_query') and message['callback_query']['data'][0] == "d":
+            new_test(message, request.build_absolute_uri('/'))
+        elif message.get('callback_query') and message['callback_query']['data'][0] == "4":
+            show_answer(message)
+        elif message.get('callback_query') and message['callback_query']['data'][0] == "5":
+            switch_state(message)
+        elif message.get('callback_query') and message['callback_query']['data'][0] == "6":
+            help(message['callback_query']['message']['chat']['id'])
 
-    elif message.get('message') and message['message'].get('text') == '/start':
-        start(message)
-    elif message.get('message') and message['message'].get('text') == '/help':
-        help(message['message']['chat']['id'])
-    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.new_question or message['message'].get('text') == '/question':
-        choose_class(message, 0)
-    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.new_test or message['message'].get('text') == '/test':
-       choose_class(message, 1)
-    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.show_score:
-        show_score(message)
-    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.change_grade:
-        new_grade(message)
-    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.channel:
-        channel(message)
-    elif message.get('message') and message['message'].get('text') == strings.MenuStrings.support:
-        support(message)
-    
-    else:
-        Sticker(message)
-    
-    
-  return HttpResponse('ok')
+        elif message.get('message') and message['message'].get('text') == '/start':
+            start(message)
+        elif message.get('message') and message['message'].get('text') == '/help':
+            help(message['message']['chat']['id'])
+        elif message.get('message') and message['message'].get('text') == strings.MenuStrings.new_question or message['message'].get('text') == '/question':
+            choose_class(message, 0)
+        elif message.get('message') and message['message'].get('text') == strings.MenuStrings.new_test or message['message'].get('text') == '/test':
+            choose_class(message, 1)
+        elif message.get('message') and message['message'].get('text') == strings.MenuStrings.show_score:
+            show_score(message)
+        elif message.get('message') and message['message'].get('text') == strings.MenuStrings.change_grade:
+            new_grade(message)
+        elif message.get('message') and message['message'].get('text') == strings.MenuStrings.channel:
+            channel(message)
+        elif message.get('message') and message['message'].get('text') == strings.MenuStrings.support:
+            support(message)
+        
+        else:
+            Sticker(message)
+        
+        
+    return HttpResponse('ok')
+  except Exception as e:
+      print(e)
+      return HttpResponse('ok')
 
 def bale_setwebhook(request):
   response = requests.post(API_URL+ "setWebhook?url=" + request.build_absolute_uri('/')).json()
