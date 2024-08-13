@@ -27,7 +27,7 @@ def get_html(request, unitid):
     }
     for question in random_questions
   ]
-  return render(request, 'exam.html', {"questions": random_questions_objects, "unit": unit.name, "date": JalaliDateTime.now(pytz.utc).strftime("%Y/%m/%d")})
+  return render(request, 'exam.html', {"questions": random_questions_objects, "unit": unit.class_rel.name, "date": JalaliDateTime.now(pytz.utc).strftime("%Y/%m/%d")})
   
 
 def new_test(message, url):

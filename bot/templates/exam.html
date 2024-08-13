@@ -55,11 +55,10 @@
             font-size: 18px;
             width:30px;
             height: 30px;
-            display: inline-block;
             border-radius: 9px;
             text-align: center;
             background-color: #88828d;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
         }
@@ -79,7 +78,7 @@
             border-radius: 9px;
             text-align: center;
             background-color: #ffb133;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
         }
@@ -126,7 +125,7 @@
     <img src="/media/images/header-1.png" style="width: 100%;" />
     <div id="questions" class="content">
         {%for q in questions%} <div class="question">
-            <div class="number">{{forloop.counter|convert_en_numbers }}</div>
+            <span class="number">{{forloop.counter|convert_en_numbers }}</span>
             {{q.text}}
 
         </div>
@@ -138,7 +137,7 @@
     <img src="/media/images/header-2.png" style="width: 100%;" />
     <div class="content">
         {%for q in questions%} <div class="answer">
-            <div class="number">{{forloop.counter|convert_en_numbers }}</div>
+            <span class="number">{{forloop.counter|convert_en_numbers }}</span>
             {{q.answer}}
             <span class="source">({{q.sourceText}})
             </span>
