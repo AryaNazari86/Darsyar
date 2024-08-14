@@ -27,6 +27,8 @@ def check_answer(message):
       "text": strings.wait,
     })
   )
+
+  
   
   req = ai(question.text, question.answer, message['message']['text'])
   
@@ -48,6 +50,7 @@ def check_answer(message):
   user.save()
 
   log_requests(message, user, question.unit, question.id, 2)
+
 
 def switch_state(message):
   #print(message['callback_query']['from']['id'])
