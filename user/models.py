@@ -11,6 +11,7 @@ class User(models.Model):
     )
     is_student = models.BooleanField(default = 1)
     state = models.IntegerField(default=0)
+    calculated_score = models.IntegerField(default = 0)
 
     def score(self):
         sc = 0
@@ -38,6 +39,7 @@ class UserQuestionRel(models.Model):
 
     class Meta:
         unique_together = ('user', 'question')
-
+    
     def __str__(self):
         return f"{self.user} - {self.question}"
+    

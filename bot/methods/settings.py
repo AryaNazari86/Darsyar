@@ -12,7 +12,7 @@ def show_score(message):
 
   counter = 1
   for i in User.objects.all():
-    if (i.score() > score):
+    if (i.calculated_score > score):
       counter += 1
 
   send(

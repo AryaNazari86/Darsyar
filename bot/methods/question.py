@@ -33,8 +33,12 @@ def check_answer(message):
   req = ai(question.text, question.answer, message['message']['text'])
   
   if not UserQuestionRel.objects.filter(user = user, question = question).exists():
-      rel = UserQuestionRel.objects.create(user=user, question=question, point = 100 * int(req['grade']))
+      pt = 100 * int(req['grade'])
+      rel = UserQuestionRel.objects.create(user=user, question=question, point = pt)
       rel.save()
+      user.calculated_score += pt
+      user.save() 
+      
   
   send(
     'editMessageText',
