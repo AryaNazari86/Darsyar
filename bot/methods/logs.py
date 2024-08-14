@@ -11,9 +11,9 @@ def log_requests(message, user, unit, question=0, t=0):
     #print("log")
     #print(question, t)
     if t == 0:
-        format = f"#question {question}"
+        format = f"#Question {question}"
     elif t == 1:
-        format = "#test"
+        format = "#Test"
     elif t == 2:
         format = f"#AI {question}"
 
