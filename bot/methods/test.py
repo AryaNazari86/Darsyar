@@ -31,7 +31,7 @@ def get_html(request, unitid):
   
 
 def new_test(message, url):
-  log_requests(message, 0, 1)
+  
   message_id = send(
     'editMessageText',
     json.dumps({
@@ -68,3 +68,5 @@ def new_test(message, url):
       "message_id": message['callback_query']['message']['message_id'],
     })
   )
+
+  log_requests(message, user, unit, 0, 1)

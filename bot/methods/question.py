@@ -44,10 +44,10 @@ def check_answer(message):
     })
   )
 
-  
-
   user.state = 0
   user.save()
+
+  log_requests(message, user, question.unit, question.id, 2)
 
 def switch_state(message):
   #print(message['callback_query']['from']['id'])
@@ -100,7 +100,7 @@ def show_answer(message):
 def new_question(message, first):
   unit = Unit.objects.all().get(id = int(message['callback_query']['data'][1:]))
   q = randint(0, unit.questions.count()-1)
-  log_requests(message, unit.questions.all()[q].id, 0)
+  
   send(
     'sendPhoto',
     json.dumps({
@@ -140,3 +140,7 @@ def new_question(message, first):
         "message_id": message['callback_query']['message']['message_id'],
       })
     )
+
+  user = User.objects.get(user_id=message['callback_query']['from']['id'])
+
+  log_requests(message, user, unit, unit.questions.all()[q].id, 0)
