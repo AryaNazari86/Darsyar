@@ -27,11 +27,11 @@ def check_answer(message):
       "text": strings.wait,
     })
   )
-
+  
   req = ai(question.text, question.answer, message['message']['text'])
-
+  
   if not UserQuestionRel.objects.filter(user = user, question = question).exists():
-      rel = UserQuestionRel.objects.create(user=user, question=question, point = 100 * req['grade'])
+      rel = UserQuestionRel.objects.create(user=user, question=question, point = 100 * int(req['grade']))
       rel.save()
   
   send(
