@@ -1,0 +1,1783 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+    
+<head>
+        
+        <meta charset="utf-8" />
+        <title>داشبورد | صفحه اصلی</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% include "partials/styles.html" %}
+    </head>
+
+    <body data-topbar="dark" data-layout="horizontal">
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <!-- LOGO -->
+                        <div class="navbar-brand-box">
+                            <a href="index.html" class="logo logo-dark">
+                                <span class="logo-sm">
+                                    <img src="{% static 'dashboard/images/logo-sm-dark.png' %}" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="{% static 'dashboard/images/logo-dark.png' %}" alt="" height="20">
+                                </span>
+                            </a>
+
+                            <a href="index.html" class="logo logo-light">
+                                <span class="logo-sm">
+                                    <img src="{% static 'dashboard/images/logo-sm-light.png' %}" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="{% static 'dashboard/images/logo-light.png' %}" alt="" height="20">
+                                </span>
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn btn-sm px-3 font-size-24 d-lg-none header-item" data-toggle="collapse" data-target="#topnav-menu-content">
+                            <i class="ri-menu-2-line align-middle"></i>
+                        </button>
+
+                        <!-- App Search-->
+                        <form class="app-search d-none d-lg-block">
+                            <div class="position-relative">
+                                <input type="text" class="form-control" placeholder="جستجو...">
+                                <span class="ri-search-line"></span>
+                            </div>
+                        </form>
+
+                        <div class="dropdown dropdown-mega d-none d-lg-block ml-2">
+                            <button type="button" class="btn header-item waves-effect" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                مگامنو
+                                <i class="mdi mdi-chevron-down"></i> 
+                            </button>
+                            <div class="dropdown-menu dropdown-megamenu">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <h5 class="font-size-14 mt-0">کامپوننت‌های UI</h5>
+                                                <ul class="list-unstyled megamenu-list">
+                                                    <li>
+                                                        <a href="javascript:void(0);">لایت‌باکس</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">رنج اسلایدر</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">سوییت الرت</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">رای‌دهی</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">فرم‌ها</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">جدول‌ها</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">چارت‌ها</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <h5 class="font-size-14 mt-0">اپلیکیشن‌ها</h5>
+                                                <ul class="list-unstyled megamenu-list">
+                                                    <li>
+                                                        <a href="javascript:void(0);">ایکامرس</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">تقویم</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">ایمیل</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">پروژه‌ها</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">تسک‌ها</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">مخاطبان</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <h5 class="font-size-14 mt-0">صفحات بیشتر</h5>
+                                                <ul class="list-unstyled megamenu-list">
+                                                    <li>
+                                                        <a href="javascript:void(0);">اسلایدر لایت</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">اسلایدر کامپکت</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">لایه‌بندی افقی </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">نگهداری</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">به زودی</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">تایملاین</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">پرسش و پاسخ</a>
+                                                    </li>
+                                        
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <h5 class="font-size-14 mt-0">کامپوننت‌های UI</h5>
+                                                <ul class="list-unstyled megamenu-list">
+                                                    <li>
+                                                        <a href="javascript:void(0);">لایت‌باکس</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">رنج اسلایدر</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">سوییت الرت</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">رای‌دهی</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">فرم‌ها</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">جدول‌ها</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">چارت‌ها</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="col-sm-5">
+                                                <div>
+                                                    <img src="{% static 'dashboard/images/megamenu-img.png' %}" alt="" class="img-fluid mx-auto d-block">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex">
+
+                        <div class="dropdown d-inline-block d-lg-none ml-2">
+                            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="ri-search-line"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+                                aria-labelledby="page-header-search-dropdown">
+                    
+                                <form class="p-3">
+                                    <div class="form-group m-0">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="جستجو...">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="submit"><i class="ri-search-line"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item waves-effect"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="" src="{% static 'dashboard/images/flags/us.jpg' %}" alt="Header Language" height="16">
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                    
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <img src="{% static 'dashboard/images/flags/spain.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">اسپانیایی</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <img src="{% static 'dashboard/images/flags/germany.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">آلمانی</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <img src="{% static 'dashboard/images/flags/italy.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">ایتالیایی</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <img src="{% static 'dashboard/images/flags/russia.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">روسی</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-none d-lg-inline-block ml-1">
+                            <button type="button" class="btn header-item noti-icon waves-effect"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="ri-apps-2-line"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                <div class="px-lg-2">
+                                    <div class="row no-gutters">
+                                        <div class="col">
+                                            <a class="dropdown-icon-item" href="#">
+                                                <img src="{% static 'dashboard/images/brands/github.png' %}" alt="Github">
+                                                <span>گیتهاب</span>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a class="dropdown-icon-item" href="#">
+                                                <img src="{% static 'dashboard/images/brands/bitbucket.png' %}" alt="bitbucket">
+                                                <span>بیتباکت</span>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a class="dropdown-icon-item" href="#">
+                                                <img src="{% static 'dashboard/images/brands/dribbble.png' %}" alt="dribbble">
+                                                <span>دریبل</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="row no-gutters">
+                                        <div class="col">
+                                            <a class="dropdown-icon-item" href="#">
+                                                <img src="{% static 'dashboard/images/brands/dropbox.png' %}" alt="dropbox">
+                                                <span>دراپ باکس</span>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a class="dropdown-icon-item" href="#">
+                                                <img src="{% static 'dashboard/images/brands/mail_chimp.png' %}" alt="mail_chimp">
+                                                <span>میل چمپ</span>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a class="dropdown-icon-item" href="#">
+                                                <img src="{% static 'dashboard/images/brands/slack.png' %}" alt="slack">
+                                                <span>اسلک</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-none d-lg-inline-block ml-1">
+                            <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+                                <i class="ri-fullscreen-line"></i>
+                            </button>
+                        </div>
+
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="ri-notification-3-line"></i>
+                                <span class="noti-dot"></span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+                                aria-labelledby="page-header-notifications-dropdown">
+                                <div class="p-3">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h6 class="m-0"> اطلاعیه‌ها </h6>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a href="#!" class="small"> دیدن همه </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div data-simplebar style="max-height: 230px;">
+                                    <a href="#" class="text-reset notification-item">
+                                        <div class="media">
+                                            <div class="avatar-xs mr-3">
+                                                <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                                    <i class="ri-shopping-cart-line"></i>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="mt-0 mb-1">سفارش شما ثبت شد</h6>
+                                                <div class="font-size-12 text-muted">
+                                                    <p class="mb-1">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
+                                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 دقیقه قبل </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="text-reset notification-item">
+                                        <div class="media">
+                                            <img src="{% static 'dashboard/images/users/avatar-3.jpg' %}"
+                                                class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                            <div class="media-body">
+                                                <h6 class="mt-0 mb-1">شیده آشنا</h6>
+                                                <div class="font-size-12 text-muted">
+                                                    <p class="mb-1">چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i>1 ساعت قبل</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="text-reset notification-item">
+                                        <div class="media">
+                                            <div class="avatar-xs mr-3">
+                                                <span class="avatar-title bg-success rounded-circle font-size-16">
+                                                    <i class="ri-checkbox-circle-line"></i>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="mt-0 mb-1">سفارش شما ارسال شد.</h6>
+                                                <div class="font-size-12 text-muted">
+                                                    <p class="mb-1">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
+                                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 دقیقه قبل </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="#" class="text-reset notification-item">
+                                        <div class="media">
+                                            <img src="{% static 'dashboard/images/users/avatar-4.jpg' %}"
+                                                class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                            <div class="media-body">
+                                                <h6 class="mt-0 mb-1">سلنا مهری</h6>
+                                                <div class="font-size-12 text-muted">
+                                                    <p class="mb-1">شناخت فراوان جامعه و متخصصان را می طلبد</p>
+                                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i>1 ساعت قبل</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="p-2 border-top">
+                                    <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
+                                        <i class="mdi mdi-arrow-right-circle mr-1"></i> مشاهده بیشتر ..
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-inline-block user-dropdown">
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="rounded-circle header-profile-user" src="{% static 'dashboard/images/users/avatar-2.jpg' %}"
+                                    alt="Header Avatar">
+                                <span class="d-none d-xl-inline-block ml-1">مهران</span>
+                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i>پروفایل</a>
+                                <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i>کیف پول من</a>
+                                <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right mt-1">11</span><i class="ri-settings-2-line align-middle mr-1"></i>تنظیمات</a>
+                                <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle mr-1"></i>قفل صفحه</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="#"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>خروج</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
+                                <i class="ri-settings-2-line"></i>
+                            </button>
+                        </div>
+            
+                    </div>
+                </div>
+            </header>
+    
+                <div class="topnav">
+                    <div class="container-fluid">
+                        <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
+    
+                            <div class="collapse navbar-collapse" id="topnav-menu-content">
+                                <ul class="navbar-nav">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="index.html">
+                                            <i class="ri-dashboard-line mr-2"></i> دَشبرد
+                                        </a>
+                                    </li>
+    
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-uielement" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ri-pencil-ruler-2-line mr-2"></i>UI عناصر <div class="arrow-down"></div>
+                                        </a>
+
+                                        <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl"
+                                            aria-labelledby="topnav-uielement">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div>
+                                                        <a href="ui-alerts.html" class="dropdown-item">هشدار</a>
+                                                        <a href="ui-buttons.html" class="dropdown-item">دکمه‌ها</a>
+                                                        <a href="ui-cards.html" class="dropdown-item">کارت‌ها</a>
+                                                        <a href="ui-carousel.html" class="dropdown-item">کراسول</a>
+                                                        <a href="ui-dropdowns.html" class="dropdown-item">دراپ‌داون</a>
+                                                        <a href="ui-grid.html" class="dropdown-item">گرید</a>
+                                                        <a href="ui-images.html" class="dropdown-item">تصاویر</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div>
+                                                        <a href="ui-lightbox.html" class="dropdown-item">لایت‌باکس</a>
+                                                        <a href="ui-modals.html" class="dropdown-item">مودال‌ها</a>
+                                                        <a href="ui-rangeslider.html" class="dropdown-item">رنج اسلایدر</a>
+                                                        <a href="ui-roundslider.html" class="dropdown-item">روند اسلایدر</a>
+                                                        <a href="ui-session-timeout.html" class="dropdown-item">سشن تایم‌اوت</a>
+                                                        <a href="ui-progressbars.html" class="dropdown-item">نوار وضعیت</a>
+                                                        <a href="ui-sweet-alert.html" class="dropdown-item">سوییت الرت</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div>
+                                                        <a href="ui-tabs-accordions.html" class="dropdown-item">تب و آکاردیون</a>
+                                                        <a href="ui-typography.html" class="dropdown-item">تایپوگرافی</a>
+                                                        <a href="ui-video.html" class="dropdown-item">ویدئو</a>
+                                                        <a href="ui-general.html" class="dropdown-item"> عمومی</a>
+                                                        <a href="ui-rating.html" class="dropdown-item">نظرسنجی</a>
+                                                        <a href="ui-notifications.html" class="dropdown-item">اطلاعیه‌ها</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </li>
+    
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ri-apps-2-line mr-2"></i>اَپ‌ها<div class="arrow-down"></div>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-apps">
+
+                                            <a href="calendar.html" class="dropdown-item">تقویم</a>
+                                            <a href="apps-chat.html" class="dropdown-item">چت</a>
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    ایمیل <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-email">
+                                                    <a href="email-inbox.html" class="dropdown-item">صندوق ورودی</a>
+                                                    <a href="email-read.html" class="dropdown-item">خواندن ایمیل</a>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-ecommerce"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                   ایکامرس <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-ecommerce">
+                                                    <a href="ecommerce-products.html" class="dropdown-item">محصولات</a>
+                                                    <a href="ecommerce-product-detail.html" class="dropdown-item">جزییات محصول</a>
+                                                    <a href="ecommerce-orders.html" class="dropdown-item"> سفارشات</a>
+                                                    <a href="ecommerce-customers.html" class="dropdown-item">مشتریان</a>
+                                                    <a href="ecommerce-cart.html" class="dropdown-item">سبد خرید</a>
+                                                    <a href="ecommerce-checkout.html" class="dropdown-item">ادامه خرید</a>
+                                                    <a href="ecommerce-shops.html" class="dropdown-item">فروشگاه‌ها</a>
+                                                    <a href="ecommerce-add-product.html" class="dropdown-item">افزودن محصول</a>
+                                                </div>
+                                            </div>
+
+                                            <a href="apps-kanban-board.html" class="dropdown-item">تخته کار کنبان</a>
+                                        </div>
+                                    </li>
+    
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ri-stack-line mr-2"></i>کامپوننت<div class="arrow-down"></div>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-components">
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-form"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    فرم‌ها <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-form">
+                                                    <a href="form-elements.html" class="dropdown-item">المنت‌ها </a>
+                                                    <a href="form-validation.html" class="dropdown-item"> اعتبارسنجی</a>
+                                                    <a href="form-advanced.html" class="dropdown-item"> پلاگین‌های پیشرفته</a>
+                                                    <a href="form-editors.html" class="dropdown-item">ادیتورها</a>
+                                                    <a href="form-uploads.html" class="dropdown-item">بارگذاری فایل</a>
+                                                    <a href="form-xeditable.html" class="dropdown-item">ویرایش دهنده </a>
+                                                    <a href="form-wizard.html" class="dropdown-item">ویزاد</a>
+                                                    <a href="form-mask.html" class="dropdown-item">ماسک</a>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-table"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    جدول‌ها <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-table">
+                                                    <a href="tables-basic.html" class="dropdown-item">جدول‌های پایه</a>
+                                                    <a href="tables-datatable.html" class="dropdown-item">جدول‌های داداه‌ای</a>
+                                                    <a href="tables-responsive.html" class="dropdown-item">جدول‌های رسپانسیو</a>
+                                                    <a href="tables-editable.html" class="dropdown-item">جدول‌های قابل ویرایش</a>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-charts"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    چارت‌ها <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-charts">
+                                                    <a href="charts-apex.html" class="dropdown-item">چارت‌های اپکس</a>
+                                                    <a href="charts-chartjs.html" class="dropdown-item">چارت جی‌اس</a>
+                                                    <a href="charts-flot.html" class="dropdown-item">چارت فلوت</a>
+                                                    <a href="charts-knob.html" class="dropdown-item">چارت جی‌کوئری ناب</a>
+                                                    <a href="charts-sparkline.html" class="dropdown-item">چارت اسپارک‌لاین</a>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-icons"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    آیکن‌ها <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-icons">
+                                                    <a href="icons-remix.html" class="dropdown-item">آیکن‌های ریمکس</a>
+                                                    <a href="icons-materialdesign.html" class="dropdown-item">آیکن‌های متریال دیزاین</a>
+                                                    <a href="icons-dripicons.html" class="dropdown-item">دریپ آیکن</a>
+                                                    <a href="icons-fontawesome.html" class="dropdown-item">فونت آوسام 5</a>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-map"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    نقشه ها <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-map">
+                                                    <a href="maps-google.html" class="dropdown-item">نقشه‌های گوگل</a>
+                                                    <a href="maps-vector.html" class="dropdown-item">نقشه‌های وکتور</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+    
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ri-file-copy-2-line mr-2"></i>صفحات<div class="arrow-down"></div>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-more">
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-auth"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    احراز هویت <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-auth">
+                                                    <a href="auth-login.html" class="dropdown-item">ورود</a>
+                                                    <a href="auth-register.html" class="dropdown-item">ثبت‌نام</a>
+                                                    <a href="auth-recoverpw.html" class="dropdown-item">بازیابی رمزعبور</a>
+                                                    <a href="auth-lock-screen.html" class="dropdown-item">قفل صفحه</a>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-utility"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    ابزارها <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-utility">
+                                                    <a href="pages-starter.html" class="dropdown-item">صفحه شروع</a>
+                                                    <a href="pages-maintenance.html" class="dropdown-item">ساخت و ساز</a>
+                                                    <a href="pages-comingsoon.html" class="dropdown-item">به زودی</a>
+                                                    <a href="pages-timeline.html" class="dropdown-item">تایملاین</a>
+                                                    <a href="pages-faqs.html" class="dropdown-item">پرسش و پاسخ</a>
+                                                    <a href="pages-pricing.html" class="dropdown-item">خرید اشتراک</a>
+                                                    <a href="pages-404.html" class="dropdown-item"> خطا 404</a>
+                                                    <a href="pages-500.html" class="dropdown-item"> خطا 500</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-layout" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ri-layout-3-line mr-2"></i>لایه‌بندی‌ها<div class="arrow-down"></div>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="topnav-layout">
+                                            <a href="layouts-vertical.html" class="dropdown-item">عمودی</a>
+                                            <a href="layouts-topbar-light.html" class="dropdown-item">نوار بالا ثابت</a>
+                                            <a href="layouts-boxed-width.html" class="dropdown-item">عرض باکس شده</a>
+                                            <a href="layouts-preloader.html" class="dropdown-item">پیش بارگذاری</a>
+                                        </div>
+                                    </li>
+    
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">دَشبرد</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">نازوکس</a></li>
+                                            <li class="breadcrumb-item active">دَشبرد</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2">تعداد فروش</p>
+                                                        <h4 class="mb-0">1452</h4>
+                                                    </div>
+                                                    <div class="text-primary">
+                                                        <i class="ri-stack-line font-size-24"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card-body border-top py-3">
+                                                <div class="text-truncate">
+                                                    <span class="badge badge-soft-success font-size-11"><i class="mdi mdi-menu-up"> </i> 2.4% </span>
+                                                    <span class="text-muted ml-2">از دوره قبل</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2">درآمد فروش</p>
+                                                        <h4 class="mb-0"> 38452 تومان</h4>
+                                                    </div>
+                                                    <div class="text-primary">
+                                                        <i class="ri-store-2-line font-size-24"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body border-top py-3">
+                                                <div class="text-truncate">
+                                                    <span class="badge badge-soft-success font-size-11"><i class="mdi mdi-menu-up"> </i> 2.4% </span>
+                                                    <span class="text-muted ml-2">از دوره قبل</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2">ارزش میانگین </p>
+                                                        <h4 class="mb-0">150 تومان</h4>
+                                                    </div>
+                                                    <div class="text-primary">
+                                                        <i class="ri-briefcase-4-line font-size-24"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body border-top py-3">
+                                                <div class="text-truncate">
+                                                    <span class="badge badge-soft-success font-size-11"><i class="mdi mdi-menu-up"> </i> 2.4% </span>
+                                                    <span class="text-muted ml-2">از دوره قبل</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end row -->
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-right d-none d-md-inline-block">
+                                            <div class="btn-group mb-2">
+                                                <button type="button" class="btn btn-sm btn-light">امروز</button>
+                                                <button type="button" class="btn btn-sm btn-light active">هفتگی</button>
+                                                <button type="button" class="btn btn-sm btn-light">ماهانه</button>
+                                            </div>
+                                        </div>
+                                        <h4 class="card-title mb-4"> تجزیه و تحلیل درآمد </h4>
+                                        <div>
+                                            <div id="line-column-chart" class="apex-charts" dir="ltr"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body border-top text-center">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="d-inline-flex">
+                                                    <h5 class="mr-2">12,253 تومان</h5>
+                                                    <div class="text-success">
+                                                        <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
+                                                    </div>
+                                                </div>
+                                                <p class="text-muted text-truncate mb-0"> این ماه </p>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mt-4 mt-sm-0">
+                                                    <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-primary font-size-10 mr-1"></i> این سال </p>
+                                                    <div class="d-inline-flex">
+                                                        <h5 class="mb-0 mr-2">34,254 تومان</h5>
+                                                        <div class="text-success">
+                                                            <i class="mdi mdi-menu-up font-size-14"> </i>2.1 %
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="mt-4 mt-sm-0">
+                                                    <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-success font-size-10 mr-1"></i> سال قبل </p>
+                                                    <div class="d-inline-flex">
+                                                        <h5 class="mb-0">32,695 تومان</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-right">
+                                            <select class="custom-select custom-select-sm">
+                                                <option selected>مهر</option>
+                                                <option value="1">آبان</option>
+                                                <option value="2">آذر</option>
+                                                <option value="3">دی</option>
+                                            </select>
+                                        </div>
+                                        <h4 class="card-title mb-4"> تجزیه و تحلیل فروش </h4>
+
+                                        <div id="donut-chart" class="apex-charts"></div>
+
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="text-center mt-4">
+                                                    <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-primary font-size-10 mr-1"></i> محصول آ </p>
+                                                    <h5>42 %</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="text-center mt-4">
+                                                    <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-success font-size-10 mr-1"></i> محصول ب </p>
+                                                    <h5>26 %</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="text-center mt-4">
+                                                    <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-warning font-size-10 mr-1"></i> محصول س </p>
+                                                    <h5>42 %</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="dropdown float-right">
+                                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">گزارش فروش</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">گزارش خروجی</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">سود</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">فعالیت</a>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="card-title mb-4"> گزارش درآمد </h4>
+                                        <div class="text-center">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div>
+                                                        <div class="mb-3">
+                                                            <div id="radialchart-1" class="apex-charts"></div>
+                                                        </div>
+
+                                                        <p class="text-muted text-truncate mb-2"> درآمد هفتگی</p>
+                                                        <h5 class="mb-0">2,523 تومان</h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="mt-5 mt-sm-0">
+                                                        <div class="mb-3">
+                                                            <div id="radialchart-2" class="apex-charts"></div>
+                                                        </div>
+
+                                                        <p class="text-muted text-truncate mb-2"> درآمد ماهانه</p>
+                                                        <h5 class="mb-0">11,235 تومان</h5>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="dropdown float-right">
+                                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">گزارش فروش</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">گزارش خروجی</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">سود</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">فعالیت</a>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="card-title mb-3"> منابع </h4>
+
+                                        <div>
+                                            <div class="text-center">
+                                                <p class="mb-2"> منابع کلی </p>
+                                                <h4>7652 تومان</h4>
+                                                <div class="text-success">
+                                                    <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
+                                                </div>
+                                            </div>
+
+                                            <div class="table-responsive mt-4">
+                                                <table class="table table-hover mb-0 table-centered table-nowrap">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="width: 60px;">
+                                                                <div class="avatar-xs">
+                                                                    <div class="avatar-title rounded-circle bg-light">
+                                                                        <img src="{% static 'dashboard/images/companies/img-1.png' %}" alt="" height="20">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                <h5 class="font-size-14 mb-0"> منبع 1</h5>
+                                                            </td>
+                                                            <td><div id="spak-chart1"></div></td>
+                                                            <td>
+                                                                <p class="text-muted mb-0">2478 تومان</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="avatar-xs">
+                                                                    <div class="avatar-title rounded-circle bg-light">
+                                                                        <img src="{% static 'dashboard/images/companies/img-2.png' %}" alt="" height="20">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <h5 class="font-size-14 mb-0"> منبع 2</h5>
+                                                            </td>
+                                                            
+                                                            <td><div id="spak-chart2"></div></td>
+                                                            <td>
+                                                                <p class="text-muted mb-0">2625 تومان</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="avatar-xs">
+                                                                    <div class="avatar-title rounded-circle bg-light">
+                                                                        <img src="{% static 'dashboard/images/companies/img-3.png' %}" alt="" height="20">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <h5 class="font-size-14 mb-0"> منبع 3</h5>
+                                                            </td>
+                                                            <td><div id="spak-chart3"></div></td>
+                                                            <td>
+                                                                <p class="text-muted mb-0">2856 تومان</p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="text-center mt-4">
+                                                <a href="#" class="btn btn-primary btn-sm">مشاهده بیشتر</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="dropdown float-right">
+                                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">گزارش فروش</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">گزارش خروجی</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">سود</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">فعالیت</a>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="card-title mb-4">آخرین فعالیت‌ها</h4>
+
+                                        <div data-simplebar style="max-height: 330px;">
+                                            <ul class="list-unstyled activity-wid">
+                                                <li class="activity-list">
+                                                    <div class="activity-icon avatar-xs">
+                                                        <span class="avatar-title bg-soft-primary text-primary rounded-circle">
+                                                            <i class="ri-edit-2-fill"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <h5 class="font-size-13">28 مهر, 1399 <small class="text-muted">12:07 قبل‌ازظهر</small></h5>
+                                                        </div>
+                                                        
+                                                        <div>
+                                                            <p class="text-muted mb-0">پاسخ به نیازهای فعالیتهای داوطلبانه</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="activity-list">
+                                                    <div class="activity-icon avatar-xs">
+                                                        <span class="avatar-title bg-soft-primary text-primary rounded-circle">
+                                                            <i class="ri-user-2-fill"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <h5 class="font-size-13">21 آبان, 1399 <small class="text-muted">08:01 بعدازظهر</small></h5>
+                                                        </div>
+                                                        
+                                                        <div>
+                                                            <p class="text-muted mb-0">افزوده شدن به عنوان فعالیت داوطلبانه</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="activity-list">
+                                                    <div class="activity-icon avatar-xs">
+                                                        <span class="avatar-title bg-soft-primary text-primary rounded-circle">
+                                                            <i class="ri-bar-chart-fill"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <h5 class="font-size-13">17 آبان, 1399 <small class="text-muted">09:23 قبل‌ازظهر</small></h5>
+                                                        </div>
+                                                        
+                                                        <div>
+                                                            <p class="text-muted mb-0">افزوده شدن به گروه با هم</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="activity-list">
+                                                    <div class="activity-icon avatar-xs">
+                                                        <span class="avatar-title bg-soft-primary text-primary rounded-circle">
+                                                            <i class="ri-mail-fill"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <h5 class="font-size-13">11 آذر, 1399 <small class="text-muted">05:10 بعدازظهر</small></h5>
+                                                        </div>
+                                                        
+                                                        <div>
+                                                            <p class="text-muted mb-0">پاسخ به نیاز تامین موجودی</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="activity-list">
+                                                    <div class="activity-icon avatar-xs">
+                                                        <span class="avatar-title bg-soft-primary text-primary rounded-circle">
+                                                            <i class="ri-calendar-2-fill"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <h5 class="font-size-13">07 دی, 1399 <small class="text-muted">12:47 بعدازظهر</small></h5>
+                                                        </div>
+                                                        
+                                                        <div>
+                                                            <p class="text-muted mb-0">افزودن فعالیت داوطلبانه</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="activity-list">
+                                                    <div class="activity-icon avatar-xs">
+                                                        <span class="avatar-title bg-soft-primary text-primary rounded-circle">
+                                                            <i class="ri-edit-2-fill"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <h5 class="font-size-13">05 مهر, 1399 <small class="text-muted">03:09 بعدازظهر</small></h5>
+                                                        </div>
+                                                        
+                                                        <div>
+                                                            <p class="text-muted mb-0">ساخت یک رویداد برای کمک</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="activity-list">
+                                                    <div class="activity-icon avatar-xs">
+                                                        <span class="avatar-title bg-soft-primary text-primary rounded-circle">
+                                                            <i class="ri-user-2-fill"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <h5 class="font-size-13">02 مهر, 1399 <small class="text-muted">12:07 قبل‌ازظهر</small></h5>
+                                                        </div>
+                                                        
+                                                        <div>
+                                                            <p class="text-muted mb-0">پاسخ به نیاز تامین موجودی</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="dropdown float-right">
+                                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">گزارش فروش</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">گزارش خروجی</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">سود</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">فعالیت</a>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="card-title mb-4">بازگشت سرمایه براساس لوکیشن</h4>
+
+                                        <div id="usa-vectormap" style="height: 196px"></div>
+
+                                        <div class="row justify-content-center">
+                                            <div class="col-xl-5 col-md-6">
+                                                <div class="mt-2">
+                                                    <div class="clearfix py-2">
+                                                        <h5 class="float-right font-size-16 m-0">2245 تومان</h5>
+                                                        <p class="text-muted mb-0 text-truncate">کالیفرنیا:</p>
+                                                        
+                                                    </div>
+                                                    <div class="clearfix py-2">
+                                                        <h5 class="float-right font-size-16 m-0">2245 تومان</h5>
+                                                        <p class="text-muted mb-0 text-truncate">نوادا:</p>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-5 offset-xl-1 col-md-6">
+                                                <div class="mt-2">
+                                                    <div class="clearfix py-2">
+                                                        <h5 class="float-right font-size-16 m-0">2156 تومان</h5>
+                                                        <p class="text-muted mb-0 text-truncate">مونتانا :</p>
+                                                        
+                                                    </div>
+                                                    <div class="clearfix py-2">
+                                                        <h5 class="float-right font-size-16 m-0">1845 تومان</h5>
+                                                        <p class="text-muted mb-0 text-truncate">تگزاس :</p>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <a href="#" class="btn btn-primary btn-sm">بیشتر بخوانید</a>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body border-bottom">
+
+                                        <div class="user-chat-border">
+                                            <div class="row">
+                                                <div class="col-md-5 col-9">
+                                                    <h5 class="font-size-15 mb-1">فرید دویدا</h5>
+                                                    <p class="text-muted mb-0"><i class="mdi mdi-circle text-success align-middle mr-1"></i>فعال</p>
+                                                </div>
+                                                <div class="col-md-7 col-3">
+                                                    <ul class="list-inline user-chat-nav text-right mb-0">
+                                                        <li class="list-inline-item">
+                                                            <div class="dropdown">
+                                                                <button class="btn nav-btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="mdi mdi-magnify"></i>
+                                                                </button>
+                                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-md p-0">
+                                                                    <form class="p-2">
+                                                                        <div class="search-box">
+                                                                            <div class="position-relative">
+                                                                                <input type="text" class="form-control rounded bg-light border-0" placeholder="جستجو...">
+                                                                                <i class="mdi mdi-magnify search-icon"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-inline-item d-none d-sm-inline-block">
+                                                            <div class="dropdown">
+                                                                <button class="btn nav-btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="mdi mdi-cog"></i>
+                                                                </button>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <a class="dropdown-item" href="#">دیدن پروفایل</a>
+                                                                    <a class="dropdown-item" href="#">پاک کردن چت</a>
+                                                                    <a class="dropdown-item" href="#">میوت کردن</a>
+                                                                    <a class="dropdown-item" href="#">حذف</a>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+        
+                                                        <li class="list-inline-item">
+                                                            <div class="dropdown">
+                                                                <button class="btn nav-btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="mdi mdi-dots-horizontal"></i>
+                                                                </button>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <a class="dropdown-item" href="#">فعالیت</a>
+                                                                    <a class="dropdown-item" href="#">فعالیت دیگر</a>
+                                                                    <a class="dropdown-item" href="#">یک فعالیت دیگر</a>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chat-widget">
+                                            <div class="chat-conversation" data-simplebar style="max-height: 292px;">
+                                                <ul class="list-unstyled mb-0 pr-3">
+                                                    <li>
+                                                        <div class="conversation-list">
+                                                            <div class="chat-avatar">
+                                                                <img src="{% static 'dashboard/images/users/avatar-2.jpg' %}" alt="">
+                                                            </div>
+                                                            <div class="ctext-wrap">
+                                                                <div class="conversation-name">فرید دویدا</div>
+                                                                <div class="ctext-wrap-content">
+                                                                    <p class="mb-0">
+                                                                       سلام من الان هستم
+                                                                    </p>
+                                                                </div>
+                                                                <p class="chat-time mb-0"><i class="mdi mdi-clock-outline align-middle mr-1"></i> 12:09</p>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="right">
+                                                        <div class="conversation-list">
+                                                            <div class="ctext-wrap">
+                                                                <div class="conversation-name">رامین مهران</div>
+                                                                <div class="ctext-wrap-content">
+                                                                    <p class="mb-0">
+                                                                       سلام، چه خوب، دوست داری دفعه بعدی کی همو ببینیم؟
+                                                                    </p>
+                                                                </div>
+        
+                                                                <p class="chat-time mb-0"><i class="bx bx-time-five align-middle mr-1"></i> 10:02</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li> 
+                                                        <div class="chat-day-title">
+                                                            <span class="title">امروز</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="conversation-list">
+                                                            <div class="chat-avatar">
+                                                                <img src="{% static 'dashboard/images/users/avatar-2.jpg' %}" alt="">
+                                                            </div>
+                                                            <div class="ctext-wrap">
+                                                                <div class="conversation-name">فرید دویدا</div>
+                                                                <div class="ctext-wrap-content">
+                                                                    <p class="mb-0">
+                                                                        سلام!
+                                                                    </p>
+                                                                </div>
+                                                                <p class="chat-time mb-0"><i class="mdi mdi-clock-outline align-middle mr-1"></i> 10:00</p>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </li>
+        
+                                                    <li class="right">
+                                                        <div class="conversation-list">
+                                                            <div class="ctext-wrap">
+                                                                <div class="conversation-name">رامین مهران</div>
+                                                                <div class="ctext-wrap-content">
+                                                                    <p class="mb-0">
+                                                                       سلام، چه خوب، دوست داری دفعه بعدی کی همو ببینیم؟
+                                                                    </p>
+                                                                </div>
+        
+                                                                <p class="chat-time mb-0"><i class="bx bx-time-five align-middle mr-1"></i> 10:02</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+        
+                                                    <li>
+                                                        <div class="conversation-list">
+                                                            <div class="chat-avatar">
+                                                                <img src="{% static 'dashboard/images/users/avatar-2.jpg' %}" alt="">
+                                                            </div>
+                                                            <div class="ctext-wrap">
+                                                                <div class="conversation-name">فرید دویدا</div>
+                                                                <div class="ctext-wrap-content">
+                                                                    <p class="mb-0">
+                                                                        آره خوبه موافقم
+                                                                    </p>
+                                                                </div>
+                                                                
+                                                                <p class="chat-time mb-0"><i class="bx bx-time-five align-middle mr-1"></i> 10:06</p>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </li>
+        
+                                                    <li >
+                                                        <div class="conversation-list">
+                                                            <div class="chat-avatar">
+                                                                <img src="{% static 'dashboard/images/users/avatar-2.jpg' %}" alt="">
+                                                            </div>
+                                                            <div class="ctext-wrap">
+                                                                <div class="conversation-name">فرید دویدا</div>
+                                                                <div class="ctext-wrap-content">
+                                                                    <p class="mb-0">پس خیلی زود میبینمت</p>
+                                                                </div>
+                                                                <p class="chat-time mb-0"><i class="bx bx-time-five align-middle mr-1"></i> 10:06</p>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </li>
+        
+                                                    <li class="right">
+                                                        <div class="conversation-list">
+                                                            <div class="ctext-wrap">
+                                                                <div class="conversation-name">رامین مهران</div>
+                                                                <div class="ctext-wrap-content">
+                                                                    <p class="mb-0">
+                                                                        چه عالی
+                                                                    </p>
+                                                                </div>
+        
+                                                                <p class="chat-time mb-0"><i class="bx bx-time-five align-middle mr-1"></i> 10:07</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    
+                                                    
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 chat-input-section border-top">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div>
+                                                    <input type="text" class="form-control rounded chat-input pl-3" placeholder="اینجا بنویسید...">
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <button type="submit" class="btn btn-primary chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block mr-2">ارسال</span> <i class="mdi mdi-send"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="dropdown float-right">
+                                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">گزارش فروش</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">گزارش خروجی</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">سود</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" class="dropdown-item">فعالیت</a>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="card-title mb-4">آخرین تراکنش‌ها</h4>
+
+                                        <div class="table-responsive">
+                                            <table class="table table-centered datatable dt-responsive nowrap" data-page-length="5" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th style="width: 20px;">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="ordercheck">
+                                                                <label class="custom-control-label" for="ordercheck">&nbsp;</label>
+                                                            </div>
+                                                        </th>
+                                                        <th>شناسه سفارش</th>
+                                                        <th>تاریخ</th>
+                                                        <th>نام پرداخت کننده</th>
+                                                        <th>کل</th>
+                                                        <th>وضعیت پرداخت</th>
+                                                        <th style="width: 120px;">فعالیت</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="ordercheck1">
+                                                                <label class="custom-control-label" for="ordercheck1">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1572</a> </td>
+                                                        <td>
+                                                            04 مهر, 1399
+                                                        </td>
+                                                        <td>مهرنا آسوده</td>
+                                                        
+                                                        <td>
+                                                            172 تومان
+                                                        </td>
+                                                        <td>
+                                                            <div class="badge badge-soft-success font-size-12">پرداخت شده</div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="ordercheck2">
+                                                                <label class="custom-control-label" for="ordercheck2">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1571</a> </td>
+                                                        <td>
+                                                            03 مهر, 1399
+                                                        </td>
+                                                        <td>هانیه شهرا</td>
+                                                        
+                                                        <td>
+                                                            165 تومان
+                                                        </td>
+                                                        <td>
+                                                            <div class="badge badge-soft-warning font-size-12">پرداخت نشده</div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="ordercheck3">
+                                                                <label class="custom-control-label" for="ordercheck3">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1570</a> </td>
+                                                        <td>
+                                                            03 مهر, 1399
+                                                        </td>
+                                                        <td>دنیا آزاده</td>
+                                                        
+                                                        <td>
+                                                             146 تومان
+                                                        </td>
+                                                        <td>
+                                                            <div class="badge badge-soft-success font-size-12">پرداخت شده</div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="ordercheck4">
+                                                                <label class="custom-control-label" for="ordercheck4">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1569</a> </td>
+                                                        <td>
+                                                            02 مهر, 1399
+                                                        </td>
+                                                        <td>پندار نیک</td>
+                                                        
+                                                        <td>
+                                                            183 تومان
+                                                        </td>
+                                                        <td>
+                                                            <div class="badge badge-soft-success font-size-12">پرداخت شده</div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="ordercheck5">
+                                                                <label class="custom-control-label" for="ordercheck5">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1568</a> </td>
+                                                        <td>
+                                                            01 آذر, 1399
+                                                        </td>
+                                                        <td>جینا آهنگ</td>
+                                                        
+                                                        <td>
+                                                            160 تومان
+                                                        </td>
+                                                        <td>
+                                                            <div class="badge badge-soft-danger font-size-12">برگشتی</div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="ordercheck6">
+                                                                <label class="custom-control-label" for="ordercheck6">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1567</a> </td>
+                                                        <td>
+                                                            31 آذر, 1399
+                                                        </td>
+                                                        <td>حمید ماهایا</td>
+                                                        
+                                                        <td>
+                                                            105 تومان
+                                                        </td>
+                                                        <td>
+                                                            <div class="badge badge-soft-warning font-size-12">پرداخت نشده</div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="ordercheck7">
+                                                                <label class="custom-control-label" for="ordercheck7">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1566</a> </td>
+                                                        <td>
+                                                            30 مهر, 1399
+                                                        </td>
+                                                        <td>سیما بینا</td>
+                                                        
+                                                        <td>
+                                                            112 تومان
+                                                        </td>
+                                                        <td>
+                                                            <div class="badge badge-soft-success font-size-12">پرداخت شده</div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="ordercheck8">
+                                                                <label class="custom-control-label" for="ordercheck8">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1565</a> </td>
+                                                        <td>
+                                                            29 مهر, 1399
+                                                        </td>
+                                                        <td>جاسمین کامیار</td>
+                                                        
+                                                        <td>
+                                                            123 تومان
+                                                        </td>
+                                                        <td>
+                                                            <div class="badge badge-soft-success font-size-12">پرداخت شده</div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="ordercheck9">
+                                                                <label class="custom-control-label" for="ordercheck9">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1564</a> </td>
+                                                        <td>
+                                                            28 تیر, 1399
+                                                        </td>
+                                                        <td>آروان تمدن</td>
+                                                        
+                                                        <td>
+                                                            141 تومان
+                                                        </td>
+                                                        <td>
+                                                            <div class="badge badge-soft-success font-size-12">پرداخت شده</div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="ordercheck10">
+                                                                <label class="custom-control-label" for="ordercheck10">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1563</a> </td>
+                                                        <td>
+                                                            28 تیر, 1399
+                                                        </td>
+                                                        <td>فرهنگ ثمین</td>
+                                                        
+                                                        <td>
+                                                             164 تومان
+                                                        </td>
+                                                        <td>
+                                                            <div class="badge badge-soft-warning font-size-12">پرداخت نشده</div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                1399 © نازوکس.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-right d-none d-sm-block">
+                                    ارایه با <i class="mdi mdi-heart text-danger"></i> از  AFARIDTEAM
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+        <!-- Right Sidebar -->
+        <div class="right-bar">
+            <div data-simplebar class="h-100">
+                <div class="rightbar-title px-3 py-4">
+                    <a href="javascript:void(0);" class="right-bar-toggle float-right">
+                        <i class="mdi mdi-close noti-icon"></i>
+                    </a>
+                    <h5 class="m-0">تنظیمات</h5>
+                </div>
+
+                <!-- Settings -->
+                <hr class="mt-0" />
+                <h6 class="text-center mb-0">مدل چینش را انتخاب کنید</h6>
+
+                <div class="p-4">
+                    <div class="mb-2">
+                        <img src="{% static 'dashboard/images/layouts/layout-1.jpg' %}" class="img-fluid img-thumbnail" alt="">
+                    </div>
+                    <div class="custom-control custom-switch mb-3">
+                        <input type="checkbox" class="custom-control-input theme-choice" id="light-mode-switch" checked />
+                        <label class="custom-control-label" for="light-mode-switch">مود لایت</label>
+                    </div>
+    
+                    <div class="mb-2">
+                        <img src="{% static 'dashboard/images/layouts/layout-2.jpg' %}" class="img-fluid img-thumbnail" alt="">
+                    </div>
+                    <div class="custom-control custom-switch mb-3">
+                        <input type="checkbox" class="custom-control-input theme-choice" id="dark-mode-switch" data-bsStyle="{% static 'dashboard/css/bootstrap-dark.min.css' %}" data-appStyle="{% static 'dashboard/css/app-dark.min.css' %}" />
+                        <label class="custom-control-label" for="dark-mode-switch">مود تاریک</label>
+                    </div>
+    
+                    <div class="mb-2">
+                        <img src="{% static 'dashboard/images/layouts/layout-3.jpg' %}" class="img-fluid img-thumbnail" alt="">
+                    </div>
+                    <div class="custom-control custom-switch mb-5">
+                        <input type="checkbox" class="custom-control-input theme-choice" id="rtl-mode-switch" data-appStyle="{% static 'dashboard/css/app-rtl.min.css' %}" />
+                        <label class="custom-control-label" for="rtl-mode-switch">مود راست‌چین</label>
+                    </div>
+
+            
+                </div>
+
+            </div> <!-- end slimscroll-menu-->
+        </div>
+        <!-- /Right-bar -->
+
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
+
+        <!-- JAVASCRIPT -->
+        <script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'dashboard/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'dashboard/libs/metismenu/metisMenu.min.js' %}"></script>
+        <script src="{% static 'dashboard/libs/simplebar/simplebar.min.js' %}"></script>
+        <script src="{% static 'dashboard/libs/node-waves/waves.min.js' %}"></script>
+
+        <!-- apexcharts -->
+        <script src="{% static 'dashboard/libs/apexcharts/apexcharts.min.js' %}"></script>
+
+        <!-- jquery.vectormap map -->
+        <script src="{% static 'dashboard/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js' %}"></script>
+        <script src="{% static 'dashboard/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js' %}"></script>
+
+        <!-- Required datatable js -->
+        <script src="{% static 'dashboard/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'dashboard/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+        
+        <!-- Responsive examples -->
+        <script src="{% static 'dashboard/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'dashboard/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+
+        <script src="{% static 'dashboard/js/pages/dashboard.init.js' %}"></script>
+
+        <script src="{% static 'dashboard/js/app.js' %}"></script>
+
+    </body>
+
+</html>
