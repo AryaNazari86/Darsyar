@@ -5,21 +5,32 @@ class User(models.Model):
     user_id  = models.PositiveBigIntegerField(primary_key=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    
     grade = models.ForeignKey(
         'content.Grade',
         on_delete=models.CASCADE,
         null = True,
     )
+
     is_student = models.BooleanField(default = 1)
     state = models.IntegerField(default=0)
     calculated_score = models.IntegerField(default = 0)
 
     date_created = models.DateTimeField(auto_now_add=True)
 
+    inviter = models.ForeignKey(
+        'user.User',
+        related_name='invitee',
+        on_delete=models.CASCADE,
+        null = True
+    )
+
     def score(self):
         sc = 0
         for i in self.solved_questions.all():
             sc += i.point
+
+        sc += self.invitee.count() * 1001
         
         return sc
         

@@ -25,12 +25,13 @@ MENU = {
         ],
         [
             {
-                "text": strings.MenuStrings.channel
+                "text": strings.MenuStrings.invite
             },
             {
                 "text": strings.MenuStrings.support
             }
-        ]]
+        ],
+        ]
 }
 
 

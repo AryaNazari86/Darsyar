@@ -81,10 +81,12 @@ def bot(request):
                 user_id = message['message']['from']['id']
                 chat_id = message['message']['chat']['id']
                 msg = message['message']
+                type = 0
             except:
                 user_id = message['callback_query']['from']['id']
                 chat_id = message['callback_query']['message']['chat']['id']
                 msg = message['callback_query']['message']
+                type = 1
 
             # Check is user has joined the channel
             req = requests.post(
@@ -109,6 +111,10 @@ def bot(request):
                     last_name=msg['from']['last_name']
                 )
                 user.save()
+
+                if type == 0 and msg.get('text')[:6] == '/start':
+                    add_invite(user_id, msg.get('text')[7:])
+                print(msg.get('text')[7:])
             else:
                 user = User.objects.get(
                     user_id=user_id
@@ -141,7 +147,7 @@ def bot(request):
             elif message.get('callback_query') and message['callback_query']['data'][0] == "6":
                 help(chat_id)
 
-            elif message.get('message') and message['message'].get('text') == '/start':
+            elif message.get('message') and message['message'].get('text')[0:6] == '/start':
                 start(chat_id, msg)
             elif message.get('message') and message['message'].get('text') == '/help':
                 help(message['message']['chat']['id'])
@@ -153,10 +159,12 @@ def bot(request):
                 show_score(message, chat_id, user_id)
             elif message.get('message') and message['message'].get('text') == strings.MenuStrings.change_grade:
                 new_grade(chat_id)
-            elif message.get('message') and message['message'].get('text') == strings.MenuStrings.channel:
-                channel(chat_id)
+            #elif message.get('message') and message['message'].get('text') == strings.MenuStrings.channel:
+            #    channel(chat_id)
             elif message.get('message') and message['message'].get('text') == strings.MenuStrings.support:
                 support(chat_id)
+            elif message.get('message') and message['message'].get('text') == strings.MenuStrings.invite:
+                send_invite(user_id, chat_id)
 
             else:
                 Sticker(chat_id)

@@ -6,6 +6,44 @@ import persian
 from .api import *
 from user.models import User
 
+def send_invite(user_id, chat_id):
+    user = User.objects.get(user_id = user_id)
+
+    send(
+        'sendMessage',
+        json.dumps({
+            "chat_id": chat_id,
+            "text": strings.invite_text2,
+            "reply_markup": MENU,
+        })
+    )
+    send(
+        'sendPhoto',
+        json.dumps({
+            "chat_id": chat_id,
+            "photo": "1274620264:-8761291616849682688:0:e61885f6087179c8d7c2f54fcdd42a151a9ec6f7595b78a8",
+            "caption": strings.invite_text.format(str(user), user_id),
+            "reply_markup": MENU,
+        })
+    )
+
+def add_invite(user_id, invitee_id):
+    user = User.objects.get(user_id = user_id)
+
+    try:
+        _ = int(invitee_id)
+        valid = 1
+    except: 
+        valid = 0
+
+    print(valid and User.objects.filter(user_id = invitee_id).exists())
+    if valid and User.objects.filter(user_id = invitee_id).exists():
+        inviter = User.objects.get(user_id=invitee_id)
+        user.inviter = inviter
+        user.save()
+
+        inviter.calculated_score += 1001
+        inviter.save()
 
 def show_score(message, chat_id, user_id):
     user = User.objects.get(user_id=user_id)
