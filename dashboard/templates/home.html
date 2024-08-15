@@ -1,1 +1,8 @@
 {% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %}صفحه اصلی{% endblock %}
+{% block page_name %}صفحه اصلی{% endblock %}
+
+{% block scripts %}<script src="{% static 'dashboard/js/app.js' %}"></script>{% endblock %}
