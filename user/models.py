@@ -14,7 +14,7 @@ class User(models.Model):
     state = models.IntegerField(default=0)
     calculated_score = models.IntegerField(default = 0)
 
-    date_created = models.DateTimeField(auto_now_add=True, null = True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def score(self):
         sc = 0

@@ -6,118 +6,124 @@ import persian
 from .api import *
 from user.models import User
 
-def show_score(message):
-  user = User.objects.get(user_id=int(message['message']['from']['id']))
-  score = user.score()
 
-  counter = 1
-  for i in User.objects.all():
-    if (i.calculated_score > score):
-      counter += 1
+def show_score(message, chat_id, user_id):
+    user = User.objects.get(user_id=user_id)
+    score = user.calculated_score
 
-  send(
-     'sendPhoto',
-     json.dumps({
-        "chat_id": message['message']['chat']['id'],
-        "from_chat_id": "@darsyarchannel",
-        "photo": "1274620264:-7778577532524028157:0:01eb81afd8161218738d56623aa1fedb",
-        "caption": strings.score.format(persian.convert_en_numbers(score), persian.convert_en_numbers(counter)),
-        "reply_markup": MENU
-     })
-  )
+    counter = 1
+    for i in User.objects.all():
+        if (i.calculated_score > score):
+            counter += 1
+
+    send(
+        'sendPhoto',
+        json.dumps({
+            "chat_id": chat_id,
+            "from_chat_id": "@darsyarchannel",
+            "photo": "1274620264:-7778577532524028157:0:01eb81afd8161218738d56623aa1fedb",
+            "caption": strings.score.format(persian.convert_en_numbers(score), persian.convert_en_numbers(counter)),
+            "reply_markup": MENU
+        })
+    )
 
 
+def ask_role(message, user_id):
+    user = User.objects.get(user_id=user_id)
+    user.is_student = message['callback_query']['data'][1:] == '1'
+    user.save()
 
-def ask_role(message):
-  user = User.objects.get(user_id=message['callback_query']['from']['id'])
-  user.is_student = message['callback_query']['data'][1:] == '1'
-  user.save()
+    send(
+        'sendMessage',
+        json.dumps({
+            "chat_id": message['callback_query']['message']['chat']['id'],
+            "text": strings.new_grade,
+            "reply_markup": {
+                "inline_keyboard": [
+                    [{"text": grade.name, "callback_data": "1"+str(grade.id)}] for grade in Grade.objects.order_by("grade_number")
+                ]
+            }
+        })
+    )
 
-  send(
-    'sendMessage',
-    json.dumps({
-      "chat_id": message['callback_query']['message']['chat']['id'],
-      "text": strings.new_grade,
-      "reply_markup": {
-        "inline_keyboard": [
-          [{"text": grade.name, "callback_data": "1"+str(grade.id)}] for grade in Grade.objects.order_by("grade_number")
-        ]
-      }
-    })
-  )
 
-def choose_class(message, type):
-  user = User.objects.get(user_id = message['message']['from']['id'])
+def choose_class(message, type, chat_id, user_id):
+    user = User.objects.get(user_id=user_id)
 
-  send(
-    'sendMessage',
-    json.dumps({
-      "chat_id": message['message']['chat']['id'],
-      "text": strings.choose_class,
-      "reply_markup": {
-        "inline_keyboard": [
-          [{"text": cls.name, "callback_data": chr(ord('a') + type) + str(cls.id)}] for cls in user.grade.classes.all()
-        ]
-      }
-    })
-  )
+    send(
+        'sendMessage',
+        json.dumps({
+            "chat_id": chat_id,
+            "text": strings.choose_class,
+            "reply_markup": {
+                "inline_keyboard": [
+                    [{"text": cls.name, "callback_data": chr(ord('a') + type) + str(cls.id)}] for cls in user.grade.classes.all()
+                ]
+            }
+        })
+    )
+
 
 def choose_unit(message, type):
-  cls = Class.objects.all().get(id = int(message['callback_query']['data'][1:]))
-  counter = 0
-  for unit in cls.units.all():
-    counter += unit.questions.count()
+    cls = Class.objects.all().get(
+        id=int(message['callback_query']['data'][1:]))
+    counter = 0
+    for unit in cls.units.all():
+        counter += unit.questions.count()
 
-  send(
-    'editMessageText',
-    json.dumps({
-      "chat_id": message['callback_query']['message']['chat']['id'],
-      "message_id": message['callback_query']['message']['message_id'],
-      "text": strings.choose_unit.format(cls, persian.convert_en_numbers(counter)),
-      "reply_markup": {
-        "inline_keyboard": [
-          [{"text": unit.name, "callback_data": chr(ord('c') + type) + str(unit.id)}] for unit in cls.units.all()
-        ]
-      }
-    })
-  )
+    send(
+        'editMessageText',
+        json.dumps({
+            "chat_id": message['callback_query']['message']['chat']['id'],
+            "message_id": message['callback_query']['message']['message_id'],
+            "text": strings.choose_unit.format(cls, persian.convert_en_numbers(counter)),
+            "reply_markup": {
+                "inline_keyboard": [
+                    [{"text": unit.name, "callback_data": chr(ord('c') + type) + str(unit.id)}] for unit in cls.units.all()
+                ]
+            }
+        })
+    )
 
-def update_grade(message): 
-  user = User.objects.get(user_id=message['callback_query']['from']['id'])
-  user.grade = Grade.objects.get(id=int(message['callback_query']['data'][1:]))
-  user.save()
 
-  send(
-    'editMessageText',
-    json.dumps({
-      "chat_id": message['callback_query']['message']['chat']['id'],
-      "message_id": message['callback_query']['message']['message_id'],
-      "text": strings.confirm_grade.format(user.grade.name),
-      "reply_markup": MENU
-    })
-  )
+def update_grade(message, user_id):
+    user = User.objects.get(user_id=user_id)
+    user.grade = Grade.objects.get(
+        id=int(message['callback_query']['data'][1:]))
+    user.save()
 
-  send(
-     'sendPhoto',
-     json.dumps({
-      "chat_id": message['callback_query']['message']['chat']['id'],
-      "from_chat_id": "@darsyarchannel",
-      "photo": "1274620264:-5975879736299086078:0:d2e8769499c774da902f88d87def11e2738d56623aa1fedb",
-      "caption": strings.guide,
-      "reply_markup": MENU,
-    })
-   )
+    send(
+        'editMessageText',
+        json.dumps({
+            "chat_id": message['callback_query']['message']['chat']['id'],
+            "message_id": message['callback_query']['message']['message_id'],
+            "text": strings.confirm_grade.format(user.grade.name),
+            "reply_markup": MENU
+        })
+    )
 
-def new_grade(message):
-  send(
-    'sendMessage',
-    json.dumps({
-      "chat_id": message['message']['chat']['id'],
-      "text": strings.new_grade,
-      "reply_markup": {
-        "inline_keyboard": [
-          [{"text": grade.name, "callback_data": "1"+str(grade.id)}] for grade in Grade.objects.order_by("grade_number")
-        ]
-      }
-    })
-  )
+    send(
+        'sendPhoto',
+        json.dumps({
+            "chat_id": message['callback_query']['message']['chat']['id'],
+            "from_chat_id": "@darsyarchannel",
+            "photo": "1274620264:-5975879736299086078:0:d2e8769499c774da902f88d87def11e2738d56623aa1fedb",
+            "caption": strings.guide,
+            "reply_markup": MENU,
+        })
+    )
+
+
+def new_grade(chat_id):
+    send(
+        'sendMessage',
+        json.dumps({
+            "chat_id": chat_id,
+            "text": strings.new_grade,
+            "reply_markup": {
+                "inline_keyboard": [
+                    [{"text": grade.name, "callback_data": "1"+str(grade.id)}] for grade in Grade.objects.order_by("grade_number")
+                ]
+            }
+        })
+    )

@@ -7,9 +7,10 @@ from .api import *
 from user.models import User
 from bot.models import LOG
 
-def log_requests(message, user, unit, question=0, t=0):
-    #print("log")
-    #print(question, t)
+
+def log_requests(user, unit, question=0, t=0):
+    # print("log")
+    # print(question, t)
     if t == 0:
         format = f"#Question {question}"
     elif t == 1:
@@ -17,9 +18,9 @@ def log_requests(message, user, unit, question=0, t=0):
     elif t == 2:
         format = f"#AI {question}"
 
-    #format = f"#question {question}" if (message['callback_query']['data'][0] == 'c' or message['callback_query']['data'][0] == 'C') else "#test"
-    #user = User.objects.get(user_id=int(message['callback_query']['from']['id']))
-    #unit = Unit.objects.get(id = int(message['callback_query']['data'][1:]))
+    # format = f"#question {question}" if (message['callback_query']['data'][0] == 'c' or message['callback_query']['data'][0] == 'C') else "#test"
+    # user = User.objects.get(user_id=int(message['callback_query']['from']['id']))
+    # unit = Unit.objects.get(id = int(message['callback_query']['data'][1:]))
 
     send(
         'sendMessage',
@@ -29,6 +30,5 @@ def log_requests(message, user, unit, question=0, t=0):
         })
     )
 
-    lg = LOG.objects.create(user = user, type = t)
-    #print(lg)
+    lg = LOG.objects.create(user=user, type=t)
     lg.save()

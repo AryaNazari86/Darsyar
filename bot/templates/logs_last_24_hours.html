@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs in Last 24 Hours</title>
+</head>
+<body>
+    <h1>Logs by Hour in the Last 24 Hours</h1>
+    {% if logs_last_24_hours_graph %}
+        <img src="data:image/png;base64,{{ logs_last_24_hours_graph }}" alt="Logs in Last 24 Hours" style="max-width: 100%; height: auto;"/>
+    {% elif error_message %}
+        <p>Error: {{ error_message }}</p>
+    {% else %}
+        <p>No data available to plot.</p>
+    {% endif %}
+
+    <h2>Data Insights</h2>
+    <ul>
+        <li><strong>Peak Hour:</strong> {{ peak_hour }}</li>
+        <li><strong>Logs on Peak Hour:</strong> {{ peak_value }}</li>
+        <li><strong>Logs in Last 5 Minutes:</strong> {{ logs_within_five_minutes }}</li>
+    </ul>
+</body>
+</html>

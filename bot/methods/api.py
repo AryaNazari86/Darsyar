@@ -4,39 +4,40 @@ from bot import strings
 import json
 
 MENU = {
-        "keyboard": [
+    "keyboard": [
         [
-          {
-            "text": strings.MenuStrings.new_question
-          },
+            {
+                "text": strings.MenuStrings.new_question
+            },
         ],
         [
-          {
-            "text": strings.MenuStrings.new_test
-          },
+            {
+                "text": strings.MenuStrings.new_test
+            },
         ],
         [
-          {
-            "text": strings.MenuStrings.change_grade
-          },
-          {
-            "text": strings.MenuStrings.show_score
-          },
+            {
+                "text": strings.MenuStrings.change_grade
+            },
+            {
+                "text": strings.MenuStrings.show_score
+            },
         ],
         [
-          {
-            "text": strings.MenuStrings.channel
-          },
-          {
-            "text": strings.MenuStrings.support
-          }
+            {
+                "text": strings.MenuStrings.channel
+            },
+            {
+                "text": strings.MenuStrings.support
+            }
         ]]
-      }
+}
+
 
 def send(method, data):
-  req = requests.post(API_URL + method, data).json()
+    req = requests.post(API_URL + method, data).json()
 
-  try:
-    return req['result']['message_id']
-  except:
-    return req
+    try:
+        return req['result']['message_id']
+    except:
+        return req

@@ -15,8 +15,8 @@ from .logs import log_requests
 from user.models import User
 from .api import *
 
-def get_html(request, unitid):
-  unit = Unit.objects.all().get(id = int(unitid))
+def get_html(request, unit_id):
+  unit = Unit.objects.all().get(id = int(unit_id))
   questions = list(unit.questions.all())
   random_questions = random.sample(questions, 5)
   random_questions_objects = [
@@ -69,4 +69,4 @@ def new_test(message, url):
     })
   )
 
-  log_requests(message, user, unit, 0, 1)
+  log_requests(user, unit, 0, 1)

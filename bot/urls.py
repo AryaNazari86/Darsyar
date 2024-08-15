@@ -12,4 +12,5 @@ urlpatterns = [
     path('plot_logs_by_hour/', views.plot_logs_by_hour, name="plot_logs_by_hour"),
     path('plot_overall_usage/', views.plot_overall_usage, name='plot_overall_usage'),
     path('plot_user_creation_trends/', views.plot_user_creation_trends, name="plot_user_creation_trends"),
+    path('plot_logs_last_24_hours/', views.plot_logs_last_24_hours, name="plot_logs_last_24_hours"),
 ]
