@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Creation Trends Over Time</title>
+</head>
+<body>
+    <h1>User Creation Trends Over Time</h1>
+    {% if user_creation_graph %}
+        <img src="data:image/png;base64,{{ user_creation_graph }}" alt="User Creation Trends" style="max-width: 100%; height: auto;"/>
+    {% elif error_message %}
+        <p>Error: {{ error_message }}</p>
+    {% else %}
+        <p>No data available to plot.</p>
+    {% endif %}
+
+    <h2>Data Insights</h2>
+    <ul>
+        <li><strong>Total Users:</strong> {{ total_users_count }}</li>
+        <li><strong>Average Users per Day:</strong> {{ avg_users_per_day|floatformat:2 }}</li>
+        <li><strong>Peak Day:</strong> {{ peak_day }}</li>
+        <li><strong>Users on Peak Day:</strong> {{ peak_count }}</li>
+    </ul>
+</body>
+</html>

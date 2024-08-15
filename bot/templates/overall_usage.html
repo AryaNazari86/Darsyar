@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overall App Usage Over Time</title>
+</head>
+<body>
+    <h1>Overall App Usage Over Time</h1>
+    <img src="data:image/png;base64,{{ overall_graph }}" alt="Overall App Usage" style="max-width: 100%; height: auto;"/>
+
+    <h2>Data Insights</h2>
+    <ul>
+        <li><strong>Total Logs:</strong> {{ total_logs }}</li>
+        <li><strong>Average Logs per Day:</strong> {{ avg_logs_per_day|floatformat:2 }}</li>
+        <li><strong>Peak Day:</strong> {{ peak_day }}</li>
+        <li><strong>Logs on Peak Day:</strong> {{ peak_count }}</li>
+        <li><strong>Growth Percentage:</strong> {{ growth_percentage|floatformat:2 }}%</li>
+    </ul>
+</body>
+</html>

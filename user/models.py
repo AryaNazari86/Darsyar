@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 class User(models.Model):
     user_id  = models.PositiveBigIntegerField(primary_key=True)
@@ -12,6 +13,8 @@ class User(models.Model):
     is_student = models.BooleanField(default = 1)
     state = models.IntegerField(default=0)
     calculated_score = models.IntegerField(default = 0)
+
+    date_created = models.DateTimeField(auto_now_add=True, null = True)
 
     def score(self):
         sc = 0
