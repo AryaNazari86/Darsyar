@@ -88,22 +88,8 @@ def bot(request):
                 msg = message['callback_query']['message']
                 type = 1
 
-            # Check is user has joined the channel
-            req = requests.post(
-                API_URL + "getChatMember",
-                json.dumps({
-                    "chat_id": "5557386819",
-                    "user_id": user_id
-                })
-            ).json()
-
-            if req['ok'] == False:
-                join_channel(chat_id)
-                return HttpResponse('ok')
-
             state = 0
 
-            # Creates user if doesn't exist
             if (not User.objects.filter(user_id=user_id).exists()):
                 user = User.objects.create(
                     user_id=user_id,
@@ -121,11 +107,29 @@ def bot(request):
                 )
                 state = user.state > 0
 
+            # Check is user has joined the channel
+            req = requests.post(
+                API_URL + "getChatMember",
+                json.dumps({
+                    "chat_id": "5557386819",
+                    "user_id": user_id
+                })
+            ).json()
+
+            if req['ok'] == False:
+                join_channel(chat_id)
+                return HttpResponse('ok')
+
+            
+
+            # Creates user if doesn't exist
+            
+
             if state:
                 check_answer(message, chat_id, user_id)
 
             elif message.get('callback_query') and message.get('callback_query')['data'] == "-":
-                start(chat_id, msg)
+                start(chat_id, user_id)
             elif message.get('callback_query') and message.get('callback_query')['data'][0] == "0":
                 ask_role(message, user_id)
             elif message.get('callback_query') and message['callback_query']['data'][0] == "1":
