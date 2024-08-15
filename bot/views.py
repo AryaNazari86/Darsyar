@@ -193,49 +193,82 @@ def send_leaderboard(request, number):
 
     return HttpResponse(result)
 
-# ----- Plots -----
-
 
 def plot_logs_by_hour(request):
     try:
-        # Group by the hour of the day
-        log_data = LOG.objects.annotate(hour=ExtractHour('date_created')).values(
-            'hour').annotate(count=Count('id')).order_by('hour')
+        # Log types
+        log_types = {
+            0: 'Question',
+            1: 'Test',
+            2: 'AI',
+        }
 
-        # Extract hours and counts
-        hours = [entry['hour'] for entry in log_data]
-        counts = [entry['count'] for entry in log_data]
+        peak_count = 0
+        peak_hour = 0
+
+        # Initialize data for each log type
+        log_data_by_type = {}
+        for log_type, label in log_types.items():
+            log_data_by_type[label] = LOG.objects.filter(type=log_type).annotate(hour=models.functions.ExtractHour('date_created')).values('hour').annotate(count=Count('id')).order_by('hour')
+
+        # Sum all types for the combined line
+        combined_counts = {}
+        for log_data in log_data_by_type.values():
+            for entry in log_data:
+                hour = entry['hour']
+                count = entry['count']
+                if hour in combined_counts:
+                    combined_counts[hour] += count
+                else:
+                    combined_counts[hour] = count
+
+        combined_hours = sorted(combined_counts.keys())
+        combined_count_values = [combined_counts[hour] for hour in combined_hours]
 
         # Calculate insights
-        total_logs = sum(counts)
-        peak_hour = hours[counts.index(max(counts))] if counts else None
-        peak_count = max(counts) if counts else 0
+        total_logs = sum(combined_count_values)
+        peak_hour = None
+        peak_count = 0
 
-        # Current time span
-        current_time = now()
-        start_time = current_time - timedelta(minutes=5)
-        end_time = current_time + timedelta(minutes=5)
-
-        # Logs in the 5-minute span
-        logs_in_time_span = LOG.objects.filter(
-            date_created__range=(start_time, end_time)).count()
-
-        # Enhanced Plotting
+        # Plotting
         plt.figure(figsize=(12, 8))
-        plt.plot(hours, counts, color='#1f77b4', marker='o',
-                 linestyle='-', linewidth=2, markersize=8)
+        colors = ['#1f77b4', '#ff7f0e', '#2ca02c']  # Different colors for each log type
+
+        for i, (label, log_data) in enumerate(log_data_by_type.items()):
+            hours = [entry['hour'] for entry in log_data]
+            counts = [entry['count'] for entry in log_data]
+
+            # Update peak hour and count if needed
+            
+            # Plot each log type with smaller lines
+            plt.plot(hours, counts, color=colors[i], marker='o', linestyle='-', linewidth=1.5, markersize=6, label=f'{label} Logs')
+
+            # Annotate data points with counts
+            for j, txt in enumerate(counts):
+                plt.annotate(txt, (hours[j], counts[j]), textcoords="offset points", xytext=(0, 5), ha='center', fontsize=10)
+
+        # Plot the combined line with a bolder style
+        plt.plot(combined_hours, combined_count_values, color='black', marker='o', linestyle='-', linewidth=3, markersize=8, label='All Logs')
+
+        # Annotate the combined line data points with counts
+        for i, txt in enumerate(combined_count_values):
+            plt.annotate(txt, (combined_hours[i], combined_count_values[i]), textcoords="offset points", xytext=(0, 5), ha='center', fontsize=10, color='black')
+            if combined_count_values[i] > peak_count:
+                peak_hour = combined_hours[i]
+                peak_count = combined_count_values[i]
+
         plt.grid(color='gray', linestyle='--', linewidth=0.5)
-        plt.title('Number of L`ogs per Hour', fontsize=20, fontweight='bold')
+        plt.title('Number of Logs per Hour by Type and Combined', fontsize=20, fontweight='bold')
         plt.xlabel('Hour of the Day', fontsize=16)
         plt.ylabel('Number of Logs', fontsize=16)
         plt.xticks(range(24), fontsize=12)
         plt.yticks(fontsize=12)
+        plt.gca().xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+        plt.legend(fontsize=12)
 
-        # Annotate data points with counts
-        for i, txt in enumerate(counts):
-            plt.annotate(txt, (hours[i], counts[i]), textcoords="offset points", xytext=(
-                0, 5), ha='center', fontsize=10)
-
+        #peak_count = max(combined_counts)
+        #peak_hour = combined_hours[combined_counts.index(peak_count)]
+        
         # Save plot to a PNG image in memory
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png', bbox_inches='tight')
@@ -244,8 +277,13 @@ def plot_logs_by_hour(request):
         buffer.close()
 
         # Encode image to base64 string
-        graph = base64.b64encode(image_png)
-        graph = graph.decode('utf-8')
+        graph = base64.b64encode(image_png).decode('utf-8')
+
+        # Current time span for +/- 5 minutes
+        current_time = now()
+        start_time = current_time - timedelta(minutes=5)
+        end_time = current_time + timedelta(minutes=5)
+        logs_in_time_span = LOG.objects.filter(date_created__range=(start_time, end_time)).count()
 
         # Prepare context with insights
         context = {
@@ -261,258 +299,3 @@ def plot_logs_by_hour(request):
     
     except Exception as e:
         return HttpResponse(e)
-
-
-def plot_overall_usage(request):
-    # Group logs by date and type
-    datewise_logs = LOG.objects.annotate(date=TruncDate('date_created')).values('date').annotate(
-        total=Count('id'),
-        questions=Count('id', filter=Q(type=0)),
-        tests=Count('id', filter=Q(type=1)),
-        ai=Count('id', filter=Q(type=2))
-    ).order_by('date')
-
-    # Extract data for plotting
-    dates = [entry['date'] for entry in datewise_logs]
-    totals = [entry['total'] for entry in datewise_logs]
-    questions = [entry['questions'] for entry in datewise_logs]
-    tests = [entry['tests'] for entry in datewise_logs]
-    ai = [entry['ai'] for entry in datewise_logs]
-
-    # Plot overall usage with detailed styling
-    plt.figure(figsize=(16, 10))
-    plt.plot(dates, totals, label='Total Logs', color='black',
-             linestyle='-', linewidth=2, marker='o')
-    plt.plot(dates, questions, label='Questions', color='blue',
-             linestyle='--', linewidth=2, marker='x')
-    plt.plot(dates, tests, label='Tests', color='green',
-             linestyle='-.', linewidth=2, marker='s')
-    plt.plot(dates, ai, label='AI', color='red',
-             linestyle=':', linewidth=2, marker='d')
-
-    plt.grid(color='gray', linestyle='--', linewidth=0.5)
-    plt.title('Overall App Usage Over Time', fontsize=24, fontweight='bold')
-    plt.xlabel('Date', fontsize=18)
-    plt.ylabel('Number of Logs', fontsize=18)
-    plt.xticks(rotation=45, fontsize=14)
-    plt.yticks(fontsize=14)
-    plt.legend(fontsize=14)
-
-    # Highlight the peak day with annotation
-    if totals:
-        peak_day = dates[totals.index(max(totals))]
-        peak_value = max(totals)
-        plt.annotate(f'Peak: {peak_value} logs', xy=(peak_day, peak_value), xytext=(peak_day, peak_value + 5),
-                     arrowprops=dict(facecolor='black', shrink=0.05), fontsize=12, ha='center')
-
-    # Add annotations for growth
-    for i in range(1, len(totals)):
-        growth = ((totals[i] - totals[i-1]) / totals[i-1]) * \
-            100 if totals[i-1] > 0 else 0
-        plt.annotate(f'{growth:+.2f}%', (dates[i], totals[i]),
-                     textcoords="offset points", xytext=(0, 10), ha='center', fontsize=10)
-
-    # Save plot to a PNG image in memory
-    buffer = io.BytesIO()
-    plt.savefig(buffer, format='png', bbox_inches='tight')
-    buffer.seek(0)
-    overall_image_png = buffer.getvalue()
-    buffer.close()
-
-    # Encode image to base64 string
-    overall_graph = base64.b64encode(overall_image_png).decode('utf-8')
-
-    # Calculate insights
-    total_logs = sum(totals)
-    avg_logs_per_day = sum(totals) / len(totals) if totals else 0
-    peak_day = dates[totals.index(max(totals))] if totals else None
-    peak_count = max(totals) if totals else 0
-
-    # Determine numerical growth or decline by comparing first and last week
-    if len(totals) > 7:
-        first_week_avg = sum(totals[:7]) / 7
-        last_week_avg = sum(totals[-7:]) / 7
-        growth_percentage = ((last_week_avg - first_week_avg) /
-                             first_week_avg) * 100 if first_week_avg > 0 else 0
-    else:
-        growth_percentage = 0
-
-    # Prepare context with the graph and insights
-    context = {
-        'overall_graph': overall_graph,
-        'total_logs': total_logs,
-        'avg_logs_per_day': avg_logs_per_day,
-        'peak_day': peak_day,
-        'peak_count': peak_count,
-        'growth_percentage': growth_percentage,
-    }
-
-    return render(request, 'overall_usage.html', context)
-
-
-def plot_user_creation_trends(request):
-    try:
-        # Group users by date_created
-        datewise_users = User.objects.annotate(date=TruncDate('date_created')).values('date').annotate(
-            total_users=Count('user_id')
-        ).order_by('date')
-
-        # Extract data for plotting
-        dates = [entry['date'] for entry in datewise_users]
-        total_users = [entry['total_users'] for entry in datewise_users]
-
-        # Ensure there is data to plot
-        if not dates:
-            return render(request, 'user_creation_trends.html', {'user_creation_graph': None})
-
-        # Plot user creation trends
-        plt.figure(figsize=(16, 10))
-        plt.plot(dates, total_users, label='User Registrations',
-                 color='purple', linestyle='-', linewidth=2, marker='o')
-
-        # Set the x-axis limits to match the range of dates
-        plt.xlim(min(dates), max(dates))
-
-        # Formatting the x-axis with dynamic date range
-        ax = plt.gca()
-        ax.xaxis.set_major_locator(mdates.AutoDateLocator())
-        ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-
-        plt.grid(color='gray', linestyle='--', linewidth=0.5)
-        plt.title('User Creation Trends Over Time',
-                  fontsize=24, fontweight='bold')
-        plt.xlabel('Date', fontsize=18)
-        plt.ylabel('Number of Users', fontsize=18)
-        # Rotate dates for better readability
-        plt.xticks(fontsize=14, rotation=45)
-        plt.yticks(fontsize=14)
-        plt.legend(fontsize=14)
-
-        # Highlight the peak day with annotation
-        peak_day = dates[total_users.index(max(total_users))]
-        peak_value = max(total_users)
-        plt.annotate(f'Peak: {peak_value} users', xy=(peak_day, peak_value), xytext=(peak_day, peak_value + 2),
-                     arrowprops=dict(facecolor='black', shrink=0.05), fontsize=12, ha='center')
-
-        # Save plot to a PNG image in memory
-        buffer = io.BytesIO()
-        plt.savefig(buffer, format='png', bbox_inches='tight')
-        buffer.seek(0)
-        user_creation_image_png = buffer.getvalue()
-        buffer.close()
-
-        # Encode image to base64 string
-        user_creation_graph = base64.b64encode(
-            user_creation_image_png).decode('utf-8')
-
-        # Calculate insights
-        total_users_count = sum(total_users)
-        avg_users_per_day = sum(total_users) / \
-            len(total_users) if total_users else 0
-        peak_day = dates[total_users.index(
-            max(total_users))] if total_users else None
-        peak_count = max(total_users) if total_users else 0
-
-        # Prepare context with the graph and insights
-        context = {
-            'user_creation_graph': user_creation_graph,
-            'total_users_count': total_users_count,
-            'avg_users_per_day': avg_users_per_day,
-            'peak_day': peak_day,
-            'peak_count': peak_count,
-        }
-
-        return render(request, 'user_creation_trends.html', context)
-
-    except Exception as e:
-        # Log the exception (optional)
-        import logging
-        logger = logging.getLogger(__name__)
-        logger.error(f"Error plotting user creation trends: {e}")
-
-        # Return a response with an error message
-        return render(request, 'user_creation_trends.html', {'user_creation_graph': None, 'error_message': str(e)})
-
-from django.shortcuts import render
-from django.utils import timezone
-from django.db.models import Count
-from django.db import models
-import matplotlib.pyplot as plt
-import io
-import base64
-import matplotlib.ticker as ticker
-
-def plot_logs_last_24_hours(request):
-    try:
-        # Get the current time
-        now = timezone.now()
-        
-        # Calculate the time 24 hours ago
-        last_24_hours = now - timezone.timedelta(hours=24)
-        
-        # Filter logs created within the last 24 hours
-        logs_last_24_hours = LOG.objects.filter(date_created__gte=last_24_hours)
-        
-        # Extract hour of the day and count logs for each hour
-        logs_by_hour = logs_last_24_hours.annotate(hour=models.functions.ExtractHour('date_created')).values('hour').annotate(count=Count('id')).order_by('hour')
-        
-        hours = [entry['hour'] for entry in logs_by_hour]
-        counts = [entry['count'] for entry in logs_by_hour]
-
-        plt.figure(figsize=(12, 8))
-        plt.plot(hours, counts, color='#1f77b4', marker='o',
-                 linestyle='-', linewidth=2, markersize=8)
-        plt.grid(color='gray', linestyle='--', linewidth=0.5)
-        plt.title('Number of L`ogs per Hour', fontsize=20, fontweight='bold')
-        plt.xlabel('Hour of the Day', fontsize=16)
-        plt.ylabel('Number of Logs', fontsize=16)
-        plt.xticks(range(24), fontsize=12)
-        plt.yticks(fontsize=12)
-
-        # Annotate data points with counts
-        for i, txt in enumerate(counts):
-            plt.annotate(txt, (hours[i], counts[i]), textcoords="offset points", xytext=(
-                0, 5), ha='center', fontsize=10)
-        
-        # Highlight the peak hour with annotation
-        if counts:
-            peak_hour = hours[counts.index(max(counts))]
-            peak_value = max(counts)
-            plt.annotate(f'Peak: {peak_value} logs', xy=(peak_hour, peak_value), xytext=(peak_hour, peak_value + 2),
-                         arrowprops=dict(facecolor='black', shrink=0.05), fontsize=12, ha='center')
-
-
-        # Save the plot to a PNG image in memory
-        buffer = io.BytesIO()
-        plt.savefig(buffer, format='png', bbox_inches='tight')
-        buffer.seek(0)
-        logs_last_24_hours_image_png = buffer.getvalue()
-        buffer.close()
-
-        # Encode image to base64 string
-        logs_last_24_hours_graph = base64.b64encode(logs_last_24_hours_image_png).decode('utf-8')
-
-        # Calculate logs count within +/- 5 minutes of the current time
-        logs_within_five_minutes = LOG.objects.filter(
-            date_created__gte=now - timezone.timedelta(minutes=5),
-            date_created__lte=now + timezone.timedelta(minutes=5)
-        ).count()
-
-        # Prepare context with the graph and additional data
-        context = {
-            'logs_last_24_hours_graph': logs_last_24_hours_graph,
-            'peak_hour': peak_hour if counts else None,
-            'peak_value': peak_value if counts else 0,
-            'logs_within_five_minutes': logs_within_five_minutes,
-        }
-
-        return render(request, 'logs_last_24_hours.html', context)
-
-    except Exception as e:
-        # Log the exception (optional)
-        import logging
-        logger = logging.getLogger(__name__)
-        logger.error(f"Error plotting logs for the last 24 hours: {e}")
-
-        # Return a response with an error message
-        return render(request, 'logs_last_24_hours.html', {'logs_last_24_hours_graph': None, 'error_message': str(e)})
