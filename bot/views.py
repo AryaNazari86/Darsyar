@@ -152,7 +152,7 @@ def bot(request):
                 help(chat_id)
 
             elif message.get('message') and message['message'].get('text')[0:6] == '/start':
-                start(chat_id, msg)
+                start(chat_id, user_id)
             elif message.get('message') and message['message'].get('text') == '/help':
                 help(message['message']['chat']['id'])
             elif message.get('message') and message['message'].get('text') == strings.MenuStrings.new_question or message['message'].get('text') == '/question':
