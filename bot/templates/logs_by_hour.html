@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs Analysis</title>
+</head>
+<body>
+    <h1>Logs Analysis</h1>
+    <img src="data:image/png;base64,{{ graph }}" alt="Logs per Hour" style="max-width: 100%; height: auto;"/>
+
+    <h2>Data Insights</h2>
+    <ul>
+        <li><strong>Total Logs:</strong> {{ total_logs }}</li>
+        <li><strong>Peak Hour:</strong> {{ peak_hour }}:00</li>
+        <li><strong>Logs at Peak Hour:</strong> {{ peak_count }}</li>
+        <li><strong>Logs in the last 5 minutes ({{ current_time|date:"H:i" }} ± 5 minutes):</strong> {{ logs_in_time_span }}</li>
+    </ul>
+</body>
+</html>
