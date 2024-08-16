@@ -4,7 +4,7 @@ from content.models import Unit, Question
 from bot import strings
 from random import randint
 import persian
-from bot.AI import ai
+from bot.AI import *
 from .api import *
 from .logs import *
 
@@ -127,6 +127,10 @@ def new_question(message, first):
                         "callback_data": "4" + str(unit.questions.all()[q].id),
                     }],
                     [{
+                        "text": strings.hint,
+                        "callback_data": "h" + str(unit.questions.all()[q].id),
+                    }],
+                    [{
                         "text": strings.check_answer,
                         "callback_data": "5" + str(unit.questions.all()[q].id),
                     }],
@@ -155,3 +159,59 @@ def new_question(message, first):
     user = User.objects.get(user_id=message['callback_query']['from']['id'])
 
     log_requests(user, unit, unit.questions.all()[q].id, 0)
+
+def get_hint(message, chat_id):
+    message_id = send(
+        'sendMessage',
+        json.dumps({
+            "chat_id": chat_id,
+            "text": strings.wait
+        })
+    )
+
+    question = Question.objects.get(
+        id=int(message['callback_query']['data'][1:])
+    )
+
+    if question.hint == None:
+        question.hint = hint(question.text, question.answer)
+        question.save()
+    
+    send(
+        'deleteMessage',
+        json.dumps({
+            "chat_id": chat_id,
+            "message_id": message_id,
+        })
+    )
+
+    send(
+        'editMessageText',
+        json.dumps({
+            "chat_id": chat_id,
+            "message_id": message['callback_query']['message']['message_id'],#message_id,
+            "text": strings.show_hint.format(question.text, question.hint),
+            "reply_markup": {
+                "inline_keyboard": [
+                    [{
+                        "text": strings.show_answer,
+                        "callback_data": "4" + str(question.id),
+                    }],
+                    [{
+                        "text": strings.check_answer,
+                        "callback_data": "5" + str(question.id),
+                    }],
+                    [{
+                        "text": strings.next_question,
+                        "callback_data": "C" + str(question.unit.id),
+                    }],
+                    [{
+                        "text": strings.show_help,
+                        "callback_data": "6",
+                    }]
+                ]
+            }
+        })
+    )
+
+    
