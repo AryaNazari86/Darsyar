@@ -5,6 +5,7 @@ from user.models import User
 from django.utils import timezone
 from datetime import timedelta
 
+
 def home(request):
     context = {
         "all_users": User.objects.count(),
@@ -17,6 +18,7 @@ def home(request):
     }
     return render(request, 'home.html', context=context)
 
+
 def statistics(request):
     oneday_threshold = timezone.now() - timedelta(days=1)
     onehour_threshold = timezone.now() - timedelta(hours=1)
@@ -24,17 +26,23 @@ def statistics(request):
     twoday_threshold = oneday_threshold - timedelta(days=1)
     twohour_threshold = onehour_threshold - timedelta(hours=1)
 
-    last24_users = User.objects.filter(date_created__gte=oneday_threshold).count()
-    previous24_users = User.objects.filter(date_created__gte=twoday_threshold, date_created__lte=oneday_threshold).count()
+    last24_users = User.objects.filter(
+        date_created__gte=oneday_threshold).count()
+    previous24_users = User.objects.filter(
+        date_created__gte=twoday_threshold, date_created__lte=oneday_threshold).count()
     print(previous24_users)
-    if(previous24_users > 0):
-        last24_users_increase_percent = (last24_users - previous24_users) * 100 // previous24_users
+    if (previous24_users > 0):
+        last24_users_increase_percent = (
+            last24_users - previous24_users) * 100 // previous24_users
     else:
         last24_users_increase_percent = 0
-    last1_users = User.objects.filter(date_created__gte=onehour_threshold).count()
-    previous1_users = User.objects.filter(date_created__gte=twohour_threshold, date_created__lte=onehour_threshold).count()
-    if(previous1_users > 0):
-        last1_users_increase_percent = (last1_users - previous1_users) * 100 // previous1_users
+    last1_users = User.objects.filter(
+        date_created__gte=onehour_threshold).count()
+    previous1_users = User.objects.filter(
+        date_created__gte=twohour_threshold, date_created__lte=onehour_threshold).count()
+    if (previous1_users > 0):
+        last1_users_increase_percent = (
+            last1_users - previous1_users) * 100 // previous1_users
     else:
         last1_users_increase_percent = 0
     context = {
@@ -48,6 +56,8 @@ def statistics(request):
         "teacher_users": User.objects.filter(is_student=0).count(),
     }
     return render(request, 'statistics.html', context=context)
+
+
 def charts(request):
     context = {
     }
