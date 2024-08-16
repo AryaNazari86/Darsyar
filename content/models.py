@@ -38,6 +38,7 @@ class Unit(models.Model):
 class Question(models.Model):
     text = models.TextField()
     answer = models.TextField(null=True)
+    hint = models.TextField(null=True)
     unit = models.ForeignKey(
         'content.Unit',
         related_name="questions",

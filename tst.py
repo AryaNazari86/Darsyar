@@ -52,7 +52,7 @@ def main():
     questions = load_data('data.json')
     total_rows = len(questions)
 
-    with open('data3.csv', mode='w', newline='', encoding='utf-8') as file:
+    with open('data4.csv', mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(['Question', 'Answer'])
 
