@@ -1,8 +1,124 @@
 {% extends "layouts/base.html" %}
 
 {% load static %}
+{% load dashboard_tags %}
 
 {% block title %}صفحه اصلی{% endblock %}
-{% block page_name %}صفحه اصلی{% endblock %}
 
-{% block scripts %}<script src="{% static 'dashboard/js/app.js' %}"></script>{% endblock %}
+{% block content %}
+{% include "partials/navigation.html" with title="صفحه اصلی" %}
+
+<div class="row">
+    <div class="col-xl-8">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body overflow-hidden">
+                                <p class="text-truncate font-size-14 mb-2">تعداد کل کاربران</p>
+                                <h4 class="mb-0">{{all_users}}</h4>
+                            </div>
+                            <div class="text-primary">
+                                <i class="ri-user-line font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% comment %} <div class="col-md-3"></div> {% endcomment %}
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body overflow-hidden">
+                                <p class="text-truncate font-size-14 mb-2">تعداد دانش آموز</p>
+                                <h4 class="mb-0">{{student_users}}</h4>
+                            </div>
+                            <div class="text-primary">
+                                <i class=" ri-user-5-line font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body overflow-hidden">
+                                <p class="text-truncate font-size-14 mb-2">تعداد معلّم</p>
+                                <h4 class="mb-0">{{teacher_users}}</h4>
+                            </div>
+                            <div class="text-primary">
+                                <i class="ri-user-2-line font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+    
+            
+
+    <div class="col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4"> آمار قابلیت های درسیار </h4>
+
+                <div id="donut-chart" class="apex-charts"></div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <div class="text-center mt-4">
+                            <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-primary font-size-10 mr-1"></i> سوال </p>
+                            {% with percentage=questions|mul:100|div:logs_count %}
+                                <h5>{{ percentage }} %</h5>
+                            {% endwith %}
+
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center mt-4">
+                            <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-success font-size-10 mr-1"></i> AI </p>
+                            {% with percentage=ai|mul:100|div:logs_count %}
+                                <h5>{{ percentage }} %</h5>
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center mt-4">
+                            <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-warning font-size-10 mr-1"></i> آزمون ساز </p>
+                            {% with percentage=pdfs|mul:100|div:logs_count %}
+                                <h5>{{ percentage }} %</h5>
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var options = {
+      series: [{{questions}}, {{ai}}, {{pdfs}}],
+      chart: { height: 230, type: "donut" },
+      labels: ["سوال ", "هوش مصنوعی ", "آزمون ساز "],
+      plotOptions: { pie: { donut: { size: "75%" } } },
+      dataLabels: { enabled: !1 },
+      legend: { show: !1 },
+      colors: ["#5664d2", "#1cbb8c", "#eeb902"],
+    };
+    (chart = new ApexCharts(
+      document.querySelector("#donut-chart"),
+      options
+    )).render();
+    
+</script>
+<script src="{% static 'dashboard/js/app.js' %}"></script>
+{% endblock %}

@@ -1,9 +1,11 @@
 {% extends "layouts/base.html" %}
 
 {% load static %}
+{% load dashboard_tags %}
 {% block title %}آمار و ارقام{% endblock %}
 
 {% block content %}
+{% include "partials/navigation.html" with title="آمار و ارقام" %}
 <div class="row">
     <div class="col-xl-12">
         <div class="row">
@@ -28,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
@@ -42,10 +44,19 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="card-body border-top py-3">
                         <div class="text-truncate">
-                            <span class="text-muted ml-2"></span>
+                            {% if last24_users_increase_percent > 0 %}
+                            <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-up"> </i> {{last24_users_increase_percent|absolute}}% </span>
+                            {% elif greeting == 0 %}
+                            <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
+                                {{last24_users_increase_percent|absolute}}% </span>
+                            {% else %}
+                            <span class="badge badge-soft-danger font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-down"> </i> {{last24_users_increase_percent|absolute}}% </span>
+                            {% endif %}
+                            <span class="text-muted ml-2">نسبت به روز قبل</span>
                         </div>
                     </div>
                 </div>
@@ -66,7 +77,17 @@
 
                     <div class="card-body border-top py-3">
                         <div class="text-truncate">
-                            <span class="text-muted ml-2"></span>
+                            {% if last1_users_increase_percent > 0 %}
+                            <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-up"> </i> {{last1_users_increase_percent|absolute}}% </span>
+                            {% elif greeting == 0 %}
+                            <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
+                                {{last1_users_increase_percent|absolute}}% </span>
+                            {% else %}
+                            <span class="badge badge-soft-danger font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-down"> </i> {{last1_users_increase_percent|absolute}}% </span>
+                            {% endif %}
+                            <span class="text-muted ml-2">نسبت به ساعت قبل</span>
                         </div>
                     </div>
                 </div>
@@ -127,31 +148,10 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="card-body border-top py-3">
                         <div class="text-truncate">
-                            <span class="badge badge-soft-success font-size-11"><i class="mdi mdi-menu-up"> </i> 2.4% </span>
-                            <span class="text-muted ml-2">از دوره قبل</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media">
-                            <div class="media-body overflow-hidden">
-                                <p class="text-truncate font-size-14 mb-2">ارزش میانگین </p>
-                                <h4 class="mb-0">150 تومان</h4>
-                            </div>
-                            <div class="text-warning">
-                                <i class="ri-briefcase-4-line font-size-24"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body border-top py-3">
-                        <div class="text-truncate">
-                            <span class="badge badge-soft-success font-size-11"><i class="mdi mdi-menu-up"> </i> 2.4% </span>
-                            <span class="text-muted ml-2">از دوره قبل</span>
+                            <span class="text-muted ml-2"></span>
                         </div>
                     </div>
                 </div>
@@ -163,4 +163,5 @@
 {% endblock %}
 
 
-{% block scripts %}<script src="{% static 'dashboard/js/app.js' %}"></script>{% endblock %}
+{% block scripts %}
+<script src="{% static 'dashboard/js/app.js' %}"></script>{% endblock %}

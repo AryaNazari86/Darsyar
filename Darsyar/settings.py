@@ -74,6 +74,7 @@ TEMPLATES = [
                 
         'libraries':{
             'custom_tags': 'bot.templatetags.custom_tags',
+            'dashboard_tags': 'dashboard.templatetags.dashboard_tags',
             
             }
         },

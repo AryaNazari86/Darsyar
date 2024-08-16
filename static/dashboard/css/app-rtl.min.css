@@ -244,7 +244,7 @@ body {
 }
 
 body[data-topbar=dark] #page-topbar {
-  background-color: #252b3b
+  background-color: #150e2d
 }
 
 body[data-topbar=dark] .navbar-header .dropdown.show .header-item {

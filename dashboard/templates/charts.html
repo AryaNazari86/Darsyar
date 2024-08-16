@@ -1,0 +1,14 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+{% load dashboard_tags %}
+{% block title %}نمودار ها{% endblock %}
+
+{% block content %}
+{% include "partials/navigation.html" with title="نمودار ها" %}
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'dashboard/js/app.js' %}"></script>{% endblock %}
