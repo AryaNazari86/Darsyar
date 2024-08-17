@@ -100,7 +100,7 @@ def bot(request):
 
                 if type == 0 and msg.get('text')[:6] == '/start':
                     add_invite(user_id, msg.get('text')[7:])
-                print(msg.get('text')[7:])
+
             else:
                 user = User.objects.get(
                     user_id=user_id

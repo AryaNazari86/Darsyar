@@ -36,7 +36,7 @@ def add_invite(user_id, invitee_id):
     except: 
         valid = 0
 
-    print(valid and User.objects.filter(user_id = invitee_id).exists())
+    #print(valid and User.objects.filter(user_id = invitee_id).exists())
     if valid and User.objects.filter(user_id = invitee_id).exists():
         inviter = User.objects.get(user_id=invitee_id)
         user.inviter = inviter
