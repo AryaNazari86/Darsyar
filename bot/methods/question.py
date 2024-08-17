@@ -216,4 +216,4 @@ def get_hint(message, chat_id, user_id):
 
     user = User.objects.get(user_id = user_id)
 
-    log_requests(user, question.unit, question.id, 4)
+    log_requests(user, question.unit, question.id, 3)

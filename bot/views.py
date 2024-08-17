@@ -145,7 +145,7 @@ def bot(request):
             elif message.get('callback_query') and message['callback_query']['data'][0] == "d":
                 new_test(message, request.build_absolute_uri('/'))
             elif message.get('callback_query') and message['callback_query']['data'][0] == "h":
-                get_hint(message, chat_id)
+                get_hint(message, chat_id, user_id)
             elif message.get('callback_query') and message['callback_query']['data'][0] == "4":
                 show_answer(message)
             elif message.get('callback_query') and message['callback_query']['data'][0] == "5":
