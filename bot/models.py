@@ -8,6 +8,7 @@ class LOG(models.Model):
         (0, 'Question'),
         (1, 'Test'),
         (2, 'AI'),
+        (3, 'Hint'),
     )
 
     type = models.IntegerField(default=0, choices=TYPES)

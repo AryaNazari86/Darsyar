@@ -17,6 +17,8 @@ def log_requests(user, unit, question=0, t=0):
         format = "#Test"
     elif t == 2:
         format = f"#AI {question}"
+    elif t == 3:
+        format = f"#AI_hint {question}"
 
     # format = f"#question {question}" if (message['callback_query']['data'][0] == 'c' or message['callback_query']['data'][0] == 'C') else "#test"
     # user = User.objects.get(user_id=int(message['callback_query']['from']['id']))

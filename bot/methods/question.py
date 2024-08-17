@@ -160,7 +160,7 @@ def new_question(message, first):
 
     log_requests(user, unit, unit.questions.all()[q].id, 0)
 
-def get_hint(message, chat_id):
+def get_hint(message, chat_id, user_id):
     message_id = send(
         'sendMessage',
         json.dumps({
@@ -214,4 +214,6 @@ def get_hint(message, chat_id):
         })
     )
 
-    
+    user = User.objects.get(user_id = user_id)
+
+    log_requests(user, question.unit, question.id, 4)
