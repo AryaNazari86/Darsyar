@@ -9,8 +9,9 @@
 {% include "partials/navigation.html" with title="صفحه اصلی" %}
 
 <div class="row">
-    <div class="col-xl-8">
+    <div class="col-xl-7">
         <div class="row">
+            
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
@@ -24,20 +25,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            {% comment %} <div class="col-md-3"></div> {% endcomment %}
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media">
-                            <div class="media-body overflow-hidden">
-                                <p class="text-truncate font-size-14 mb-2">تعداد دانش آموز</p>
-                                <h4 class="mb-0">{{student_users}}</h4>
-                            </div>
-                            <div class="text-primary">
-                                <i class=" ri-user-5-line font-size-24"></i>
-                            </div>
+
+                    <div class="card-body border-top py-3">
+                        <div class="text-truncate">
+                            <span class="text-muted ml-2">{{nograde_users}} کاربر بدون پایه تحصیلی</span>
                         </div>
                     </div>
                 </div>
@@ -47,12 +38,58 @@
                     <div class="card-body">
                         <div class="media">
                             <div class="media-body overflow-hidden">
-                                <p class="text-truncate font-size-14 mb-2">تعداد معلّم</p>
-                                <h4 class="mb-0">{{teacher_users}}</h4>
+                                <p class="text-truncate font-size-14 mb-2">تعداد کاربران ۲۴ ساعت گذشته</p>
+                                <h4 class="mb-0">{{last24_users}}</h4>
                             </div>
                             <div class="text-primary">
-                                <i class="ri-user-2-line font-size-24"></i>
+                                <i class="ri-time-line font-size-24"></i>
                             </div>
+                        </div>
+                    </div>
+                    <div class="card-body border-top py-3">
+                        <div class="text-truncate">
+                            {% if last24_users_increase_percent > 0 %}
+                            <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-up"> </i> {{last24_users_increase_percent|absolute}}% </span>
+                            {% elif last24_users_increase_percent == 0 %}
+                            <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
+                                {{last24_users_increase_percent|absolute}}% </span>
+                            {% else %}
+                            <span class="badge badge-soft-danger font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-down"> </i> {{last24_users_increase_percent|absolute}}% </span>
+                            {% endif %}
+                            <span class="text-muted ml-2">نسبت به روز قبل</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body overflow-hidden">
+                                <p class="text-truncate font-size-14 mb-2">تعداد کاربران ۱ ساعت گذشته</p>
+                                <h4 class="mb-0">{{last1_users}}</h4>
+                            </div>
+                            <div class="text-primary">
+                                <i class=" ri-timer-flash-line font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body border-top py-3">
+                        <div class="text-truncate">
+                            {% if last1_users_increase_percent > 0 %}
+                            <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-up"> </i> {{last1_users_increase_percent|absolute}}% </span>
+                            {% elif last1_users_increase_percent == 0 %}
+                            <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
+                                {{last1_users_increase_percent|absolute}}% </span>
+                            {% else %}
+                            <span class="badge badge-soft-danger font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-down"> </i> {{last1_users_increase_percent|absolute}}% </span>
+                            {% endif %}
+                            <span class="text-muted ml-2">نسبت به ساعت قبل</span>
                         </div>
                     </div>
                 </div>
@@ -156,7 +193,7 @@
     
             
 
-    <div class="col-xl-4">
+    <div class="col-xl-5">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title mb-4"> آمار قابلیت های درسیار </h4>
@@ -164,7 +201,7 @@
                 <div id="donut-chart" class="apex-charts"></div>
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="text-center mt-4">
                             <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-primary font-size-10 mr-1"></i> سوال </p>
                             {% with percentage=questions|mul:100|div:logs_count %}
@@ -173,7 +210,7 @@
 
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="text-center mt-4">
                             <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-success font-size-10 mr-1"></i> AI </p>
                             {% with percentage=ai|mul:100|div:logs_count %}
@@ -181,10 +218,18 @@
                             {% endwith %}
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="text-center mt-4">
                             <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-warning font-size-10 mr-1"></i> آزمون ساز </p>
                             {% with percentage=pdfs|mul:100|div:logs_count %}
+                                <h5>{{ percentage }} %</h5>
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center mt-4">
+                            <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-info font-size-10 mr-1"></i> راهنمایی </p>
+                            {% with percentage=hints|mul:100|div:logs_count %}
                                 <h5>{{ percentage }} %</h5>
                             {% endwith %}
                         </div>
@@ -199,13 +244,13 @@
 {% block scripts %}
 <script>
     var options = {
-      series: [{{questions}}, {{ai}}, {{pdfs}}],
+      series: [{{questions}}, {{ai}}, {{pdfs}}, {{hints}}],
       chart: { height: 230, type: "donut" },
-      labels: ["سوال ", "هوش مصنوعی ", "آزمون ساز "],
+      labels: ["سوال ", "هوش مصنوعی ", "آزمون ساز ", "راهنمایی "],
       plotOptions: { pie: { donut: { size: "75%" } } },
       dataLabels: { enabled: !1 },
       legend: { show: !1 },
-      colors: ["#5664d2", "#1cbb8c", "#eeb902"],
+      colors: ["#5664d2", "#1cbb8c", "#eeb902", "#4aa3ff"],
     };
     (chart = new ApexCharts(
       document.querySelector("#donut-chart"),

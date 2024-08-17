@@ -25,7 +25,7 @@
 
                     <div class="card-body border-top py-3">
                         <div class="text-truncate">
-                            <span class="text-muted ml-2"></span>
+                            <span class="text-muted ml-2">{{nograde_users}} کاربر بدون پایه تحصیلی</span>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                             {% if last24_users_increase_percent > 0 %}
                             <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
                                     class="mdi mdi-menu-up"> </i> {{last24_users_increase_percent|absolute}}% </span>
-                            {% elif greeting == 0 %}
+                            {% elif last24_users_increase_percent == 0 %}
                             <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
                                 {{last24_users_increase_percent|absolute}}% </span>
                             {% else %}
@@ -79,7 +79,7 @@
                             {% if last1_users_increase_percent > 0 %}
                             <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
                                     class="mdi mdi-menu-up"> </i> {{last1_users_increase_percent|absolute}}% </span>
-                            {% elif greeting == 0 %}
+                            {% elif last1_users_increase_percent == 0 %}
                             <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
                                 {{last1_users_increase_percent|absolute}}% </span>
                             {% else %}
@@ -112,16 +112,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
                         <div class="media">
                             <div class="media-body overflow-hidden">
-                                <p class="text-truncate font-size-14 mb-2">تعداد کاربر بدون پایه تحصیلی</p>
-                                <h4 class="mb-0">{{nograde_users}}</h4>
+                                <p class="text-truncate font-size-14 mb-2">تعداد لاگ سوال ها</p>
+                                <h4 class="mb-0">{{all_questions_logs}}</h4>
                             </div>
-                            <div class="text-primary">
-                                <i class=" ri-user-unfollow-line font-size-24"></i>
+                            <div class="text-success">
+                                <i class="  ri-question-line font-size-24"></i>
                             </div>
                         </div>
                     </div>
@@ -133,6 +135,197 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body overflow-hidden">
+                                <p class="text-truncate font-size-14 mb-2"> سوال ها در 24 ساعت گذشته</p>
+                                <h4 class="mb-0">{{last24_questions_logs}}</h4>
+                            </div>
+                            <div class="text-success">
+                                <i class="  ri-question-line font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body border-top py-3">
+                        <div class="text-truncate">
+                            {% if previous24_questions_increase_percent > 0 %}
+                            <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-up"> </i> {{previous24_questions_increase_percent|absolute}}% </span>
+                            {% elif previous24_questions_increase_percent == 0 %}
+                            <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
+                                {{previous24_questions_increase_percent|absolute}}% </span>
+                            {% else %}
+                            <span class="badge badge-soft-danger font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-down"> </i> {{previous24_questions_increase_percent|absolute}}% </span>
+                            {% endif %}
+                            <span class="text-muted ml-2">نسبت به روز قبل</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body overflow-hidden">
+                                <p class="text-truncate font-size-14 mb-2">تعداد لاگ آزمون ساز</p>
+                                <h4 class="mb-0">{{all_pdfs_logs}}</h4>
+                            </div>
+                            <div class="text-success">
+                                <i class="ri-file-pdf-line font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body border-top py-3">
+                        <div class="text-truncate">
+                            <span class="text-muted ml-2"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body overflow-hidden">
+                                <p class="text-truncate font-size-14 mb-2"> آزمون ساز در 24 ساعت گذشته</p>
+                                <h4 class="mb-0">{{last24_pdfs_logs}}</h4>
+                            </div>
+                            <div class="text-success">
+                                <i class="ri-file-pdf-line font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body border-top py-3">
+                        <div class="text-truncate">
+                            {% if previous24_pdfs_increase_percent > 0 %}
+                            <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-up"> </i> {{previous24_pdfs_increase_percent|absolute}}% </span>
+                            {% elif previous24_pdfs_increase_percent == 0 %}
+                            <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
+                                {{previous24_pdfs_increase_percent|absolute}}% </span>
+                            {% else %}
+                            <span class="badge badge-soft-danger font-size-11 text" style="direction: ltr;"><i
+                                    class="mdi mdi-menu-down"> </i> {{previous24_pdfs_increase_percent|absolute}}% </span>
+                            {% endif %}
+                            <span class="text-muted ml-2">نسبت به روز قبل</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body overflow-hidden">
+                                <p class="text-truncate font-size-14 mb-2">تعداد لاگ هوش مصنوعی</p>
+                                <h4 class="mb-0">{{all_ai_logs}}</h4>
+                            </div>
+                            <div class="text-success">
+                                <i class="  ri-robot-line font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body border-top py-3">
+                        <div class="text-truncate">
+                            <span class="text-muted ml-2"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body overflow-hidden">
+                                <p class="text-truncate font-size-14 mb-2"> هوش مصنوعی در 24 ساعت گذشته</p>
+                                <h4 class="mb-0">{{last24_ai_logs}}</h4>
+                            </div>
+                            <div class="text-success">
+                                <i class="  ri-robot-line font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body border-top py-3">
+
+                    <div class="text-truncate">
+                        {% if previous24_ai_increase_percent > 0 %}
+                        <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
+                                class="mdi mdi-menu-up"> </i> {{previous24_ai_increase_percent|absolute}}% </span>
+                        {% elif previous24_ai_increase_percent == 0 %}
+                        <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
+                            {{previous24_ai_increase_percent|absolute}}% </span>
+                        {% else %}
+                        <span class="badge badge-soft-danger font-size-11 text" style="direction: ltr;"><i
+                                class="mdi mdi-menu-down"> </i> {{previous24_ai_increase_percent|absolute}}% </span>
+                        {% endif %}
+                        <span class="text-muted ml-2">نسبت به روز قبل</span>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body overflow-hidden">
+                                <p class="text-truncate font-size-14 mb-2">تعداد لاگ راهنمایی</p>
+                                <h4 class="mb-0">{{all_hints_logs}}</h4>
+                            </div>
+                            <div class="text-success">
+                                <i class="  ri-robot-line font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body border-top py-3">
+                        <div class="text-truncate">
+                            <span class="text-muted ml-2"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body overflow-hidden">
+                                <p class="text-truncate font-size-14 mb-2"> راهنمایی در 24 ساعت گذشته</p>
+                                <h4 class="mb-0">{{last24_hints_logs}}</h4>
+                            </div>
+                            <div class="text-success">
+                                <i class="  ri-robot-line font-size-24"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body border-top py-3">
+
+                    <div class="text-truncate">
+                        {% if previous24_hints_increase_percent > 0 %}
+                        <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
+                                class="mdi mdi-menu-up"> </i> {{previous24_hints_increase_percent|absolute}}% </span>
+                        {% elif previous24_hints_increase_percent == 0 %}
+                        <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
+                            {{previous24_hints_increase_percent|absolute}}% </span>
+                        {% else %}
+                        <span class="badge badge-soft-danger font-size-11 text" style="direction: ltr;"><i
+                                class="mdi mdi-menu-down"> </i> {{previous24_hints_increase_percent|absolute}}% </span>
+                        {% endif %}
+                        <span class="text-muted ml-2">نسبت به روز قبل</span>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
         </div>
         <div class="row">
             
@@ -178,8 +371,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             
             <div class="col-md-3">
                 <div class="card">
@@ -223,167 +414,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media">
-                            <div class="media-body overflow-hidden">
-                                <p class="text-truncate font-size-14 mb-2">تعداد لاگ سوال ها</p>
-                                <h4 class="mb-0">{{all_questions_logs}}</h4>
-                            </div>
-                            <div class="text-success">
-                                <i class="  ri-question-line font-size-24"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body border-top py-3">
-                        <div class="text-truncate">
-                            <span class="text-muted ml-2"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media">
-                            <div class="media-body overflow-hidden">
-                                <p class="text-truncate font-size-14 mb-2">تعداد لاگ آزمون ساز</p>
-                                <h4 class="mb-0">{{all_pdfs_logs}}</h4>
-                            </div>
-                            <div class="text-success">
-                                <i class="ri-file-pdf-line font-size-24"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body border-top py-3">
-                        <div class="text-truncate">
-                            <span class="text-muted ml-2"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media">
-                            <div class="media-body overflow-hidden">
-                                <p class="text-truncate font-size-14 mb-2">تعداد لاگ هوش مصنوعی</p>
-                                <h4 class="mb-0">{{all_ai_logs}}</h4>
-                            </div>
-                            <div class="text-success">
-                                <i class="  ri-robot-line font-size-24"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body border-top py-3">
-                        <div class="text-truncate">
-                            <span class="text-muted ml-2"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media">
-                            <div class="media-body overflow-hidden">
-                                <p class="text-truncate font-size-14 mb-2"> سوال ها در 24 ساعت گذشته</p>
-                                <h4 class="mb-0">{{last24_questions_logs}}</h4>
-                            </div>
-                            <div class="text-success">
-                                <i class="  ri-question-line font-size-24"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body border-top py-3">
-                        <div class="text-truncate">
-                            {% if previous24_questions_increase_percent > 0 %}
-                            <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
-                                    class="mdi mdi-menu-up"> </i> {{previous24_questions_increase_percent|absolute}}% </span>
-                            {% elif greeting == 0 %}
-                            <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
-                                {{previous24_questions_increase_percent|absolute}}% </span>
-                            {% else %}
-                            <span class="badge badge-soft-danger font-size-11 text" style="direction: ltr;"><i
-                                    class="mdi mdi-menu-down"> </i> {{previous24_questions_increase_percent|absolute}}% </span>
-                            {% endif %}
-                            <span class="text-muted ml-2">نسبت به روز قبل</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media">
-                            <div class="media-body overflow-hidden">
-                                <p class="text-truncate font-size-14 mb-2"> آزمون ساز در 24 ساعت گذشته</p>
-                                <h4 class="mb-0">{{last24_pdfs_logs}}</h4>
-                            </div>
-                            <div class="text-success">
-                                <i class="ri-file-pdf-line font-size-24"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body border-top py-3">
-                        <div class="text-truncate">
-                            {% if previous24_pdfs_increase_percent > 0 %}
-                            <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
-                                    class="mdi mdi-menu-up"> </i> {{previous24_pdfs_increase_percent|absolute}}% </span>
-                            {% elif greeting == 0 %}
-                            <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
-                                {{previous24_pdfs_increase_percent|absolute}}% </span>
-                            {% else %}
-                            <span class="badge badge-soft-danger font-size-11 text" style="direction: ltr;"><i
-                                    class="mdi mdi-menu-down"> </i> {{previous24_pdfs_increase_percent|absolute}}% </span>
-                            {% endif %}
-                            <span class="text-muted ml-2">نسبت به روز قبل</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media">
-                            <div class="media-body overflow-hidden">
-                                <p class="text-truncate font-size-14 mb-2"> هوش مصنوعی در 24 ساعت گذشته</p>
-                                <h4 class="mb-0">{{last24_ai_logs}}</h4>
-                            </div>
-                            <div class="text-success">
-                                <i class="  ri-robot-line font-size-24"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body border-top py-3">
-
-                    <div class="text-truncate">
-                        {% if previous24_ai_increase_percent > 0 %}
-                        <span class="badge badge-soft-success font-size-11 text" style="direction: ltr;"><i
-                                class="mdi mdi-menu-up"> </i> {{previous24_ai_increase_percent|absolute}}% </span>
-                        {% elif greeting == 0 %}
-                        <span class="badge badge-soft-secondary font-size-11 text" style="direction: ltr;">
-                            {{previous24_ai_increase_percent|absolute}}% </span>
-                        {% else %}
-                        <span class="badge badge-soft-danger font-size-11 text" style="direction: ltr;"><i
-                                class="mdi mdi-menu-down"> </i> {{previous24_ai_increase_percent|absolute}}% </span>
-                        {% endif %}
-                        <span class="text-muted ml-2">نسبت به روز قبل</span>
-                    </div>
-                </div>
-                </div>
-            </div>
-            
         </div>
         <!-- end row -->
     </div>

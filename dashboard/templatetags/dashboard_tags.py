@@ -5,7 +5,6 @@ register = template.Library()
 
 @register.filter
 def absolute(number):
-    print(number)
     return abs(number)
 
 @register.filter
