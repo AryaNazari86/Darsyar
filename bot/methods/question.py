@@ -32,7 +32,7 @@ def check_answer(message, chat_id, user_id):
     req = ai(question.text, question.answer, message['message'].get('text'))
 
     if not UserQuestionRel.objects.filter(user=user, question=question).exists():
-        pt = 100 * int(req['grade'])
+        pt = 100 * int(req['grade']) * 2
         rel = UserQuestionRel.objects.create(
             user=user, question=question, point=pt)
         rel.save()
