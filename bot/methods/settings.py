@@ -42,7 +42,7 @@ def add_invite(user_id, invitee_id):
         user.inviter = inviter
         user.save()
 
-        inviter.calculated_score += 3001 #1001
+        inviter.calculated_score += 1001
         inviter.save()
 
 def show_score(message, chat_id, user_id):
