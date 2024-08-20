@@ -1,7 +1,19 @@
 from django.db import models
-from datetime import datetime
 
 class User(models.Model):
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    
+    '''PLATFORM_CHOICES = [
+        ('TG', 'Telegram'),
+        ('BALE', 'Bale'),
+    ]
+    
+    platform = models.CharField(
+        max_length=10,
+        choices=PLATFORM_CHOICES,
+        default='BALE',
+    )'''
+
     user_id  = models.PositiveBigIntegerField(primary_key=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -24,6 +36,9 @@ class User(models.Model):
         on_delete=models.CASCADE,
         null = True
     )
+
+    '''class Meta:
+        unique_together = ('platform', 'user_id')'''
 
     def score(self):
         sc = 0
