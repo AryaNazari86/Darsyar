@@ -3,7 +3,7 @@ from django.db import models
 class User(models.Model):
     #id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     
-    '''PLATFORM_CHOICES = [
+    PLATFORM_CHOICES = [
         ('TG', 'Telegram'),
         ('BALE', 'Bale'),
     ]
@@ -12,9 +12,11 @@ class User(models.Model):
         max_length=10,
         choices=PLATFORM_CHOICES,
         default='BALE',
-    )'''
+    )
 
-    user_id  = models.PositiveBigIntegerField(primary_key=True)
+    id  = models.CharField(max_length=60, primary_key=True)#models.PositiveBigIntegerField(primary_key  = True)
+    user_id = models.PositiveBigIntegerField(null  = True)
+
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     
@@ -37,8 +39,8 @@ class User(models.Model):
         null = True
     )
 
-    '''class Meta:
-        unique_together = ('platform', 'user_id')'''
+    class Meta:
+        unique_together = ('platform', 'user_id')
 
     def score(self):
         sc = 0

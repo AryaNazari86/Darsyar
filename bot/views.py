@@ -35,6 +35,7 @@ import base64
 import matplotlib.dates as mdates
 import matplotlib.ticker as ticker
 from django.db import models  # Import models here
+from .credintials import CHANNEL_ID, PLATFORM
 
 matplotlib.use('Agg')
 
@@ -92,6 +93,8 @@ def bot(request):
 
             if (not User.objects.filter(user_id=user_id).exists()):
                 user = User.objects.create(
+                    id = PLATFORM + "_" + str(user_id) if (PLATFORM == "TG") else str(user_id) ,
+                    platform = PLATFORM,
                     user_id=user_id,
                     first_name=msg['from']['first_name'],
                     last_name=msg['from']['last_name']
@@ -103,6 +106,7 @@ def bot(request):
 
             else:
                 user = User.objects.get(
+                    platform = PLATFORM,
                     user_id=user_id
                 )
                 state = user.state > 0
@@ -111,7 +115,7 @@ def bot(request):
             req = requests.post(
                 API_URL + "getChatMember",
                 json.dumps({
-                    "chat_id": "5557386819",
+                    "chat_id": CHANNEL_ID,
                     "user_id": user_id
                 })
             ).json()
@@ -139,11 +143,11 @@ def bot(request):
             elif message.get('callback_query') and message['callback_query']['data'][0] == "b":
                 choose_unit(message, 1)
             elif message.get('callback_query') and message['callback_query']['data'][0] == "c":
-                new_question(message, 1)
+                new_question(message, 1, user_id)
             elif message.get('callback_query') and message['callback_query']['data'][0] == "C":
-                new_question(message, 0)
+                new_question(message, 0, user_id)
             elif message.get('callback_query') and message['callback_query']['data'][0] == "d":
-                new_test(message, request.build_absolute_uri('/'))
+                new_test(message, request.build_absolute_uri('/'), user_id)
             elif message.get('callback_query') and message['callback_query']['data'][0] == "h":
                 get_hint(message, chat_id, user_id)
             elif message.get('callback_query') and message['callback_query']['data'][0] == "4":

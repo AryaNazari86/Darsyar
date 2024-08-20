@@ -9,7 +9,7 @@ def score(obj):
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['user_id', name, 'grade', score]
+    list_display = ['id', name, 'grade', score]
     
 @admin.register(UserQuestionRel)
 class UserQuestionRelAdmin(admin.ModelAdmin):

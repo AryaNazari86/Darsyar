@@ -2,3 +2,5 @@ TOKEN = "1955676885:WB8GRhuUqHitq62rpeokOWDsX91EwovoBp5eGSO4"#"571613348:jxfa32I
 URL = "https://8910-217-170-243-177.ngrok-free.app"
 API_URL = f'https://tapi.bale.ai/bot{TOKEN}/'
 PLATFORM = "BALE"
+CHANNEL_ID = "5557386819"
+SUPPORT_USERNAME = ""

@@ -21,7 +21,7 @@ def log_requests(user, unit, question=0, t=0):
         format = f"#Hint {question}"
 
     # format = f"#question {question}" if (message['callback_query']['data'][0] == 'c' or message['callback_query']['data'][0] == 'C') else "#test"
-    # user = User.objects.get(user_id=int(message['callback_query']['from']['id']))
+    # user = User.objects.get( platform = PLATFORM,user_id=int(message['callback_query']['from']['id']))
     # unit = Unit.objects.get(id = int(message['callback_query']['data'][1:]))
 
     send(

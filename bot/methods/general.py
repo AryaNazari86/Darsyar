@@ -1,5 +1,6 @@
 import json
 from bot import strings
+from bot.credintials import PLATFORM
 from user.models import User
 from .api import *
 from content.models import Grade, Class, Unit, Question
@@ -69,7 +70,7 @@ def support(chat_id):
 
 
 def start(chat_id, user_id):
-    user = User.objects.get(user_id=user_id)
+    user = User.objects.get( platform = PLATFORM, user_id=user_id)
 
     send(
         'sendPhoto',

@@ -2,6 +2,7 @@ import json
 from django.http import FileResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from weasyprint import HTML
+from bot.credintials import PLATFORM
 from content.models import Unit
 from django.shortcuts import render
 from django.template import loader
@@ -34,7 +35,7 @@ def get_html(request, unit_id):
           return HttpResponse('ok')
   
 
-def new_test(message, url):
+def new_test(message, url, user_id):
   
   message_id = send(
     'editMessageText',
@@ -54,7 +55,7 @@ def new_test(message, url):
   ]
   response = requests.post(upload_url, files=files)
   fileurl = response.json()['data']['url'].replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/")
-  user = User.objects.get(user_id=message['callback_query']['from']['id'])
+  user = User.objects.get( platform = PLATFORM,user_id=message['callback_query']['from']['id'])
   send(
     'sendDocument',
     json.dumps({

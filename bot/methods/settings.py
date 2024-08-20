@@ -1,5 +1,6 @@
 import json
 from django.views.decorators.csrf import csrf_exempt
+from bot.credintials import PLATFORM
 from content.models import Grade, Class
 from bot import strings
 import persian
@@ -7,7 +8,7 @@ from .api import *
 from user.models import User
 
 def send_invite(user_id, chat_id):
-    user = User.objects.get(user_id = user_id)
+    user = User.objects.get( platform = PLATFORM,user_id = user_id)
 
     send(
         'sendMessage',
@@ -28,7 +29,7 @@ def send_invite(user_id, chat_id):
     )
 
 def add_invite(user_id, invitee_id):
-    user = User.objects.get(user_id = user_id)
+    user = User.objects.get( platform = PLATFORM,user_id = user_id)
 
     try:
         _ = int(invitee_id)
@@ -38,7 +39,7 @@ def add_invite(user_id, invitee_id):
 
     #print(valid and User.objects.filter(user_id = invitee_id).exists())
     if valid and User.objects.filter(user_id = invitee_id).exists():
-        inviter = User.objects.get(user_id=invitee_id)
+        inviter = User.objects.get( platform = PLATFORM,user_id=invitee_id)
         user.inviter = inviter
         user.save()
 
@@ -46,7 +47,7 @@ def add_invite(user_id, invitee_id):
         inviter.save()
 
 def show_score(message, chat_id, user_id):
-    user = User.objects.get(user_id=user_id)
+    user = User.objects.get( platform = PLATFORM,user_id=user_id)
     score = user.calculated_score
 
     counter = 1
@@ -67,7 +68,7 @@ def show_score(message, chat_id, user_id):
 
 
 def ask_role(message, user_id):
-    user = User.objects.get(user_id=user_id)
+    user = User.objects.get( platform = PLATFORM,user_id=user_id)
     user.is_student = message['callback_query']['data'][1:] == '1'
     user.save()
 
@@ -86,7 +87,7 @@ def ask_role(message, user_id):
 
 
 def choose_class(message, type, chat_id, user_id):
-    user = User.objects.get(user_id=user_id)
+    user = User.objects.get( platform = PLATFORM,user_id=user_id)
 
     send(
         'sendMessage',
@@ -125,7 +126,7 @@ def choose_unit(message, type):
 
 
 def update_grade(message, user_id):
-    user = User.objects.get(user_id=user_id)
+    user = User.objects.get( platform = PLATFORM,user_id=user_id)
     user.grade = Grade.objects.get(
         id=int(message['callback_query']['data'][1:]))
     user.save()

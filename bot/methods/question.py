@@ -1,4 +1,5 @@
 import json
+from bot.credintials import PLATFORM
 from user.models import User, UserQuestionRel
 from content.models import Unit, Question
 from bot import strings
@@ -18,7 +19,7 @@ def check_answer(message, chat_id, user_id):
       })
     )"""
 
-    user = User.objects.get(user_id=user_id)
+    user = User.objects.get( platform = PLATFORM,user_id=user_id)
     question = Question.objects.get(id=user.state)
 
     message_id = send(
@@ -57,7 +58,7 @@ def check_answer(message, chat_id, user_id):
 
 def switch_state(message, chat_id, user_id):
     # print(message['callback_query']['from']['id'])
-    user = User.objects.get(user_id=user_id)
+    user = User.objects.get( platform = PLATFORM,user_id=user_id)
     user.state = int(message['callback_query']['data'][1:])
     user.save()
 
@@ -107,7 +108,7 @@ def show_answer(message):
     )
 
 
-def new_question(message, first):
+def new_question(message, first, user_id):
     unit = Unit.objects.all().get(
         id=int(message['callback_query']['data'][1:]))
     q = randint(0, unit.questions.count()-1)
@@ -156,7 +157,7 @@ def new_question(message, first):
             })
         )
 
-    user = User.objects.get(user_id=message['callback_query']['from']['id'])
+    user = User.objects.get( platform = PLATFORM,user_id=message['callback_query']['from']['id'])
 
     log_requests(user, unit, unit.questions.all()[q].id, 0)
 
@@ -214,6 +215,6 @@ def get_hint(message, chat_id, user_id):
         })
     )
 
-    user = User.objects.get(user_id = user_id)
+    user = User.objects.get( platform = PLATFORM,user_id = user_id)
 
     log_requests(user, question.unit, question.id, 3)
