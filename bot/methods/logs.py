@@ -26,10 +26,10 @@ def log_requests(user, unit, question=0, t=0):
 
     send(
         'sendMessage',
-        json.dumps({
+        {
             "chat_id": "5868778639",
             "text": strings.log.format(format, user, user.user_id, user.grade, unit.class_rel, unit.name, question),
-        })
+        }
     )
 
     lg = LOG.objects.create(user=user, type=t)

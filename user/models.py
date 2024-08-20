@@ -18,7 +18,7 @@ class User(models.Model):
     user_id = models.PositiveBigIntegerField(null  = True)
 
     first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100, default = "", blank = True)
     
     grade = models.ForeignKey(
         'content.Grade',

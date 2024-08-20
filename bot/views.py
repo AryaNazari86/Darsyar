@@ -75,7 +75,7 @@ def bot(request):
     try:
         if request.method == 'POST':
             message = json.loads(request.body.decode('utf-8'))
-            # print(json.dumps(message, indent=4))
+            #print(json.dumps(message, indent=4))
 
             # Fetch data related to the message
             try:
@@ -97,7 +97,6 @@ def bot(request):
                     platform = PLATFORM,
                     user_id=user_id,
                     first_name=msg['from']['first_name'],
-                    last_name=msg['from']['last_name']
                 )
                 user.save()
 
@@ -114,10 +113,10 @@ def bot(request):
             # Check is user has joined the channel
             req = requests.post(
                 API_URL + "getChatMember",
-                json.dumps({
+                {
                     "chat_id": CHANNEL_ID,
                     "user_id": user_id
-                })
+                }
             ).json()
 
             if req['ok'] == False:
@@ -188,8 +187,10 @@ def bot(request):
 
 def bale_setwebhook(request):
     response = requests.post(
-        API_URL + "setWebhook?url=" + request.build_absolute_uri('/')
+        API_URL + "setWebhook?url=" + request.build_absolute_uri('/').replace('http', 'https')
     ).json()
+
+    print(API_URL + "setWebhook?url=" + request.build_absolute_uri('/'))
 
     return HttpResponse(f"{response}")
 
@@ -203,10 +204,10 @@ def send_leaderboard(request, number):
 
     send(
         'sendMessage',
-        json.dumps({
+        {
             "chat_id": "6210855232",
             "text": strings.leaderboard.format(result, persian.convert_en_numbers(number))
-        })
+        }
     )
 
     return HttpResponse(result)

@@ -1,9 +1,9 @@
 import requests
-from bot.credintials import TOKEN, API_URL, URL
+from bot.credintials import PLATFORM, TOKEN, API_URL, URL
 from bot import strings
 import json
 
-MENU = {
+MENU = json.dumps({
     "keyboard": [
         [
             {
@@ -32,11 +32,17 @@ MENU = {
             }
         ],
         ]
-}
+})
 
 
 def send(method, data):
-    req = requests.post(API_URL + method, data).json()
+    req = requests.post(
+        API_URL + method,
+        data
+    ).json()
+
+    #print(json.dumps(req, indent = 4))
+    
 
     try:
         return req['result']['message_id']

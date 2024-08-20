@@ -13,7 +13,7 @@ from .logs import *
 def check_answer(message, chat_id, user_id):
     """send(
       'sendChatAction',
-      json.dumps({
+      {
         "chat_id": message['message']['chat']['id'],
         "action": strings.making_pdf,
       })
@@ -24,10 +24,10 @@ def check_answer(message, chat_id, user_id):
 
     message_id = send(
         'sendMessage',
-        json.dumps({
+        {
             "chat_id": chat_id,
             "text": strings.wait,
-        })
+        }
     )
 
     req = ai(question.text, question.answer, message['message'].get('text'))
@@ -42,12 +42,12 @@ def check_answer(message, chat_id, user_id):
 
     send(
         'editMessageText',
-        json.dumps({
+        {
             "chat_id": chat_id,
             "message_id": message_id,
             "text": strings.ai_answer.format(persian.convert_en_numbers(req['grade']), req['feedback'], question.answer),
             "reply_markup": MENU
-        })
+        }
     )
 
     user.state = 0
@@ -64,10 +64,10 @@ def switch_state(message, chat_id, user_id):
 
     send(
         'sendMessage',
-        json.dumps({
+        {
             "chat_id": message['callback_query']['message']['chat']['id'],
             "text": strings.send_answer,
-        })
+        }
     )
 
     question = Question.objects.get(
@@ -75,10 +75,10 @@ def switch_state(message, chat_id, user_id):
     format = f"#AI {question.id}"
     send(
         'sendMessage',
-        json.dumps({
+        {
             "chat_id": "5868778639",
             "text": strings.log.format(format, user, user.user_id, user.grade, question.unit.class_rel, question.unit.name, question),
-        })
+        }
     )
 
 
@@ -88,11 +88,11 @@ def show_answer(message):
 
     send(
         'editMessageText',
-        json.dumps({
+        {
             "chat_id": message['callback_query']['message']['chat']['id'],
             "message_id": message['callback_query']['message']['message_id'],
             "text": strings.answer_text.format(question.text, question.answer),
-            "reply_markup": {
+            "reply_markup": json.dumps({
                 "inline_keyboard": [
                     [{
                         "text": strings.next_question,
@@ -103,8 +103,8 @@ def show_answer(message):
                         "callback_data": "6",
                     }]
                 ]
-            }
-        })
+            })
+        }
     )
 
 
@@ -115,13 +115,13 @@ def new_question(message, first, user_id):
 
     send(
         'sendPhoto',
-        json.dumps({
+        {
             "chat_id": message['callback_query']['message']['chat']['id'],
             "from_chat_id": "@darsyarchannel",
             "message_id": message['callback_query']['message']['message_id'],
             "photo": "1274620264:1017637785560620802:0:4a16c9d0851906fefa6b055f138b54ae3c7b7805ace94705",
             "caption": strings.question.format(unit, unit.questions.all()[q].text),
-            "reply_markup": {
+            "reply_markup": json.dumps({
                 "inline_keyboard": [
                     [{
                         "text": strings.show_answer,
@@ -144,17 +144,17 @@ def new_question(message, first, user_id):
                         "callback_data": "6",
                     }]
                 ]
-            }
-        })
+            })
+        }
     )
 
     if first:
         send(
             "deleteMessage",
-            json.dumps({
+            {
                 "chat_id": message['callback_query']['message']['chat']['id'],
                 "message_id": message['callback_query']['message']['message_id'],
-            })
+            }
         )
 
     user = User.objects.get( platform = PLATFORM,user_id=message['callback_query']['from']['id'])
@@ -164,10 +164,10 @@ def new_question(message, first, user_id):
 def get_hint(message, chat_id, user_id):
     message_id = send(
         'sendMessage',
-        json.dumps({
+        {
             "chat_id": chat_id,
             "text": strings.wait
-        })
+        }
     )
 
     question = Question.objects.get(
@@ -180,19 +180,19 @@ def get_hint(message, chat_id, user_id):
     
     send(
         'deleteMessage',
-        json.dumps({
+        {
             "chat_id": chat_id,
             "message_id": message_id,
-        })
+        }
     )
 
     send(
         'editMessageText',
-        json.dumps({
+        {
             "chat_id": chat_id,
             "message_id": message['callback_query']['message']['message_id'],#message_id,
             "text": strings.show_hint.format(question.text, question.hint),
-            "reply_markup": {
+            "reply_markup": json.dumps({
                 "inline_keyboard": [
                     [{
                         "text": strings.show_answer,
@@ -211,8 +211,8 @@ def get_hint(message, chat_id, user_id):
                         "callback_data": "6",
                     }]
                 ]
-            }
-        })
+            })
+        }
     )
 
     user = User.objects.get( platform = PLATFORM,user_id = user_id)
