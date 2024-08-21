@@ -1,5 +1,5 @@
 import json
-from bot.credintials import PLATFORM
+from bot.credintials import DARSYAR_QUESTION_FILE_ID, PLATFORM
 from user.models import User, UserQuestionRel
 from content.models import Unit, Question
 from bot import strings
@@ -119,7 +119,7 @@ def new_question(message, first, user_id):
             "chat_id": message['callback_query']['message']['chat']['id'],
             "from_chat_id": "@darsyarchannel",
             "message_id": message['callback_query']['message']['message_id'],
-            "photo": "1274620264:1017637785560620802:0:4a16c9d0851906fefa6b055f138b54ae3c7b7805ace94705",
+            "photo": DARSYAR_QUESTION_FILE_ID,
             "caption": strings.question.format(unit, unit.questions.all()[q].text),
             "reply_markup": json.dumps({
                 "inline_keyboard": [

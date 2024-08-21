@@ -75,7 +75,7 @@ def bot(request):
     try:
         if request.method == 'POST':
             message = json.loads(request.body.decode('utf-8'))
-            #print(json.dumps(message, indent=4))
+            print(json.dumps(message, indent=4))
 
             # Fetch data related to the message
             try:
@@ -185,7 +185,7 @@ def bot(request):
         return HttpResponse('ok')
 
 
-def bale_setwebhook(request):
+def setwebhook(request):
     response = requests.post(
         API_URL + "setWebhook?url=" + request.build_absolute_uri('/').replace('http', 'https')
     ).json()

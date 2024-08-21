@@ -36,12 +36,15 @@ MENU = json.dumps({
 
 
 def send(method, data):
+    if PLATFORM == "TG":
+        data['parse_mode'] = "Markdown"
+    
     req = requests.post(
         API_URL + method,
         data
     ).json()
 
-    #print(json.dumps(req, indent = 4))
+    print(json.dumps(req, indent = 4))
     
 
     try:

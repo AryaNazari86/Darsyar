@@ -1,6 +1,6 @@
 import json
 from django.views.decorators.csrf import csrf_exempt
-from bot.credintials import PLATFORM
+from bot.credintials import DARSYAR_GUIDE_FILE_ID, DARSYAR_SCORE_FILE_ID, PLATFORM
 from content.models import Grade, Class
 from bot import strings
 import persian
@@ -23,7 +23,7 @@ def send_invite(user_id, chat_id):
         'sendPhoto',
         {
             "chat_id": chat_id,
-            "photo": "1274620264:-8761291616849682688:0:e61885f6087179c8d7c2f54fcdd42a151a9ec6f7595b78a8",
+            "photo": DARSYAR_IMAGE_FILE_ID,
             "caption": strings.invite_text.format(str(user), user_id),
             "reply_markup": MENU,
         }
@@ -63,7 +63,7 @@ def show_score(message, chat_id, user_id):
         {
             "chat_id": chat_id,
             "from_chat_id": "@darsyarchannel",
-            "photo": "1274620264:-7778577532524028157:0:01eb81afd8161218738d56623aa1fedb",
+            "photo": DARSYAR_SCORE_FILE_ID,
             "caption": strings.score.format(persian.convert_en_numbers(score), persian.convert_en_numbers(counter)),
             "reply_markup": MENU
         }
@@ -149,7 +149,7 @@ def update_grade(message, user_id):
         {
             "chat_id": message['callback_query']['message']['chat']['id'],
             "from_chat_id": "@darsyarchannel",
-            "photo": "1274620264:-5975879736299086078:0:d2e8769499c774da902f88d87def11e2738d56623aa1fedb",
+            "photo": DARSYAR_GUIDE_FILE_ID,
             "caption": strings.guide,
             "reply_markup": MENU,
         }
