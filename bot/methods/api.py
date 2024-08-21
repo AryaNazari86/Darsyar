@@ -44,7 +44,7 @@ def send(method, data):
         data
     ).json()
 
-    print(json.dumps(req, indent = 4))
+    #print(json.dumps(req, indent = 4))
     
 
     try:

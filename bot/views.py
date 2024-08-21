@@ -75,7 +75,7 @@ def bot(request):
     try:
         if request.method == 'POST':
             message = json.loads(request.body.decode('utf-8'))
-            print(json.dumps(message, indent=4))
+            # print(json.dumps(message, indent=4))
 
             # Fetch data related to the message
             try:
@@ -91,7 +91,7 @@ def bot(request):
 
             state = 0
 
-            if (not User.objects.filter(user_id=user_id).exists()):
+            if (not User.objects.filter(user_id=user_id, platform=PLATFORM).exists()):
                 user = User.objects.create(
                     id = PLATFORM + "_" + str(user_id) if (PLATFORM == "TG") else str(user_id) ,
                     platform = PLATFORM,
@@ -108,6 +108,7 @@ def bot(request):
                     platform = PLATFORM,
                     user_id=user_id
                 )
+
                 state = user.state > 0
 
             # Check is user has joined the channel
