@@ -120,7 +120,7 @@ def bot(request):
                 }
             ).json()
 
-            if req['ok'] == False:
+            if req['ok'] == False or (req['result']['status'] in ("left", "banned", "restricted")):
                 join_channel(chat_id)
                 return HttpResponse('ok')
 
@@ -191,7 +191,7 @@ def setwebhook(request):
         API_URL + "setWebhook?url=" + request.build_absolute_uri('/').replace('http', 'https')
     ).json()
 
-    print(API_URL + "setWebhook?url=" + request.build_absolute_uri('/'))
+    # print(API_URL + "setWebhook?url=" + request.build_absolute_uri('/'))
 
     return HttpResponse(f"{response}")
 
