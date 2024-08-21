@@ -1,6 +1,6 @@
 import json
 from django.views.decorators.csrf import csrf_exempt
-from bot.credintials import DARSYAR_GUIDE_FILE_ID, DARSYAR_SCORE_FILE_ID, PLATFORM
+from bot.credintials import DARSYAR_GUIDE_FILE_ID, DARSYAR_IMAGE_FILE_ID, DARSYAR_SCORE_FILE_ID, PLATFORM
 from content.models import Grade, Class
 from bot import strings
 import persian
