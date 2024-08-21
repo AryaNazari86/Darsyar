@@ -1,6 +1,6 @@
 import json
 from bot import strings
-from bot.credintials import DARSYAR_GUIDE_FILE_ID, DARSYAR_IMAGE_FILE_ID, PLATFORM
+from bot.credintials import DARSYAR_GIF, DARSYAR_GUIDE_FILE_ID, DARSYAR_IMAGE_FILE_ID, PLATFORM
 from user.models import User
 from .api import *
 from content.models import Grade, Class, Unit, Question
@@ -94,7 +94,7 @@ def Sticker(chat_id):
         'sendAnimation',
         {
             "chat_id": chat_id,
-            "animation": "1409599563:-356479065845784830:1:1a9ec6f7595b78a8",
+            "animation": DARSYAR_GIF,
             "reply_markup": MENU
         }
     )
