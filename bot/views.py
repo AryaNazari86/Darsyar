@@ -75,7 +75,7 @@ def bot(request):
     try:
         if request.method == 'POST':
             message = json.loads(request.body.decode('utf-8'))
-            print(json.dumps(message, indent=4))
+            #print(json.dumps(message, indent=4))
 
             # Fetch data related to the message
             try:

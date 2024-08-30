@@ -36,4 +36,5 @@ def hint(question, answer):
 
     response = requests.request("POST", url, headers=headers, data=payload)
 
+    print(response)
     return response.text

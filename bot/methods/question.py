@@ -30,7 +30,17 @@ def check_answer(message, chat_id, user_id):
         }
     )
 
+    
+
     req = ai(question.text, question.answer, message['message'].get('text'))
+    
+    send(
+        'deleteMessage',
+        {
+            "chat_id": chat_id,
+            "message_id": message
+        }
+    )
 
     if not UserQuestionRel.objects.filter(user=user, question=question).exists():
         pt = 100 * int(req['grade'])
@@ -41,10 +51,9 @@ def check_answer(message, chat_id, user_id):
         user.save()
 
     send(
-        'editMessageText',
+        'sendMessage',
         {
             "chat_id": chat_id,
-            "message_id": message_id,
             "text": strings.ai_answer.format(persian.convert_en_numbers(req['grade']), req['feedback'], question.answer),
             "reply_markup": MENU
         }
