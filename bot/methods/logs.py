@@ -6,7 +6,7 @@ import persian
 from .api import *
 from user.models import User
 from bot.models import LOG
-
+from bot.credintials import log_gc
 
 def log_requests(user, unit, question=0, t=0):
     # print("log")
@@ -27,7 +27,7 @@ def log_requests(user, unit, question=0, t=0):
     send(
         'sendMessage',
         {
-            "chat_id": "5868778639",
+            "chat_id": log_gc,
             "text": strings.log.format(format, user, user.user_id, user.grade, unit.class_rel, unit.name, question),
         }
     )

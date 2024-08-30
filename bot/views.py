@@ -35,7 +35,7 @@ import base64
 import matplotlib.dates as mdates
 import matplotlib.ticker as ticker
 from django.db import models  # Import models here
-from .credintials import CHANNEL_ID, PLATFORM
+from .credintials import BOT_USERNAME, CHANNEL_ID, PLATFORM
 
 matplotlib.use('Agg')
 
@@ -75,7 +75,7 @@ def bot(request):
     try:
         if request.method == 'POST':
             message = json.loads(request.body.decode('utf-8'))
-            #print(json.dumps(message, indent=4))
+            # print(json.dumps(message, indent=4))        
 
             # Fetch data related to the message
             try:
@@ -88,6 +88,10 @@ def bot(request):
                 chat_id = message['callback_query']['message']['chat']['id']
                 msg = message['callback_query']['message']
                 type = 1
+
+            if (user_id != chat_id) and (type == 0) and not (BOT_USERNAME in message['message'].get('text')):
+                return HttpResponse('ok')
+                
 
             state = 0
 
