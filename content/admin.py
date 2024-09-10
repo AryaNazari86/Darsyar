@@ -1,5 +1,5 @@
 from django.contrib import admin
-from content.models import Grade, Class, Unit, Question, Source
+from content.models import Grade, Class, Unit, Question, Source, NotePackage
 
 def name(obj): 
     return str(obj)
@@ -26,6 +26,10 @@ class UnitAdmin(admin.ModelAdmin):
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ['id', name, 'unit', 'source']
+
+@admin.register(NotePackage)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ['id', 'class_rel', 'views', 'author']
 
 @admin.register(Source)
 class SourceAdmin(admin.ModelAdmin):

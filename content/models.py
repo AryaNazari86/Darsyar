@@ -62,3 +62,45 @@ class Source(models.Model):
 
     def __str__(self):
         return self.name
+
+class NotePackage(models.Model):
+    class_rel = models.ForeignKey(
+        "content.Class",
+        on_delete=models.CASCADE,
+        related_name="notes"
+    )
+    author = models.ForeignKey(
+        "user.User",
+        on_delete=models.CASCADE,
+        related_name="notes",
+        null = True,
+        blank = True
+    )
+
+    upvotes = models.ManyToManyField(
+        'user.User',
+        related_name='upvotes'
+    )
+
+    downvotes = models.ManyToManyField(
+        'user.User',
+        related_name='downvotes'
+    )
+
+    file_id = models.CharField(max_length = 100)
+    confirmed = models.BooleanField(default = False)
+    views = models.IntegerField(default = 0)
+
+    PLATFORM_CHOICES = [
+        ('TG', 'Telegram'),
+        ('BALE', 'Bale'),
+    ]
+    
+    platform = models.CharField(
+        max_length=10,
+        choices=PLATFORM_CHOICES,
+        default='BALE',
+    )
+
+    def rating(self):
+        return self.upvotes.count() - self.downvotes.count()

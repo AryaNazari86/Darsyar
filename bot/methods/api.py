@@ -17,6 +17,14 @@ MENU = json.dumps({
         ],
         [
             {
+                "text": strings.MenuStrings.note
+            },
+            {
+                "text": strings.MenuStrings.addnote
+            }
+        ],
+        [
+            {
                 "text": strings.MenuStrings.change_grade
             },
             {

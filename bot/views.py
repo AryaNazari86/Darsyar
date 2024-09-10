@@ -36,6 +36,7 @@ import matplotlib.dates as mdates
 import matplotlib.ticker as ticker
 from django.db import models  # Import models here
 from .credintials import BOT_USERNAME, CHANNEL_ID, PLATFORM
+from bot.methods.note import *
 
 matplotlib.use('Agg')
 
@@ -75,7 +76,7 @@ def bot(request):
     try:
         if request.method == 'POST':
             message = json.loads(request.body.decode('utf-8'))
-            # print(json.dumps(message, indent=4))        
+            print(json.dumps(message, indent=4))        
 
             # Fetch data related to the message
             try:
@@ -113,7 +114,7 @@ def bot(request):
                     user_id=user_id
                 )
 
-                state = user.state > 0
+                state = user.state
 
             # Check is user has joined the channel
             req = requests.post(
@@ -128,16 +129,24 @@ def bot(request):
                 join_channel(chat_id)
                 return HttpResponse('ok')
 
-            
 
-            # Creates user if doesn't exist
-            
-
-            if state:
+            if state > 0:
                 check_answer(message, chat_id, user_id)
+            if state < 0:
+                receive_note(chat_id, user_id, msg)
 
+            elif message.get('callback_query') and message.get('callback_query')['data'][0] == "@":
+                report(chat_id, msg, message['callback_query']['data'][1:])
+            elif message.get('callback_query') and message.get('callback_query')['data'] == "^":
+                reset_state(chat_id, user_id)
+            elif message.get('callback_query') and message.get('callback_query')['data'] == "!":
+                help(chat_id)
             elif message.get('callback_query') and message.get('callback_query')['data'] == "-":
                 start(chat_id, user_id)
+            elif message.get('callback_query') and message['callback_query']['data'][0] == "&":
+                upvote_note(chat_id, user_id, message['callback_query']['data'][1:])
+            elif message.get('callback_query') and message['callback_query']['data'][0] == "*":
+                downvote_note(chat_id, user_id, message['callback_query']['data'][1:])
             elif message.get('callback_query') and message.get('callback_query')['data'][0] == "0":
                 ask_role(message, user_id)
             elif message.get('callback_query') and message['callback_query']['data'][0] == "1":
@@ -146,6 +155,10 @@ def bot(request):
                 choose_unit(message, 0)
             elif message.get('callback_query') and message['callback_query']['data'][0] == "b":
                 choose_unit(message, 1)
+            elif message.get('callback_query') and message['callback_query']['data'][0] == "n":
+                send_note(chat_id, message['callback_query']['data'][1:])
+            elif message.get('callback_query') and message['callback_query']['data'][0] == "m":
+                add_note(chat_id, user_id, message['callback_query']['data'][1:])
             elif message.get('callback_query') and message['callback_query']['data'][0] == "c":
                 new_question(message, 1, user_id)
             elif message.get('callback_query') and message['callback_query']['data'][0] == "C":
@@ -169,6 +182,10 @@ def bot(request):
                 choose_class(message, 0, chat_id, user_id)
             elif message.get('message') and message['message'].get('text') == strings.MenuStrings.new_test or message['message'].get('text') == '/test':
                 choose_class(message, 1, chat_id, user_id)
+            elif message.get('message') and message['message'].get('text') == strings.MenuStrings.note or message['message'].get('text') == '/note':
+                choose_class_note(chat_id, user_id)
+            elif message.get('message') and message['message'].get('text') == strings.MenuStrings.addnote or message['message'].get('text') == '/addnote':
+                choose_class_addnote(chat_id, user_id)
             elif message.get('message') and message['message'].get('text') == strings.MenuStrings.show_score:
                 show_score(message, chat_id, user_id)
             elif message.get('message') and message['message'].get('text') == strings.MenuStrings.change_grade:

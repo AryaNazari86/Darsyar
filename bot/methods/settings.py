@@ -6,7 +6,7 @@ from bot import strings
 import persian
 from .api import *
 from user.models import User
-
+from bot.methods.general import help
 
 def send_invite(user_id, chat_id):
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
@@ -105,6 +105,12 @@ def choose_class(message, type, chat_id, user_id):
         }
     )
 
+def reset_state(chat_id, user_id):
+    user = User.objects.get(platform=PLATFORM, user_id=user_id)
+    user.state = 0
+    user.save()
+
+    help(chat_id)
 
 def choose_unit(message, type):
     cls = Class.objects.all().get(
