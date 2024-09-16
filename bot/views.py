@@ -132,13 +132,13 @@ def bot(request):
 
             if state > 0:
                 check_answer(message, chat_id, user_id)
-            if state < 0:
+            elif message.get('callback_query') and message.get('callback_query')['data'] == "^":
+                reset_state(chat_id, user_id)
+            elif state < 0:
                 receive_note(chat_id, user_id, msg)
 
             elif message.get('callback_query') and message.get('callback_query')['data'][0] == "@":
                 report(chat_id, msg, message['callback_query']['data'][1:])
-            elif message.get('callback_query') and message.get('callback_query')['data'] == "^":
-                reset_state(chat_id, user_id)
             elif message.get('callback_query') and message.get('callback_query')['data'] == "!":
                 help(chat_id)
             elif message.get('callback_query') and message.get('callback_query')['data'] == "-":

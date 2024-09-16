@@ -161,7 +161,8 @@ def receive_note(chat_id, user_id, msg):
                 "caption": f"ℹ️: {note.id}\n👤 {note.author.user_id}",
             }
         )
-    except:
+    except Exception as e:
+        print(e)
         send(
             'sendMessage',
             {
