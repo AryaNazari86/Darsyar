@@ -209,7 +209,7 @@ def bot(request):
 
 def setwebhook(request):
     response = requests.post(
-        API_URL + "setWebhook?url=" + request.build_absolute_uri('/').replace('http', 'https')
+        API_URL + "setWebhook?url=" + request.build_absolute_uri('/')#.replace('http', 'https')
     ).json()
 
     # print(API_URL + "setWebhook?url=" + request.build_absolute_uri('/'))
