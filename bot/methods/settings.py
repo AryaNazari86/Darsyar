@@ -92,6 +92,11 @@ def ask_role(message, user_id):
 def choose_class(message, type, chat_id, user_id):
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
 
+    classes = []
+    for i in user.grade.classes.all():
+        if i.count_questions() > 0:
+            classes.append(i)
+
     send(
         'sendMessage',
         {
@@ -99,7 +104,7 @@ def choose_class(message, type, chat_id, user_id):
             "text": strings.choose_class,
             "reply_markup": json.dumps({
                 "inline_keyboard": [
-                    [{"text": cls.name, "callback_data": chr(ord('a') + type) + str(cls.id)}] for cls in user.grade.classes.all()
+                    [{"text": cls.name, "callback_data": chr(ord('a') + type) + str(cls.id)}] for cls in classes
                 ]
             })
         }
@@ -115,9 +120,15 @@ def reset_state(chat_id, user_id):
 def choose_unit(message, type):
     cls = Class.objects.all().get(
         id=int(message['callback_query']['data'][1:]))
+    
     counter = 0
     for unit in cls.units.all():
         counter += unit.questions.count()
+
+    units = []
+    for i in cls.units.all():
+        if i.questions.count() > 0:
+            units.append(i)
 
     send(
         'editMessageText',
@@ -127,7 +138,7 @@ def choose_unit(message, type):
             "text": strings.choose_unit.format(cls, persian.convert_en_numbers(counter)),
             "reply_markup": json.dumps({
                 "inline_keyboard": [
-                    [{"text": unit.name, "callback_data": chr(ord('c') + type) + str(unit.id)}] for unit in cls.units.all()
+                    [{"text": unit.name, "callback_data": chr(ord('c') + type) + str(unit.id)}] for unit in units
                 ]
             })
         }
