@@ -20,6 +20,12 @@ class Class(models.Model):
         for unit in self.units.all():
             counter += unit.questions.count()
         return counter
+    
+    def has_questions(self):
+        for unit in self.units.all():
+            if unit.questions.count() > 0:
+                return True
+        return False
 
     def __str__(self):
         return self.name
