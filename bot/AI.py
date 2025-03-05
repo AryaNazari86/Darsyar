@@ -38,3 +38,19 @@ def hint(question, answer):
 
     print(response)
     return response.text
+
+def tutor(question):
+    url = "https://darsyar.pythonanywhere.com/darsyar/tutor"
+
+    payload = json.dumps({
+        "question": question,
+    })
+    
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    print(response)
+    return response.text

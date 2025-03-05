@@ -15,6 +15,7 @@ from bot import strings
 from django.shortcuts import render
 from .methods.general import *
 from .methods.test import *
+from .methods.tutor import ask_tutor
 from .methods.question import *
 from .methods.settings import *
 from .scraper import scrape
@@ -37,7 +38,7 @@ import matplotlib.ticker as ticker
 from django.db import models  # Import models here
 from .credintials import BOT_USERNAME, CHANNEL_ID, PLATFORM
 from bot.methods.note import *
-
+from .AI import tutor
 matplotlib.use('Agg')
 
 
@@ -76,7 +77,7 @@ def bot(request):
     try:
         if request.method == 'POST':
             message = json.loads(request.body.decode('utf-8'))
-            print(json.dumps(message, indent=4))        
+            #print(json.dumps(message, indent=4))        
 
             # Fetch data related to the message
             try:
@@ -198,7 +199,10 @@ def bot(request):
                 send_invite(user_id, chat_id)
 
             else:
-                Sticker(chat_id)
+                if (type == 0): 
+                    ask_tutor(message, chat_id)
+                else: 
+                    Sticker(chat_id)
 
         return HttpResponse('ok')
 
