@@ -97,6 +97,7 @@ def bot(request):
 
             state = 0
 
+            # Check if user exists
             if (not User.objects.filter(user_id=user_id, platform=PLATFORM).exists()):
                 user = User.objects.create(
                     id = PLATFORM + "_" + str(user_id) if (PLATFORM == "TG") else str(user_id) ,
@@ -117,7 +118,7 @@ def bot(request):
 
                 state = user.state
 
-            # Check is user has joined the channel
+            # Check if user has joined the channel
             req = requests.post(
                 API_URL + "getChatMember",
                 {
@@ -125,7 +126,6 @@ def bot(request):
                     "user_id": user_id
                 }
             ).json()
-
             if req['ok'] == False or (req['result']['status'] in ("left", "banned", "restricted")):
                 join_channel(chat_id)
                 return HttpResponse('ok')

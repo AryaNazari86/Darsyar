@@ -23,7 +23,8 @@ class User(models.Model):
     grade = models.ForeignKey(
         'content.Grade',
         on_delete=models.CASCADE,
-        null = True,
+        null = True, 
+        default = 1
     )
 
     is_student = models.BooleanField(default = 1)
