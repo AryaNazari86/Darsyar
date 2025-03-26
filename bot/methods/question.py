@@ -186,6 +186,8 @@ def get_hint(message, chat_id, user_id):
     if question.hint == None:
         question.hint = hint(question.text, question.answer)
         question.save()
+
+    print(question.hint)
     
     send(
         'deleteMessage',
@@ -196,7 +198,15 @@ def get_hint(message, chat_id, user_id):
     )
 
     send(
-        'editMessageText',
+        'deleteMessage',
+        {
+            "chat_id": chat_id,
+            "message_id": message['callback_query']['message']['message_id'],#message_id,
+        }
+    )
+
+    send(
+        'sendMessage',
         {
             "chat_id": chat_id,
             "message_id": message['callback_query']['message']['message_id'],#message_id,
