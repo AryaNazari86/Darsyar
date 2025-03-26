@@ -23,6 +23,8 @@ def ask_tutor(message, chat_id):
     text = message['message']['text']
 
     response = tutor(text)
+
+    response += "\n\n⚠️ مسئولیت محتوای تولید شده برعهده کاربر است."
     
     send(
         'deleteMessage',
