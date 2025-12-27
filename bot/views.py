@@ -216,7 +216,9 @@ def setwebhook(request):
         API_URL + "setWebhook?url=" + request.build_absolute_uri('/')#.replace('http', 'https')
     ).json()
 
-    # print(API_URL + "setWebhook?url=" + request.build_absolute_uri('/'))
+    """print("XFP:", request.META.get("HTTP_X_FORWARDED_PROTO"))
+    print("is_secure:", request.is_secure())
+    print("absolute:", request.build_absolute_uri("/"))"""
 
     return HttpResponse(f"{response}")
 

@@ -26,13 +26,19 @@ SECRET_KEY = 'django-insecure-&!5y8)=ivdo58hl#=v(87o^t1gtzy+6p-ppu0%c$o753!_9-)m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
+
 ALLOWED_HOSTS = ['7a9a-2604-3d08-5b7b-1330-4c2f-77db-3e6f-f99f.ngrok-free.app', 'localhost', '127.0.0.1', '*']
 
 CORS_ALLOWED_ORIGINS = [
+    "https://api.darsyar.net",
     "https://7a9a-2604-3d08-5b7b-1330-4c2f-77db-3e6f-f99f.ngrok-free.app",
 ]
 CSRF_TRUSTED_ORIGINS = [
+    "https://api.darsyar.net",
     "https://7a9a-2604-3d08-5b7b-1330-4c2f-77db-3e6f-f99f.ngrok-free.app",
+    "https://54a1787a61d1.ngrok-free.app"
 ]
 
 # Application definition
