@@ -36,7 +36,7 @@ def hint(question, answer):
 
     response = requests.request("POST", url, headers=headers, data=payload)
 
-    print(response)
+    #print(response)
     return response.text
 
 def tutor(question):
@@ -52,5 +52,5 @@ def tutor(question):
 
     response = requests.request("POST", url, headers=headers, data=payload)
 
-    print(response)
+    #print(response)
     return response.text

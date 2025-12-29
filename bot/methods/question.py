@@ -187,7 +187,7 @@ def get_hint(message, chat_id, user_id):
         question.hint = hint(question.text, question.answer)
         question.save()
 
-    print(question.hint)
+    #print(question.hint)
     
     send(
         'deleteMessage',
@@ -204,12 +204,13 @@ def get_hint(message, chat_id, user_id):
             "message_id": message['callback_query']['message']['message_id'],#message_id,
         }
     )
+    
 
     send(
         'sendMessage',
         {
             "chat_id": chat_id,
-            "message_id": message['callback_query']['message']['message_id'],#message_id,
+            #"reply_to_message_id": message['callback_query']['message']['message_id'],#message_id,
             "text": strings.show_hint.format(question.text, question.hint),
             "reply_markup": json.dumps({
                 "inline_keyboard": [

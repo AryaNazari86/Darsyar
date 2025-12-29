@@ -58,8 +58,12 @@ def new_test(message, url, user_id):
     response = requests.post(upload_url, files=files)
     fileurl = response.json()['data']['url'].replace(
         "https://tmpfiles.org/", "https://tmpfiles.org/dl/")
+    
+    print(fileurl)
+    
     user = User.objects.get(
         platform=PLATFORM, user_id=message['callback_query']['from']['id'])
+    
     send(
         'sendDocument',
         {

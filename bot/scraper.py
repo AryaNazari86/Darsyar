@@ -18,8 +18,9 @@ def scrape(cls, source, link):
         soup = soup.select_one('#text-3 > main > article:nth-child(1) > div > div.accessibility-plugin-ac.entry-content.post')
         try:
             name = soup.find(attrs={'class': 'center app-off more-off'})
-        except:
+        except: 
             continue
+        
         soup = soup.find_all('p')
         name = name.find_all('p')[-1].find('strong').text
         
@@ -29,31 +30,32 @@ def scrape(cls, source, link):
         
         counter2 = 0
         for question in soup:
-            if question.text.find('پاسخ:') == -1 and question.text.find('جواب:') == -1:
-                continue
+            try:
+                if question.text.find('پاسخ:') == -1 and question.text.find('جواب:') == -1:
+                    continue
 
-            splitting_text = "پاسخ:" if question.text.find('پاسخ:') != -1 else "جواب:"
-                
-            counter2 += 1
-            question = question.text.split(splitting_text)
-        
-            temp = question[0].split('-')
-            if len(temp[0]) >= 5:
-                temp = question[0].split('_')
+                splitting_text = "پاسخ:" if question.text.find('پاسخ:') != -1 else "جواب:"
+                    
+                counter2 += 1
+                question = question.text.split(splitting_text)
             
-            question[0] = ''
-            for i in range(1 if (len(temp) > 1) else 0, len(temp)):
-                question[0] += temp[i]
+                temp = question[0].split('-')
+                if len(temp[0]) >= 5:
+                    temp = question[0].split('_')
+                
+                question[0] = ''
+                for i in range(1 if (len(temp) > 1) else 0, len(temp)):
+                    question[0] += temp[i]
 
-            question = Question.objects.create(
-                text=question[0].strip(), 
-                answer=question[-1].strip(), 
-                unit = unit, 
-                source = source
-            )
-            question.save()
-
-        
+                question = Question.objects.create(
+                    text=question[0].strip(), 
+                    answer=question[-1].strip(), 
+                    unit = unit, 
+                    source = source
+                )
+                question.save()
+            except: continue
+            
         counter += counter2 
         print(f"unit {unit.name} completed!")
 

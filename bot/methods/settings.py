@@ -91,7 +91,7 @@ def ask_role(message, user_id):
 
 def choose_class(message, type, chat_id, user_id):
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
-    print(user)
+    #print(user)
 
     classes = []
     for i in user.grade.classes.all():
