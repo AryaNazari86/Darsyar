@@ -74,6 +74,7 @@ def scrape_hamyar(request):
 
 @csrf_exempt
 def bot(request):
+    print("request received")
     try:
         if request.method == 'POST':
             message = json.loads(request.body.decode('utf-8'))
@@ -130,7 +131,6 @@ def bot(request):
                 join_channel(chat_id)
                 return HttpResponse('ok')
             
-            print("request ----")
 
             if state > 0:
                 check_answer(message, chat_id, user_id)
