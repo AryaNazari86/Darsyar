@@ -91,14 +91,13 @@ def ask_role(message, user_id):
 
 def choose_class(message, type, chat_id, user_id):
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
-    #print(user)
 
     classes = []
     for i in user.grade.classes.all():
         if i.has_questions():
             classes.append(i)
 
-    send(
+    print(send(
         'sendMessage',
         {
             "chat_id": chat_id,
@@ -109,7 +108,7 @@ def choose_class(message, type, chat_id, user_id):
                 ]
             })
         }
-    )
+    ))
 
 def reset_state(chat_id, user_id):
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
@@ -131,7 +130,7 @@ def choose_unit(message, type):
         if i.questions.count() > 0:
             units.append(i)
 
-    send(
+    print(send(
         'editMessageText',
         {
             "chat_id": message['callback_query']['message']['chat']['id'],
@@ -143,7 +142,7 @@ def choose_unit(message, type):
                 ]
             })
         }
-    )
+    ))
 
 
 def update_grade(message, user_id):
