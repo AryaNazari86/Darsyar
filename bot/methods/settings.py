@@ -98,7 +98,7 @@ def choose_class(message, type, chat_id, user_id):
         if i.has_questions():
             classes.append(i)
 
-    print(send(
+    print(json.dumps(send(
         'sendMessage',
         {
             "chat_id": chat_id,
@@ -109,7 +109,7 @@ def choose_class(message, type, chat_id, user_id):
                 ]
             })
         }
-    ))
+    ), indent=4))
 
 def reset_state(chat_id, user_id):
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
