@@ -74,7 +74,7 @@ def scrape_hamyar(request):
 
 @csrf_exempt
 def bot(request):
-    print("Received a request", flush =True)
+    #print("Received a request", flush =True)
 
     try:
         if request.method == 'POST':
