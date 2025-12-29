@@ -227,7 +227,7 @@ def setwebhook(request):
 
 def send_leaderboard(request, number):
     result = ""
-    ranking = User.objects.order_by('calculated_score').reverse()
+    ranking = list(User.objects.order_by('-calculated_score', 'id')[:number])
 
     for i in range(1, number+1):
         result += f"{persian.convert_en_numbers(str(i))}. {str(ranking[i-1])} ({persian.convert_en_numbers(str(ranking[i-1].calculated_score))} امتیاز)\n"
