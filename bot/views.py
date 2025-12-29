@@ -129,7 +129,8 @@ def bot(request):
             if req['ok'] == False or (req['result']['status'] in ("left", "banned", "restricted")):
                 join_channel(chat_id)
                 return HttpResponse('ok')
-
+            
+            print("request ----")
 
             if state > 0:
                 check_answer(message, chat_id, user_id)
