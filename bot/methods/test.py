@@ -1,16 +1,12 @@
 import json
 from django.http import FileResponse, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 from weasyprint import HTML
 from bot.credintials import PLATFORM
 from content.models import Unit
 from django.shortcuts import render
-from django.template import loader
 from persiantools.jdatetime import JalaliDateTime
-from asgiref.sync import async_to_sync
 import pytz
 import tempfile
-from random import randint
 import random
 from .logs import log_requests
 from user.models import User
@@ -60,7 +56,7 @@ def new_test(message, url, user_id):
         "https://tmpfiles.org/", "https://tmpfiles.org/dl/")
     
     print(fileurl)
-    
+
     user = User.objects.get(
         platform=PLATFORM, user_id=message['callback_query']['from']['id'])
     
