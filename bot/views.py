@@ -230,7 +230,7 @@ def send_leaderboard(request, number):
     ranking = User.objects.order_by('calculated_score').reverse()
 
     for i in range(1, number+1):
-        result += f"{persian.convert_en_numbers(i)}. {str(ranking[i-1])} ({persian.convert_en_numbers(ranking[i-1].calculated_score)} امتیاز)\n"
+        result += f"{persian.convert_en_numbers(str(i))}. {str(ranking[i-1])} ({persian.convert_en_numbers(ranking[i-1].calculated_score)} امتیاز)\n"
 
     send(
         'sendMessage',

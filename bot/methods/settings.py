@@ -138,7 +138,7 @@ def choose_unit(message, type):
             {
                 "chat_id": message['callback_query']['message']['chat']['id'],
                 "message_id": message['callback_query']['message']['message_id'],
-                "text": strings.choose_unit.format(cls, persian.convert_en_numbers(counter)),
+                "text": strings.choose_unit.format(cls, persian.convert_en_numbers(str(counter))),
                 "reply_markup": json.dumps({
                     "inline_keyboard": [
                         [{"text": unit.name, "callback_data": chr(ord('c') + type) + str(unit.id)}] for unit in units
