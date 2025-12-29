@@ -74,6 +74,9 @@ def scrape_hamyar(request):
 
 @csrf_exempt
 def bot(request):
+    try: print("Received a request")
+    except: print("Couldn't print request")
+    
     try:
         if request.method == 'POST':
             message = json.loads(request.body.decode('utf-8'))
@@ -204,7 +207,7 @@ def bot(request):
                 else: 
                     Sticker(chat_id)
 
-        return HttpResponse('salam')
+        return HttpResponse('ok')
 
     except Exception as e:
         print(e)
