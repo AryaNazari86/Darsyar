@@ -92,6 +92,8 @@ def switch_state(message, chat_id, user_id):
 
 
 def show_answer(message):
+    print(json.dumps(message, indent=4))
+    
     try:
         question = Question.objects.get(
             id=int(message['callback_query']['data'][1:]))
