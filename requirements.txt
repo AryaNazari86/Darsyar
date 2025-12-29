@@ -8,3 +8,4 @@ WeasyPrint
 persiantools
 bs4
 matplotlib
+pytz
