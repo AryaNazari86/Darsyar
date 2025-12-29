@@ -90,7 +90,6 @@ def ask_role(message, user_id):
 
 
 def choose_class(message, type, chat_id, user_id):
-    print("Choose Class")
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
 
     classes = []
@@ -98,7 +97,7 @@ def choose_class(message, type, chat_id, user_id):
         if i.has_questions():
             classes.append(i)
 
-    print(json.dumps(send(
+    send(
         'sendMessage',
         {
             "chat_id": chat_id,
@@ -109,7 +108,7 @@ def choose_class(message, type, chat_id, user_id):
                 ]
             })
         }
-    ), indent=4))
+    )
 
 def reset_state(chat_id, user_id):
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
@@ -120,23 +119,18 @@ def reset_state(chat_id, user_id):
 
 def choose_unit(message, type):
     print("Choose Unit")
-    try:
-        cls = Class.objects.all().get(
-            id=int(message['callback_query']['data'][1:]))
-    except:
-        print("cls not found")
 
-    try:
-        counter = 0
-        for unit in cls.units.all():
-            counter += unit.questions.count()
+    cls = Class.objects.all().get(
+        id=int(message['callback_query']['data'][1:]))
 
-        units = []
-        for i in cls.units.all():
-            if i.questions.count() > 0:
-                units.append(i)
-    except:
-        print("second part problem")
+    counter = 0
+    for unit in cls.units.all():
+        counter += unit.questions.count()
+
+    units = []
+    for i in cls.units.all():
+        if i.questions.count() > 0:
+            units.append(i)
 
     try:
         print(json.dumps(send(
@@ -152,7 +146,8 @@ def choose_unit(message, type):
                 })
             }
         ), indent=4))
-    except:
+    except Exception as e:
+        print(e)
         print("third part problem")
 
 

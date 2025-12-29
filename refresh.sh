@@ -1,24 +1,16 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
-# Always run from the script's directory (repo root)
-cd "$(dirname "$0")"
-
-echo "==> Pulling latest code..."
+echo ">>> Running: git pull"
 git pull
 
-echo "==> Stopping/removing container (if it exists)..."
-podman rm -f darsyar_cont >/dev/null 2>&1 || true
+echo ">>> Running: podman kill darsyar_cont"
+podman kill darsyar_cont
 
-echo "==> Building image..."
-podman image build -t darsyar_image -f ./dockerfile .
+echo ">>> Running: podman rm darsyar_cont"
+podman rm darsyar_cont
 
-echo "==> Starting container..."
-podman run -d \
-  -e PYTHONUNBUFFERED=1 \
-  -p 6868:6868 \
-  --name darsyar_cont \
-  darsyar_image
+echo ">>> Running: podman image build -t darsyar_image ./ -f ./dockerfile"
+podman image build -t darsyar_image ./ -f ./dockerfile
 
-echo "==> Done."
-podman ps --filter name=darsyar_cont
+echo ">>> Running: podman run -d -p 6868:6868 --name darsyar_cont darsyar_image"
+podman run -d -p 6868:6868 --name darsyar_cont darsyar_image
