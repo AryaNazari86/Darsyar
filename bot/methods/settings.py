@@ -132,7 +132,7 @@ def choose_unit(message, type):
         if i.questions.count() > 0:
             units.append(i)
 
-    print(send(
+    print(json.dumps(send(
         'editMessageText',
         {
             "chat_id": message['callback_query']['message']['chat']['id'],
@@ -144,7 +144,7 @@ def choose_unit(message, type):
                 ]
             })
         }
-    ))
+    ), indent=4))
 
 
 def update_grade(message, user_id):
