@@ -54,7 +54,7 @@ def check_answer(message, chat_id, user_id):
         'sendMessage',
         {
             "chat_id": chat_id,
-            "text": strings.ai_answer.format(persian.convert_en_numbers(req['grade']), req['feedback'], question.answer),
+            "text": strings.ai_answer.format(persian.convert_en_numbers(str(req['grade'])), req['feedback'], question.answer),
             "reply_markup": MENU
         }
     )

@@ -64,7 +64,7 @@ def show_score(message, chat_id, user_id):
             "chat_id": chat_id,
             "from_chat_id": "@darsyarchannel",
             "photo": DARSYAR_SCORE_FILE_ID,
-            "caption": strings.score.format(persian.convert_en_numbers(score), persian.convert_en_numbers(counter)),
+            "caption": strings.score.format(persian.convert_en_numbers(str(score)), persian.convert_en_numbers(str(counter))),
             "reply_markup": MENU
         }
     )

@@ -65,7 +65,7 @@ def send_note(chat_id, cls_id):
         {
             "chat_id": chat_id,
             "document": note.file_id,
-            "caption": strings.note_caption.format(cls.name, note.author, persian.convert_en_numbers(note.views), persian.convert_en_numbers(note.rating())),
+            "caption": strings.note_caption.format(cls.name, note.author, persian.convert_en_numbers(str(note.views)), persian.convert_en_numbers(str(note.rating()))),
             "reply_markup": json.dumps({
                 "inline_keyboard": [
                     [

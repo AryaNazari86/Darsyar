@@ -230,13 +230,13 @@ def send_leaderboard(request, number):
     ranking = User.objects.order_by('calculated_score').reverse()
 
     for i in range(1, number+1):
-        result += f"{persian.convert_en_numbers(str(i))}. {str(ranking[i-1])} ({persian.convert_en_numbers(ranking[i-1].calculated_score)} امتیاز)\n"
+        result += f"{persian.convert_en_numbers(str(i))}. {str(ranking[i-1])} ({persian.convert_en_numbers(str(ranking[i-1].calculated_score))} امتیاز)\n"
 
     send(
         'sendMessage',
         {
             "chat_id": "6210855232",
-            "text": strings.leaderboard.format(result, persian.convert_en_numbers(number))
+            "text": strings.leaderboard.format(result, persian.convert_en_numbers(str(number)))
         }
     )
 
