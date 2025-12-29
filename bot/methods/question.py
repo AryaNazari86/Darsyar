@@ -92,29 +92,32 @@ def switch_state(message, chat_id, user_id):
 
 
 def show_answer(message):
-    question = Question.objects.get(
-        id=int(message['callback_query']['data'][1:]))
+    try:
+        question = Question.objects.get(
+            id=int(message['callback_query']['data'][1:]))
 
-    send(
-        'editMessageText',
-        {
-            "chat_id": message['callback_query']['message']['chat']['id'],
-            "message_id": message['callback_query']['message']['message_id'],
-            "text": strings.answer_text.format(question.text, question.answer),
-            "reply_markup": json.dumps({
-                "inline_keyboard": [
-                    [{
-                        "text": strings.next_question,
-                        "callback_data": "C" + str(question.unit.id),
-                    }],
-                    [{
-                        "text": strings.show_help,
-                        "callback_data": "6",
-                    }]
-                ]
-            })
-        }
-    )
+        print(send(
+            'editMessageText',
+            {
+                "chat_id": message['callback_query']['message']['chat']['id'],
+                "message_id": message['callback_query']['message']['message_id'],
+                "text": strings.answer_text.format(question.text, question.answer),
+                "reply_markup": json.dumps({
+                    "inline_keyboard": [
+                        [{
+                            "text": strings.next_question,
+                            "callback_data": "C" + str(question.unit.id),
+                        }],
+                        [{
+                            "text": strings.show_help,
+                            "callback_data": "6",
+                        }]
+                    ]
+                })
+            }
+        ))
+    except Exception as e:
+        print(e)
 
 
 def new_question(message, first, user_id):

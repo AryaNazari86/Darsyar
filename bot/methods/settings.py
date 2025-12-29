@@ -118,8 +118,6 @@ def reset_state(chat_id, user_id):
     help(chat_id)
 
 def choose_unit(message, type):
-    print("Choose Unit")
-
     cls = Class.objects.all().get(
         id=int(message['callback_query']['data'][1:]))
 
@@ -132,23 +130,19 @@ def choose_unit(message, type):
         if i.questions.count() > 0:
             units.append(i)
 
-    try:
-        print(json.dumps(send(
-            'editMessageText',
-            {
-                "chat_id": message['callback_query']['message']['chat']['id'],
-                "message_id": message['callback_query']['message']['message_id'],
-                "text": strings.choose_unit.format(cls, persian.convert_en_numbers(str(counter))),
-                "reply_markup": json.dumps({
-                    "inline_keyboard": [
-                        [{"text": unit.name, "callback_data": chr(ord('c') + type) + str(unit.id)}] for unit in units
-                    ]
-                })
-            }
-        ), indent=4))
-    except Exception as e:
-        print(e)
-        print("third part problem")
+    send(
+        'editMessageText',
+        {
+            "chat_id": message['callback_query']['message']['chat']['id'],
+            "message_id": message['callback_query']['message']['message_id'],
+            "text": strings.choose_unit.format(cls, persian.convert_en_numbers(str(counter))),
+            "reply_markup": json.dumps({
+                "inline_keyboard": [
+                    [{"text": unit.name, "callback_data": chr(ord('c') + type) + str(unit.id)}] for unit in units
+                ]
+            })
+        }
+    )
 
 
 def update_grade(message, user_id):
