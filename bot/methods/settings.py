@@ -90,6 +90,7 @@ def ask_role(message, user_id):
 
 
 def choose_class(message, type, chat_id, user_id):
+    print("Choose Class")
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
 
     classes = []
@@ -118,6 +119,7 @@ def reset_state(chat_id, user_id):
     help(chat_id)
 
 def choose_unit(message, type):
+    print("Choose Unit")
     cls = Class.objects.all().get(
         id=int(message['callback_query']['data'][1:]))
     
