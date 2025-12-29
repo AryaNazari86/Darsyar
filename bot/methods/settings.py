@@ -120,31 +120,40 @@ def reset_state(chat_id, user_id):
 
 def choose_unit(message, type):
     print("Choose Unit")
-    cls = Class.objects.all().get(
-        id=int(message['callback_query']['data'][1:]))
-    
-    counter = 0
-    for unit in cls.units.all():
-        counter += unit.questions.count()
+    try:
+        cls = Class.objects.all().get(
+            id=int(message['callback_query']['data'][1:]))
+    except:
+        print("cls not found")
 
-    units = []
-    for i in cls.units.all():
-        if i.questions.count() > 0:
-            units.append(i)
+    try:
+        counter = 0
+        for unit in cls.units.all():
+            counter += unit.questions.count()
 
-    print(json.dumps(send(
-        'editMessageText',
-        {
-            "chat_id": message['callback_query']['message']['chat']['id'],
-            "message_id": message['callback_query']['message']['message_id'],
-            "text": strings.choose_unit.format(cls, persian.convert_en_numbers(counter)),
-            "reply_markup": json.dumps({
-                "inline_keyboard": [
-                    [{"text": unit.name, "callback_data": chr(ord('c') + type) + str(unit.id)}] for unit in units
-                ]
-            })
-        }
-    ), indent=4))
+        units = []
+        for i in cls.units.all():
+            if i.questions.count() > 0:
+                units.append(i)
+    except:
+        print("second part problem")
+
+    try:
+        print(json.dumps(send(
+            'editMessageText',
+            {
+                "chat_id": message['callback_query']['message']['chat']['id'],
+                "message_id": message['callback_query']['message']['message_id'],
+                "text": strings.choose_unit.format(cls, persian.convert_en_numbers(counter)),
+                "reply_markup": json.dumps({
+                    "inline_keyboard": [
+                        [{"text": unit.name, "callback_data": chr(ord('c') + type) + str(unit.id)}] for unit in units
+                    ]
+                })
+            }
+        ), indent=4))
+    except:
+        print("third part problem")
 
 
 def update_grade(message, user_id):
