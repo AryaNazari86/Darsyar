@@ -49,6 +49,7 @@ def new_test(message, url, user_id):
     try:
         #url = url.replace('https://', 'http://')
         HTML(url=f'{url}gethtml/{unit.id}').write_pdf(file.name)
+        print("success", flush=True)
     except Exception as e:
         print(e, flush=True)
         print("shoomboos goombooli", flush=True)
