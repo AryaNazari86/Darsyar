@@ -47,12 +47,10 @@ def new_test(message, url, user_id):
         id=int(message['callback_query']['data'][1:]))
     file = tempfile.NamedTemporaryFile(delete=True, suffix=".pdf")
     try:
-        #url = url.replace('https://', 'http://')
         HTML(url=f'{url}gethtml/{unit.id}').write_pdf(file.name)
-        print("success", flush=True)
+        print("success")
     except Exception as e:
         print(e, flush=True)
-        print("shoomboos goombooli", flush=True)
     upload_url = "https://tmpfiles.org/api/v1/upload"
     files = [
         ('file', ('exam.pdf', open(file.name, 'rb')))
@@ -61,7 +59,7 @@ def new_test(message, url, user_id):
     fileurl = response.json()['data']['url'].replace(
         "https://tmpfiles.org/", "https://tmpfiles.org/dl/")
     
-    print(fileurl)
+    print(fileurl, flush=True)
 
     user = User.objects.get(
         platform=PLATFORM, user_id=message['callback_query']['from']['id'])
