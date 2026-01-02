@@ -242,6 +242,18 @@ def send_leaderboard(request, number):
 
     return HttpResponse(result)
 
+def total_users_json(request):
+    count = User.objects.count()
+
+    response_data = {
+        "postfix": "MyUnits",
+        "color": "green",
+        "data": {
+            "value": count
+        }
+    }
+
+    return JsonResponse(response_data)
 
 def plot_logs_by_hour(request):
     try:
