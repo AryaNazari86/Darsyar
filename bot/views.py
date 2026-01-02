@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import io
 import base64
 import persian
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from bot.credintials import TOKEN, API_URL, URL
 from user.models import User, UserQuestionRel
