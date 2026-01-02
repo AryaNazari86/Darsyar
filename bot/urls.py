@@ -9,6 +9,5 @@ urlpatterns = [
     path('scraper/', views.scraper, name="scraper"),
     path('scrape_hamyar/', views.scrape_hamyar, name="scrape_hamyar"),
     path('send_leaderboard/<int:number>', views.send_leaderboard, name="send_leaderboard"),
-    path("total_users/", views.total_users_json, name="total_users_json"),
     path('plot_logs_by_hour/', views.plot_logs_by_hour, name="plot_logs_by_hour"),
 ]
