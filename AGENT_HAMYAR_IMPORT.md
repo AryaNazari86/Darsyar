@@ -55,8 +55,22 @@ Import Hamyar course question banks into Darsyar safely, without polluting the d
 ## Naming Rules
 - Keep class naming consistent with existing Darsyar classes.
 - Prefer exact style already used in DB (for example: `اجتماعی هفتم`, `پیام‌های آسمانی هشتم`, etc.).
+- Grade 10 to 12 branch rule (Iran):
+  - Consider branches: `انسانی`، `ریاضی`، `تجربی`.
+  - If a course content is common for all branches, label only the course name (no branch suffix).
+  - If content differs by branch, include branch in class label.
+  - If shared by two branches only, include both branches in label.
+  - Examples:
+    - `ریاضی دهم تجربی`
+    - `تاریخ یازدهم تجربی و ریاضی`
+    - `فلسفه یازدهم انسانی`
 
 ## Safety Rules
 - Never send insert requests before approval.
 - Never send failed-validation courses unless user explicitly overrides.
 - If DNS/network fails in sandbox, rerun outside sandbox with explicit approval.
+- Grade 6 follows the exact same workflow:
+  - discovery -> exclusion -> tester validation -> human approval -> insert.
+- File hygiene rule:
+  - Do not keep extra generated files in repository.
+  - If temporary/candidate/result files are created during execution, delete them after the step is complete unless the user explicitly asks to keep them.

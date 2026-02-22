@@ -1,14 +1,171 @@
 {% extends "layouts/base.html" %}
+{% load l10n %}
 
-{% load static %}
-{% load dashboard_tags %}
-{% block title %}نمودار ها{% endblock %}
+{% block title %}Deep Charts{% endblock %}
 
 {% block content %}
-{% include "partials/navigation.html" with title="نمودار ها" %}
+{% localize off %}
+<section class="grid cards-2">
+    <article class="card">
+        <h2 class="panel-title">Peak Usage by Hour (Last 14 Days)</h2>
+        <p class="panel-sub">Identifies best/worst traffic windows for scaling and campaigns</p>
+        <div class="chart-wrap"><canvas id="chartHourProfile"></canvas></div>
+    </article>
 
+    <article class="card">
+        <h2 class="panel-title">User Platform Split</h2>
+        <p class="panel-sub">Current audience channel distribution</p>
+        <div class="chart-wrap"><canvas id="chartPlatform"></canvas></div>
+    </article>
+</section>
+
+<section class="grid cards-2">
+    <article class="card">
+        <h2 class="panel-title">Daily Requests vs Users (30 Days)</h2>
+        <p class="panel-sub">Correlation between traffic and onboarding patterns</p>
+        <div class="chart-wrap"><canvas id="chartCombo"></canvas></div>
+    </article>
+
+    <article class="card">
+        <h2 class="panel-title">Operational Snapshot</h2>
+        <p class="panel-sub">Fast metrics for current monitoring</p>
+        <div class="metric-row">
+            <div class="pill">
+                <div class="name">Requests in past hour</div>
+                <div class="num">{{ progression.0.current }}</div>
+            </div>
+            <div class="pill">
+                <div class="name">Requests in past day</div>
+                <div class="num">{{ progression.1.current }}</div>
+            </div>
+            <div class="pill">
+                <div class="name">Requests in past month</div>
+                <div class="num">{{ progression.2.current }}</div>
+            </div>
+            <div class="pill">
+                <div class="name">Requests in past year</div>
+                <div class="num">{{ progression.3.current }}</div>
+            </div>
+            <div class="pill">
+                <div class="name">Most used type</div>
+                <div class="num">{{ kpi.top_type_label }}</div>
+            </div>
+            <div class="pill">
+                <div class="name">Avg request per user</div>
+                <div class="num">{{ kpi.avg_requests_per_user }}</div>
+            </div>
+        </div>
+    </article>
+</section>
+{% endlocalize %}
 {% endblock %}
 
-
 {% block scripts %}
-<script src="{% static 'dashboard/js/app.js' %}"></script>{% endblock %}
+<script>
+(function () {
+    const hourProfile = JSON.parse('{{ chart_json.hour_profile|escapejs }}');
+    const platform = JSON.parse('{{ chart_json.platform|escapejs }}');
+    const daily = JSON.parse('{{ chart_json.daily|escapejs }}');
+
+    new Chart(document.getElementById('chartHourProfile').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: hourProfile.labels,
+            datasets: [{
+                label: 'Requests',
+                data: hourProfile.data,
+                borderColor: '#FF8A00',
+                backgroundColor: 'rgba(255,138,0,0.16)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.35,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0,
+                        callback: function (value) { return toEnglishDigits(value); }
+                    }
+                },
+                x: { ticks: { maxTicksLimit: 8 } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('chartPlatform').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: platform.labels,
+            datasets: [{
+                data: platform.data,
+                backgroundColor: ['#0B84F3', '#17B26A', '#FF8A00'],
+                borderWidth: 0,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } },
+        }
+    });
+
+    new Chart(document.getElementById('chartCombo').getContext('2d'), {
+        data: {
+            labels: daily.labels,
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'Requests',
+                    data: daily.logs,
+                    backgroundColor: 'rgba(11,132,243,0.70)',
+                    yAxisID: 'y',
+                    borderRadius: 5,
+                },
+                {
+                    type: 'line',
+                    label: 'New Users',
+                    data: daily.users,
+                    borderColor: '#17B26A',
+                    backgroundColor: 'rgba(23,178,106,0.2)',
+                    borderWidth: 3,
+                    tension: 0.3,
+                    fill: false,
+                    yAxisID: 'y1',
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    position: 'left',
+                    ticks: {
+                        precision: 0,
+                        callback: function (value) { return toEnglishDigits(value); }
+                    }
+                },
+                y1: {
+                    beginAtZero: true,
+                    position: 'right',
+                    grid: { drawOnChartArea: false },
+                    ticks: {
+                        precision: 0,
+                        callback: function (value) { return toEnglishDigits(value); }
+                    },
+                },
+                x: { ticks: { maxTicksLimit: 10 } }
+            }
+        }
+    });
+})();
+</script>
+{% endblock %}
