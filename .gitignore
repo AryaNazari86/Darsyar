@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+
+.DS_Store
+
+# Secrets - real values live in /opt/darsyar/.env on the server
+.env
+
+# collectstatic output
+staticfiles/
+
+# Local dev database
+db.sqlite3
+
+# Scratch / scraped HTML dumps / generated media
+code.txt
+tmp/
+output/

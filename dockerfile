@@ -1,22 +1,31 @@
-FROM docker.arvancloud.ir/python:3.10.12-alpine
+FROM python:3.10-slim
 
-RUN apk add weasyprint
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
 
-WORKDIR /var/www/Darsyar/app
+# WeasyPrint needs Pango/Cairo at runtime; fontconfig so it can see Vazirmatn.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libpango-1.0-0 \
+        libpangoft2-1.0-0 \
+        libharfbuzz0b \
+        libcairo2 \
+        fontconfig \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY ./requirements.txt ./
+WORKDIR /app
 
-RUN pip install --trusted-host mirrors.aliyun.com -i http://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-# ---- WeasyPrint / Pango runtime deps (minimal, Alpine) ----
-RUN apk add --no-cache fontconfig pango cairo
-
-# ---- Install ONLY the fonts you use (Vazirmatn) ----
+# ---- Only the fonts the exam PDFs actually use ----
 COPY static/fonts/Vazirmatn-*.ttf /usr/local/share/fonts/vazirmatn/
-
-# ---- Build font cache so Pango can see them ----
 RUN fc-cache -f
 
 COPY . .
 
-CMD [ "python", "./manage.py", "runserver", "0.0.0.0:6868"]
+RUN DJANGO_SECRET_KEY=build-only python manage.py collectstatic --noinput
+
+EXPOSE 6868
+
+# Long timeout because the /scraper/ endpoints run synchronously in-request.
+CMD ["sh", "-c", "python manage.py migrate --noinput && exec gunicorn Darsyar.wsgi:application --bind ${GUNICORN_BIND:-0.0.0.0:6868} --workers 3 --timeout 600 --access-logfile - --error-logfile -"]

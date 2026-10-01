@@ -1,0 +1,19 @@
+.git
+.gitignore
+__pycache__
+**/__pycache__
+*.py[cod]
+.DS_Store
+.env
+
+# 41MB scraped HTML dump, not needed at runtime
+code.txt
+
+db.sqlite3
+staticfiles/
+tmp/
+output/
+pdfs/
+pdf-opencv/
+DarsyarAppleWidget/
+*.jpg

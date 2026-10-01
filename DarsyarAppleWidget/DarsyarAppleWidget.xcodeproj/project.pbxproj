@@ -1,0 +1,441 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0480881E90493E638FD718EB /* DarsyarUsersWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C920D695E288934CCC716A38 /* DarsyarUsersWidgetBundle.swift */; };
+		10A8108EE57BAF2874118284 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851579E0893AE54E4D0AF4AC /* ContentView.swift */; };
+		2F873473769A7723AE8E65D3 /* DarsyarUsersWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A26C9CDFCADC1C9F43817 /* DarsyarUsersWidget.swift */; };
+		3286B3A4DF62DA8B2A6CB75C /* DarsyarUsersFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1706BAA5D13B7408D1A3504A /* DarsyarUsersFetcher.swift */; };
+		363A950CE3F9FC336FD4F41C /* DarsyarWidgetHostApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8E0975B44171FC72570A2 /* DarsyarWidgetHostApp.swift */; };
+		3CAFBB0E63B059148804D3DE /* DarsyarUsersWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 25B7ED5CA23D701B85961CDC /* DarsyarUsersWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		81C25DB8A69297DFB46BC10A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A3F26086F232084A73370985 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 39F72F95428A14A8F322B86C;
+			remoteInfo = DarsyarUsersWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F3BEFE838C1F3E6644DB2385 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3CAFBB0E63B059148804D3DE /* DarsyarUsersWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1706BAA5D13B7408D1A3504A /* DarsyarUsersFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarsyarUsersFetcher.swift; sourceTree = "<group>"; };
+		25B7ED5CA23D701B85961CDC /* DarsyarUsersWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DarsyarUsersWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6617BC7262D6BCEBADA68B2C /* DarsyarWidgetHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DarsyarWidgetHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		851579E0893AE54E4D0AF4AC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8D3D9D27B09CEFF412D90D85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B39A26C9CDFCADC1C9F43817 /* DarsyarUsersWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarsyarUsersWidget.swift; sourceTree = "<group>"; };
+		C920D695E288934CCC716A38 /* DarsyarUsersWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarsyarUsersWidgetBundle.swift; sourceTree = "<group>"; };
+		CEB8E0975B44171FC72570A2 /* DarsyarWidgetHostApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarsyarWidgetHostApp.swift; sourceTree = "<group>"; };
+		FD0B2802DC7FA93903952CB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		09DA9316CF2E014A35CB1806 = {
+			isa = PBXGroup;
+			children = (
+				E19308B2B4F59F943D4C625F /* App */,
+				2424C47CAE828E22BF4D959A /* Shared */,
+				B4A3AB75375F616EDF58120B /* Widget */,
+				365E205781E59450E8CEABB4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2424C47CAE828E22BF4D959A /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				1706BAA5D13B7408D1A3504A /* DarsyarUsersFetcher.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		365E205781E59450E8CEABB4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25B7ED5CA23D701B85961CDC /* DarsyarUsersWidgetExtension.appex */,
+				6617BC7262D6BCEBADA68B2C /* DarsyarWidgetHost.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B4A3AB75375F616EDF58120B /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				B39A26C9CDFCADC1C9F43817 /* DarsyarUsersWidget.swift */,
+				C920D695E288934CCC716A38 /* DarsyarUsersWidgetBundle.swift */,
+				8D3D9D27B09CEFF412D90D85 /* Info.plist */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		E19308B2B4F59F943D4C625F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				851579E0893AE54E4D0AF4AC /* ContentView.swift */,
+				CEB8E0975B44171FC72570A2 /* DarsyarWidgetHostApp.swift */,
+				FD0B2802DC7FA93903952CB9 /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		39F72F95428A14A8F322B86C /* DarsyarUsersWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 108CDF62717320E00822A8D9 /* Build configuration list for PBXNativeTarget "DarsyarUsersWidgetExtension" */;
+			buildPhases = (
+				FD78884301E15700F665A119 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DarsyarUsersWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = DarsyarUsersWidgetExtension;
+			productReference = 25B7ED5CA23D701B85961CDC /* DarsyarUsersWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		C5A8D750E6CDF9DEEFFC8D25 /* DarsyarWidgetHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B441A733B57C485F6AE19935 /* Build configuration list for PBXNativeTarget "DarsyarWidgetHost" */;
+			buildPhases = (
+				58CBD5C6826C627A5BF2B60C /* Sources */,
+				F3BEFE838C1F3E6644DB2385 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				758A11FE3EBBA05114885B20 /* PBXTargetDependency */,
+			);
+			name = DarsyarWidgetHost;
+			packageProductDependencies = (
+			);
+			productName = DarsyarWidgetHost;
+			productReference = 6617BC7262D6BCEBADA68B2C /* DarsyarWidgetHost.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A3F26086F232084A73370985 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					39F72F95428A14A8F322B86C = {
+						ProvisioningStyle = Automatic;
+					};
+					C5A8D750E6CDF9DEEFFC8D25 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = E1881769881DC8165A96BB18 /* Build configuration list for PBXProject "DarsyarAppleWidget" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 09DA9316CF2E014A35CB1806;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				39F72F95428A14A8F322B86C /* DarsyarUsersWidgetExtension */,
+				C5A8D750E6CDF9DEEFFC8D25 /* DarsyarWidgetHost */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		58CBD5C6826C627A5BF2B60C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10A8108EE57BAF2874118284 /* ContentView.swift in Sources */,
+				363A950CE3F9FC336FD4F41C /* DarsyarWidgetHostApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FD78884301E15700F665A119 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3286B3A4DF62DA8B2A6CB75C /* DarsyarUsersFetcher.swift in Sources */,
+				2F873473769A7723AE8E65D3 /* DarsyarUsersWidget.swift in Sources */,
+				0480881E90493E638FD718EB /* DarsyarUsersWidgetBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		758A11FE3EBBA05114885B20 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 39F72F95428A14A8F322B86C /* DarsyarUsersWidgetExtension */;
+			targetProxy = 81C25DB8A69297DFB46BC10A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2881A708C9213C6B76D386C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.1;
+			};
+			name = Release;
+		};
+		303DB52D5189109403F63192 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.darsyar.widgethost.widget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		6306D67A8525DB218592C38D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.darsyar.widgethost;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		AA0C1A274F80AC8928120129 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.darsyar.widgethost;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DFB23190F102346489C70292 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.darsyar.widgethost.widget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		E8A9EC401CCC2CB9E594D4B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.1;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		108CDF62717320E00822A8D9 /* Build configuration list for PBXNativeTarget "DarsyarUsersWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFB23190F102346489C70292 /* Debug */,
+				303DB52D5189109403F63192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B441A733B57C485F6AE19935 /* Build configuration list for PBXNativeTarget "DarsyarWidgetHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6306D67A8525DB218592C38D /* Debug */,
+				AA0C1A274F80AC8928120129 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1881769881DC8165A96BB18 /* Build configuration list for PBXProject "DarsyarAppleWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8A9EC401CCC2CB9E594D4B5 /* Debug */,
+				2881A708C9213C6B76D386C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A3F26086F232084A73370985 /* Project object */;
+}

@@ -1,4 +1,6 @@
-Django
+Django>=4.2,<5.0
+gunicorn
+whitenoise
 djangorestframework
 djangorestframework-api-key
 requests

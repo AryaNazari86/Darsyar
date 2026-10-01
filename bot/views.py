@@ -1,5 +1,7 @@
 import matplotlib.dates as mdates
+import hmac
 import json
+import os
 import requests
 import matplotlib
 import matplotlib.pyplot as plt

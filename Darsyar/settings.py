@@ -20,23 +20,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
+def env_list(name, default=""):
+    return [item.strip() for item in os.environ.get(name, default).split(",") if item.strip()]
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&!5y8)=ivdo58hl#=v(87o^t1gtzy+6p-ppu0%c$o753!_9-)m'
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-local-dev-only")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
 
-ALLOWED_HOSTS = ['https://api.darsyar.net', 'localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "api.darsyar.net,localhost,127.0.0.1")
 
-CORS_ALLOWED_ORIGINS = [
-    "https://api.darsyar.net",
-]
-CSRF_TRUSTED_ORIGINS = [
-    "https://api.darsyar.net",
-]
+CORS_ALLOWED_ORIGINS = env_list("DJANGO_TRUSTED_ORIGINS", "https://api.darsyar.net")
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 
 # Application definition
 
@@ -56,6 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -96,23 +97,25 @@ WSGI_APPLICATION = 'Darsyar.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'darsyardb',
-        'USER': 'darsyaruser',
-        'PASSWORD': 'darsyar2025',
-        'HOST': '87.248.131.53',  # Replace with your PostgreSQL server's address if necessary
-        'PORT': '5432',          # Leave empty to use the default PostgreSQL port (usually 5432)
+if os.environ.get("POSTGRES_HOST"):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get("POSTGRES_DB", "darsyardb"),
+            'USER': os.environ.get("POSTGRES_USER", "darsyaruser"),
+            'PASSWORD': os.environ["POSTGRES_PASSWORD"],
+            'HOST': os.environ["POSTGRES_HOST"],
+            'PORT': os.environ.get("POSTGRES_PORT", "5432"),
+        }
     }
-}
-
-"""DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+else:
+    # Local development fallback
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}"""
 
 
 # Password validation
@@ -152,8 +155,8 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ('static',)
-STATIC_ROOT = os.path.join(BASE_DIR, '')
+STATICFILES_DIRS = (BASE_DIR / 'static',)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
