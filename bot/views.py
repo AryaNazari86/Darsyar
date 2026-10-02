@@ -1,7 +1,5 @@
 import matplotlib.dates as mdates
-import hmac
 import json
-import os
 import requests
 import matplotlib
 import matplotlib.pyplot as plt
@@ -44,31 +42,27 @@ from .AI import tutor
 matplotlib.use('Agg')
 
 
-def scraper(request):
-    # grade = Grade.objects.filter(id = request.GET.get('grade'))
+def _resolve_class(request):
+    grade_number = int(request.GET.get('grade_number'))
+    cls, _ = Class.objects.get_or_create(
+        name=request.GET.get('class'),
+        defaults={'grade_number': grade_number},
+    )
+    # The bot's subject menu walks user.grade.classes, so a class that is never
+    # linked to its grade stays invisible no matter how many questions it has.
+    cls.grades.add(*Grade.objects.filter(grade_number=grade_number))
+    return cls
 
-    if not Class.objects.filter(name=request.GET.get('class')).exists:
-        cls = Class.objects.get(name=request.GET.get('class'))
-    else:
-        cls = Class.objects.create(name=request.GET.get(
-            'class'), grade_number=request.GET.get('grade_number'))
-    # cls.grades.add(grade)
+
+def scraper(request):
+    cls = _resolve_class(request)
     source = Source.objects.get(id=1)
     number = scrape(cls, source, request.GET.get('link'))
     return HttpResponse(f"{number} questions scraped succesfully!")
 
 
 def scrape_hamyar(request):
-    # grade = Grade.objects.filter(id = request.GET.get('grade'))
-
-    if not Class.objects.filter(name=request.GET.get('class')).exists:
-        cls = Class.objects.get(name=request.GET.get('class'))
-    else:
-        cls = Class.objects.create(name=request.GET.get(
-            'class'), grade_number=request.GET.get('grade_number'))
-        cls.save()
-
-    # cls.grades.add(grade)
+    cls = _resolve_class(request)
     source = Source.objects.get(id=2)
     number = hamyar.scrape(cls, source, request.GET.get('link'))
     return HttpResponse(f"{number} questions scraped succesfully!")

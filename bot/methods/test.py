@@ -17,7 +17,7 @@ def get_html(request, unit_id):
     try:
         unit = Unit.objects.all().get(id=int(unit_id))
         questions = list(unit.questions.all())
-        random_questions = random.sample(questions, 5)
+        random_questions = random.sample(questions, min(5, len(questions)))
         random_questions_objects = [
             {
                 'text': question.text,
