@@ -6,7 +6,17 @@ suffix for grades 10-12 when the content is branch-specific.
 import json, os, re
 from collections import defaultdict
 
-GRADE_WORD = {7: "هفتم", 8: "هشتم", 9: "نهم", 10: "دهم", 11: "یازدهم", 12: "دوازدهم"}
+GRADE_WORD = {
+    1: "اول", 2: "دوم", 3: "سوم", 4: "چهارم", 5: "پنجم", 6: "ششم",
+    7: "هفتم", 8: "هشتم", 9: "نهم", 10: "دهم", 11: "یازدهم", 12: "دوازدهم",
+}
+
+# Same slug stem, different subject by grade: tafakor is تفکر و پژوهش in
+# primary school and تفکر و سواد رسانه‌ای in grade 10.
+GRADE_SPECIFIC = {
+    ("تفکر و سواد رسانه‌ای", 6): "تفکر و پژوهش",
+    ("تفکر و سواد رسانه‌ای", 7): "تفکر و سبک زندگی",
+}
 
 # canonical subject <- first matching pattern against (title + slug)
 SUBJECTS = [

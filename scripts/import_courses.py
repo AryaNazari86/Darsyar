@@ -32,7 +32,12 @@ def call(class_name, grade_number, link, timeout=900):
 
 
 def main():
-    rows = json.load(open(CATALOG, encoding="utf-8"))["approved_for_import"]
+    # import_courses.py [approved-list.json]
+    # Accepts either the full catalog (dict with approved_for_import) or a
+    # bare list of approved rows, so a partial re-run can target one batch.
+    path = sys.argv[1] if len(sys.argv) > 1 else CATALOG
+    data = json.load(open(path, encoding="utf-8"))
+    rows = data["approved_for_import"] if isinstance(data, dict) else data
     rows.sort(key=lambda r: (r["grade_number"], -r["primary_questions"]))
 
     done = {}
