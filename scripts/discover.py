@@ -45,6 +45,10 @@ def sitemap_urls(root):
 COURSE_RE = re.compile(r"/(soal|soalmatn|gambegam|soalat)[a-z0-9\-]*-(\d{1,2})-([a-z0-9\-]+)/?$", re.I)
 
 def main():
+    # grade range, defaulting to secondary school: discover.py [LOW] [HIGH]
+    low = int(sys.argv[1]) if len(sys.argv) > 1 else 7
+    high = int(sys.argv[2]) if len(sys.argv) > 2 else 12
+
     print("fetching sitemaps...", file=sys.stderr)
     urls = sitemap_urls("https://hamyar.me/sitemap.xml")
     print(f"total urls: {len(urls)}", file=sys.stderr)
@@ -56,14 +60,14 @@ def main():
         if not m:
             continue
         grade = int(m.group(2))
-        if not 7 <= grade <= 12:
+        if not low <= grade <= high:
             continue
         by_grade.setdefault(grade, []).append(
             {"kind": m.group(1).lower(), "grade_number": grade, "slug": m.group(3), "link": u}
         )
 
     total = sum(len(v) for v in by_grade.values())
-    print(f"\ncandidate course pages for grades 7-12: {total}\n")
+    print(f"\ncandidate course pages: {total}\n")
     for g in sorted(by_grade):
         print(f"--- grade {g}: {len(by_grade[g])} ---")
         for c in sorted(by_grade[g], key=lambda x: x["slug"]):
