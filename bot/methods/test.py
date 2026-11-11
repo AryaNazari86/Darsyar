@@ -6,7 +6,6 @@ from content.models import Unit
 from django.shortcuts import render
 from persiantools.jdatetime import JalaliDateTime
 import pytz
-import tempfile
 import random
 from .logs import log_requests
 from user.models import User
@@ -33,51 +32,74 @@ def get_html(request, unit_id):
 
 
 def new_test(message, url, user_id):
+    chat_id = message['callback_query']['message']['chat']['id']
+    wait_message_id = message['callback_query']['message']['message_id']
 
-    message_id = send(
+    send(
         'editMessageText',
         {
-            "chat_id": message['callback_query']['message']['chat']['id'],
-            "message_id": message['callback_query']['message']['message_id'],
+            "chat_id": chat_id,
+            "message_id": wait_message_id,
             "text": strings.wait,
         }
     )
+
     # print(message['callback_query']['data'])
     unit = Unit.objects.all().get(
         id=int(message['callback_query']['data'][1:]))
-    file = tempfile.NamedTemporaryFile(delete=True, suffix=".pdf")
+
     try:
-        HTML(url=f'{url}gethtml/{unit.id}').write_pdf(file.name)
+        pdf = HTML(url=f'{url}gethtml/{unit.id}').write_pdf()
     except Exception as e:
-        print(e, flush=True)
-    upload_url = "https://tmpfiles.org/api/v1/upload"
-    files = [
-        ('file', ('exam.pdf', open(file.name, 'rb')))
-    ]
-    response = requests.post(upload_url, files=files)
-    fileurl = response.json()['data']['url'].replace(
-        "tmpfiles.org/", "tmpfiles.org/dl/")
-    
-    #print(fileurl, flush=True)
+        print(f"exam pdf render failed for unit {unit.id}: {e}", flush=True)
+        send(
+            'editMessageText',
+            {
+                "chat_id": chat_id,
+                "message_id": wait_message_id,
+                "text": strings.test_failed,
+                "reply_markup": MENU,
+            }
+        )
+        return
 
     user = User.objects.get(
         platform=PLATFORM, user_id=message['callback_query']['from']['id'])
-    
-    send(
+
+    # The PDF goes up as multipart. It used to be parked on tmpfiles.org and
+    # handed over as a URL, but their /dl/ links now 302 to an HTML landing
+    # page, so the platform fetched that page instead of the file and the user
+    # got nothing.
+    result = send(
         'sendDocument',
         {
-            "chat_id": message['callback_query']['message']['chat']['id'],
-            "document": fileurl,
+            "chat_id": chat_id,
             "reply_markup": MENU,
             "caption": strings.test_caption.format(user.grade.name, unit.class_rel.name, unit.name),
-        }
+        },
+        files={'document': ('exam.pdf', pdf, 'application/pdf')},
     )
+
+    # send() returns the new message_id on success and the raw API response
+    # otherwise; without this check a rejected upload looked like a success.
+    if not isinstance(result, int):
+        print(f"sendDocument failed for unit {unit.id}: {result}", flush=True)
+        send(
+            'editMessageText',
+            {
+                "chat_id": chat_id,
+                "message_id": wait_message_id,
+                "text": strings.test_failed,
+                "reply_markup": MENU,
+            }
+        )
+        return
 
     send(
         'deleteMessage',
         {
-            "chat_id": message['callback_query']['message']['chat']['id'],
-            "message_id": message['callback_query']['message']['message_id'],
+            "chat_id": chat_id,
+            "message_id": wait_message_id,
         }
     )
 

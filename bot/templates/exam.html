@@ -123,7 +123,7 @@
     <p id="unit">{{unit}}</p>
     <p id="date">{{date|convert_en_numbers}}</p>
     <!-- Questions -->
-    <img src="/media/images/header-1.png" style="width: 100%;" />
+    <img src="{% static 'images/header-1.png' %}" style="width: 100%;" />
     <div id="questions" class="content">
         {%for q in questions%} <div class="question">
             <span class="number">{{forloop.counter|convert_en_numbers }}</span>
@@ -135,7 +135,7 @@
     <div class="pagebreak"> </div>
 
     <!-- Answers -->
-    <img src="/media/images/header-2.png" style="width: 100%;" />
+    <img src="{% static 'images/header-2.png' %}" style="width: 100%;" />
     <div class="content">
         {%for q in questions%} <div class="answer">
             <span class="number">{{forloop.counter|convert_en_numbers }}</span>

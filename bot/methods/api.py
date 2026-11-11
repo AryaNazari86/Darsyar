@@ -43,13 +43,18 @@ MENU = json.dumps({
 })
 
 
-def send(method, data):
+def send(method, data, files=None):
     if PLATFORM == "TG":
         data['parse_mode'] = "Markdown"
-    
+
+    # files is a multipart payload, e.g. {"document": ("exam.pdf", pdf_bytes,
+    # "application/pdf")} — the platform then stores the bytes we send instead
+    # of fetching a URL from us.
     req = requests.post(
         API_URL + method,
-        data
+        data=data,
+        files=files,
+        timeout=180,
     ).json()
 
     #print(json.dumps(req, indent = 4))
