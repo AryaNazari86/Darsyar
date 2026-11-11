@@ -37,7 +37,11 @@ GRADE_MAX = 5          # strings.ai_answer renders "نمره پاسخ شما: {}
 # sized from measured traces (1,300-2,000 characters) plus the answer itself --
 # too low and content comes back empty while the trace eats the whole budget.
 MAX_TOKENS_GRADE = 1500
-MAX_TOKENS_HINT = 1200
+# Hints need more headroom than grading: deciding how much of the answer to
+# give away takes the model longer to deliberate, and 1200 was not enough for
+# gemma-4. Cheap in practice, since a hint is generated once per question and
+# then cached on the row forever.
+MAX_TOKENS_HINT = 2500
 MAX_TOKENS_TUTOR = 2000
 
 # Persian-Indic and Arabic-Indic digits -> ASCII, so the model compares numbers
