@@ -24,10 +24,10 @@ ACCOUNT_ID = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "")
 API_TOKEN = os.environ.get("CLOUDFLARE_API_TOKEN", "")
 # Swap freely; all of these are on the free allocation. Measured neurons per
 # grading call on a real question, 2026-11:
-#   @cf/qwen/qwen3-30b-a3b-fp8      ~14  blunt but accurate Persian (current)
-#   @cf/google/gemma-4-26b-a4b-it   ~18  warmer, more encouraging Persian
+#   @cf/google/gemma-4-26b-a4b-it   ~18  warmer, kinder Persian (current)
+#   @cf/qwen/qwen3-30b-a3b-fp8      ~14  cheaper, but blunt with students
 #   @cf/zai-org/glm-4.7-flash       ~56  too expensive, and truncates
-MODEL = os.environ.get("CLOUDFLARE_MODEL", "@cf/qwen/qwen3-30b-a3b-fp8")
+MODEL = os.environ.get("CLOUDFLARE_MODEL", "@cf/google/gemma-4-26b-a4b-it")
 
 TIMEOUT = 90
 GRADE_MAX = 5          # strings.ai_answer renders "نمره پاسخ شما: {} از ۵"
