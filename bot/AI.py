@@ -22,12 +22,15 @@ import requests
 
 ACCOUNT_ID = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "")
 API_TOKEN = os.environ.get("CLOUDFLARE_API_TOKEN", "")
-# Swap freely; all of these are on the free allocation. Measured neurons per
-# grading call on a real question, 2026-11:
-#   @cf/google/gemma-4-26b-a4b-it   ~18  warmer, kinder Persian (current)
-#   @cf/qwen/qwen3-30b-a3b-fp8      ~14  cheaper, but blunt with students
-#   @cf/zai-org/glm-4.7-flash       ~56  too expensive, and truncates
-MODEL = os.environ.get("CLOUDFLARE_MODEL", "@cf/google/gemma-4-26b-a4b-it")
+# Measured neurons per grading call on a real question (2026-11), against the
+# 10,000/day free allocation. Cost here is driven by how much a model thinks
+# aloud, not by its per-token price -- see _prepare().
+#   @cf/qwen/qwen3-30b-a3b-fp8                3.9  ~2570/day  (current)
+#   @cf/meta/llama-3.1-8b-instruct-fp8-fast   2.2  ~4600/day  cheapest; 8B judgement
+#   @cf/google/gemma-4-26b-a4b-it            16.2   ~618/day  warmest tone, 4x cost
+#   @cf/zai-org/glm-4.7-flash                55.7   ~180/day  rambles, truncates
+# Avoid @cf/meta/llama-3.2-3b-instruct: ignores the JSON instruction.
+MODEL = os.environ.get("CLOUDFLARE_MODEL", "@cf/qwen/qwen3-30b-a3b-fp8")
 
 TIMEOUT = 90
 GRADE_MAX = 5          # strings.ai_answer renders "نمره پاسخ شما: {} از ۵"
@@ -62,18 +65,34 @@ def _normalise(text):
 
 
 def _prepare(messages):
-    """Gemma's chat template has no system role, so fold it into the first
-    user turn. Other models take the system message as-is."""
-    if "gemma" not in MODEL.lower():
-        return messages
+    """Adapt the message list to the quirks of the configured model.
 
-    system = "\n\n".join(m["content"] for m in messages if m["role"] == "system")
-    rest = [m for m in messages if m["role"] != "system"]
-    if system and rest:
-        rest = list(rest)
-        rest[0] = {"role": rest[0]["role"],
-                   "content": f"{system}\n\n---\n\n{rest[0]['content']}"}
-    return rest
+    Two adjustments, both measured rather than guessed:
+
+    - Qwen3 thinks aloud by default, and the trace is ~75% of the token cost
+      (12.8 neurons per grading vs 3.9 with it off) for no gain on a task this
+      constrained. "/no_think" switches it off.
+    - Gemma and Granite have no system role in their chat template, so the
+      system text has to be folded into the first user turn.
+    """
+    model = MODEL.lower()
+    messages = list(messages)
+
+    if "qwen3" in model:
+        messages = [
+            {**m, "content": m["content"] + " /no_think"} if m["role"] == "system" else m
+            for m in messages
+        ]
+
+    if "gemma" in model or "granite" in model:
+        system = "\n\n".join(m["content"] for m in messages if m["role"] == "system")
+        rest = [m for m in messages if m["role"] != "system"]
+        if system and rest:
+            rest[0] = {"role": rest[0]["role"],
+                       "content": f"{system}\n\n---\n\n{rest[0]['content']}"}
+        messages = rest
+
+    return messages
 
 
 def _run(messages, max_tokens=512, temperature=0.3):
