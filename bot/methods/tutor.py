@@ -22,10 +22,23 @@ def ask_tutor(message, chat_id):
 
     text = message['message']['text']
 
-    response = tutor(text)
+    try:
+        response = tutor(text)
+    except AIUnavailable as exc:
+        print(f"tutor unavailable: {exc}", flush=True)
+        send('deleteMessage', {"chat_id": chat_id, "message_id": message_id})
+        send(
+            'sendMessage',
+            {
+                "chat_id": chat_id,
+                "text": strings.ai_failed_short,
+                "reply_markup": MENU,
+            }
+        )
+        return
 
     response += "\n\n⚠️ مسئولیت محتوای تولید شده برعهده کاربر است."
-    
+
     send(
         'deleteMessage',
         {

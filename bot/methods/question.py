@@ -32,18 +32,31 @@ def check_answer(message, chat_id, user_id):
 
     
 
-    req = ai(question.text, question.answer, message['message'].get('text'))
-    
-    send(
-        'deleteMessage',
-        {
-            "chat_id": chat_id,
-            "message_id": message
-        }
-    )
+    try:
+        req = ai(question.text, question.answer, message['message'].get('text'))
+    except AIUnavailable as exc:
+        # No grade means no points: scoring a 0 because the API was down would
+        # permanently cost the user a question they may well have got right.
+        print(f"grading unavailable for question {question.id}: {exc}", flush=True)
+        send('deleteMessage', {"chat_id": chat_id, "message_id": message_id})
+        send(
+            'sendMessage',
+            {
+                "chat_id": chat_id,
+                "text": strings.ai_failed.format(question.answer),
+                "reply_markup": MENU,
+            }
+        )
+        user.state = 0
+        user.save()
+        return
 
+    send('deleteMessage', {"chat_id": chat_id, "message_id": message_id})
+
+    # The grade is out of 5 and may be fractional, so round the points rather
+    # than int()-ing the grade, which used to raise on values like "0.25".
     if not UserQuestionRel.objects.filter(user=user, question=question).exists():
-        pt = 100 * int(req['grade'])
+        pt = round(100 * req['grade'])
         rel = UserQuestionRel.objects.create(
             user=user, question=question, point=pt)
         rel.save()
@@ -54,7 +67,11 @@ def check_answer(message, chat_id, user_id):
         'sendMessage',
         {
             "chat_id": chat_id,
-            "text": strings.ai_answer.format(persian.convert_en_numbers(str(req['grade'])), req['feedback'], question.answer),
+            "text": strings.ai_answer.format(
+                persian.convert_en_numbers(f"{req['grade']:g}"),
+                req['feedback'],
+                question.answer,
+            ),
             "reply_markup": MENU
         }
     )
@@ -184,7 +201,20 @@ def get_hint(message, chat_id, user_id):
     )
 
     if question.hint == None:
-        question.hint = hint(question.text, question.answer)
+        try:
+            question.hint = hint(question.text, question.answer)
+        except AIUnavailable as exc:
+            print(f"hint unavailable for question {question.id}: {exc}", flush=True)
+            send('deleteMessage', {"chat_id": chat_id, "message_id": message_id})
+            send(
+                'sendMessage',
+                {
+                    "chat_id": chat_id,
+                    "text": strings.ai_failed_short,
+                    "reply_markup": MENU,
+                }
+            )
+            return
         question.save()
 
     #print(question.hint)
