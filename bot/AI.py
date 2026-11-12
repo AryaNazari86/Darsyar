@@ -128,9 +128,14 @@ def _run(messages, max_tokens=512, temperature=0.3):
 
     result = payload.get("result") or {}
 
-    # Two shapes in the wild: classic Workers AI returns {"response": "..."},
-    # while some models (gemma-4, the GLM family) answer OpenAI-style.
+    # Three shapes in the wild: classic Workers AI returns {"response": "..."},
+    # some models (gemma-4, GLM) answer OpenAI-style under choices[], and when
+    # the reply is valid JSON Cloudflare helpfully pre-parses it, so "response"
+    # arrives as a dict. Re-serialise that so callers always get text.
     text = result.get("response")
+    if isinstance(text, (dict, list)):
+        return json.dumps(text, ensure_ascii=False)
+
     if not text:
         choices = result.get("choices") or []
         message = (choices[0].get("message") or {}) if choices else {}
